@@ -165,6 +165,74 @@
 		return var:=RTrim(Stdin.ReadLine(), "`n")
 	}
 	
+	_getch() {
+		return DllCall("msvcrt.dll\_getch","int")
+	}
+
+	getch(ByRef keyname) {
+		;the comments with ;//   are from my original c funtion
+		;this is an AutoHotkey port of that function...
+		key:=_getch()
+		if (key==224)
+		skey:=_getch()
+		
+		if (key==3) ;//note 'c' is 63
+			keyname:="Ctrl+c"
+		else if (key==4) ;//note 'd' is 64
+			keyname:="Ctrl+d"
+		else if (key==5)  ;//therefore "Ctrl+c" = 63 - 60 = 3
+			keyname:="Ctrl+e" ;//and so on...
+		else if (key==6)
+			keyname:="Ctrl+f"
+		else if (key==7)
+			keyname:="Ctrl+g"
+		else if (key==8) ;//case  8: *keyname ="Ctrl+h 8"; break;
+			keyname:="Backspace"
+		else if (key==9) ;//case  9: *keyname ="Ctrl+i 9"; break;
+			keyname:="Tab"
+		else if (key==13)
+			keyname:="Return"
+		else if (key==26)
+			keyname:="Ctrl+z"
+		else if (key==27)
+			keyname:="Esc"
+		else if (key==32)
+			keyname:="Space"
+		else if (key==224) ;//or FFFFFFE0 or 4294967264 ;*keyname ="Special";
+		{
+			;skey:=DllCall("msvcrt.dll\_getch","int")
+			if (skey==71)
+				keyname:="Home"
+			else if (skey=72)
+				keyname:="Up"
+			else if (skey=73)
+				keyname:="PgUp"
+			else if (skey=75)
+				keyname:="Left"
+			else if (skey=77)
+				keyname:="Right"
+			else if (skey=79)
+				keyname:="End"
+			else if (skey=80)
+				keyname:="Down"
+			else if (skey=81)
+				keyname:="PgDn"
+			else if (skey=83)
+				keyname:="Del"
+			else
+				keyname:="Special"
+		}
+		else
+		{
+			keyname:=chr(key)
+		}
+		
+		if (key==224)
+			return "224+" skey
+		else
+			return key
+	}
+	
 	wait(timeout=0) {
 		opt:=""
 		if (!timeout=0)
