@@ -2,6 +2,7 @@
 ; AutoHotkey (Tested) Version: 1.1.13.00
 ; Author:         Joe DF  |  http://joedf.co.nr  |  joedf@users.sourceforge.net
 ; Date:           August 31st, 2013
+; Library Version: 1.0.1.0
 ;
 ;	LibCon - AutoHotkey Library For Console Support
 ;
