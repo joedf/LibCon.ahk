@@ -129,6 +129,11 @@
 		puts("Current Color: " . getColor())
 	}
 	
+	newline(x=1) {
+	loop %x%
+		puts()
+	}
+	
 	puts(string="") {
 		global Stdout
 		Stdout.WriteLine(string) ;Stdout.write(string . "`n")
@@ -145,29 +150,13 @@
 	;fork of 'formatprint' :  http://www.autohotkey.com/board/topic/60731-printf-the-ahk-way/#entry382968
 	printf(msg, vargs*) {
 		for each, varg in vargs
-		{
 			msg:=RegExReplace(msg,"i)`%.",varg)
-			/*
-			StringReplace, msg, msg, `%s, % varg
-			StringReplace, msg, msg, `%c, % chr(varg)
-			msg:=RegExReplace(msg,"i)`%[idufeEgG]",(varg+0))
-			StringReplace, msg, msg, `%p, % &varg
-			StringReplace, msg, msg, `%o, % num2octal(varg+0)
-			hex:="" . dec2hex(varg+0)
-			StringLower,hex,hex
-			msg:=RegExReplace(msg,"`%x",hex)
-			StringUpper,hex,hex
-			msg:=RegExReplace(msg,"`%X",hex)
-			*/
-		}
 		return print(msg)
 	}
 	
 	putsf(msg, vargs*) {
 		for each, varg in vargs
-		{
 			msg:=RegExReplace(msg,"i)`%.",varg)
-		}
 		return puts(msg)
 	}
 	
@@ -212,15 +201,6 @@
 	dec2shex(var) { ;dec to S(tring)Hex
 		var:=("" . dec2hex(var))
 		StringRight,var,var,1
-		;var:=var + 0
-		return var
-	}
-
-	hex2dec(var) {
-		OldFormat := A_FormatInteger
-		SetFormat, Integer, D
-		var += 0
-		SetFormat, Integer, %OldFormat%
 		return var
 	}
 	
@@ -232,11 +212,6 @@
 			IfLess n,1, Break
 		}
 		Return m
-	}
-
-	newline(x=1) {
-		loop %x%
-			puts()
 	}
 	
 	;Fork of http://www.autohotkey.com/board/topic/90674-ascii-progress-bar/
