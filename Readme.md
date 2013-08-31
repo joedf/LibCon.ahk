@@ -7,7 +7,7 @@ The goal is to maintain simplicity, so that the common AutoHotkey user may use i
 I know that this is probably considered far from complete, (I do) but just to get things started, here it is!
   
 ------------------------------------------------
-[Preview](preview.png "Preview")
+![Preview](preview.png "Preview")
   
 ------------------------------------------------
 [Contact Me](mailto:joedf@users.sourceforge.net) for Requests, Comments, Contributions, etc.
