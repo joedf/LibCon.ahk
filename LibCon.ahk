@@ -2,7 +2,7 @@
 ; AutoHotkey (Tested) Version: 1.1.13.00
 ; Author:         Joe DF  |  http://joedf.co.nr  |  joedf@users.sourceforge.net
 ; Date:           August 31st, 2013
-; Library Version: 1.0.1.0
+; Library Version: 1.0.1.1
 ;
 ;	LibCon - AutoHotkey Library For Console Support
 ;
@@ -151,13 +151,13 @@
 	;fork of 'formatprint' :  http://www.autohotkey.com/board/topic/60731-printf-the-ahk-way/#entry382968
 	printf(msg, vargs*) {
 		for each, varg in vargs
-			msg:=RegExReplace(msg,"i)`%.",varg)
+			StringReplace,msg,msg,`%s, % varg ;msg:=RegExReplace(msg,"i)`%.",varg)
 		return print(msg)
 	}
 	
 	putsf(msg, vargs*) {
 		for each, varg in vargs
-			msg:=RegExReplace(msg,"i)`%.",varg)
+			StringReplace,msg,msg,`%s, % varg ;msg:=RegExReplace(msg,"i)`%.",varg)
 		return puts(msg)
 	}
 	

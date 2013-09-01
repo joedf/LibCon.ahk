@@ -33,7 +33,8 @@ puts("Press 5 different keys...")
 Loop 5
 {
 	kcode:=getch(kname) ;getch returns keycode and stores the keyname in kname if possible
-	puts("KeyName: " . kname . " (" . kcode ")")
+	putsf("KeyName: %s (%d)",kname,kcode) ;puts("KeyName: " . kname . " (" . kcode ")")
+	
 }
 pause() ;Pause : "press any key to continue..."
 puts("bye!")
