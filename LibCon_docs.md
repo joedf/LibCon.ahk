@@ -5,7 +5,7 @@ Console Functions & More...
 - [Library Global Variables](#GlobalVars)
     - [Predefined Variables](#PreDefVar)
     - [Console Color Constants](#ConsoleColors)
-
+  >
 - [Library Functions](#LibraryFunctions)
     - [StartConsole()](#StartConsole)
     - [AttachConsole( cPID )](#AttachConsole)
