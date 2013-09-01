@@ -2,7 +2,7 @@ Console Functions & More...
 =====================================
 
 ##Table of Contents##
-- [Library Global Variables](#GlobalVars)
+- [Library Global Variables](#global-vars)
     - [Predefined Variables](#PreDefVar)
     - [Console Color Constants](#ConsoleColors)
 - [Library Functions](#library-functions)
@@ -367,7 +367,7 @@ Description: Shorthand for 'getConsoleSize()'. Get the Console's buffer's Height
 ```
 
 <a id="GlobalVars"/>
-##GlobalVars##
+##Global Vars##
 ----
 
 <a id="PreDefVar"/>
