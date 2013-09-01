@@ -1,7 +1,7 @@
-Console Functions & More...
+LibCon - AutoHotkey Library For Console Support : Documentation
 =====================================
 
-##Table of Contents##
+#Table of Contents#
 - [Library Global Variables](#global-vars)
     - [Predefined Variables](#predefined-variables)
     - [Console Color Constants](#console-color-constants)
@@ -34,7 +34,7 @@ Console Functions & More...
     - [getConsoleWidth()](#getconsolewidth)
     - [getConsoleHeight()](#getconsoleheight)
 
-###Library Functions###
+##Library Functions##
 -----
 
 ####**_StartConsole()_**####
