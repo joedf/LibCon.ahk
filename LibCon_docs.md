@@ -3,8 +3,8 @@ Console Functions & More...
 
 ##Table of Contents##
 - [Library Global Variables](#global-vars)
-    - [Predefined Variables](#PreDefVar)
-    - [Console Color Constants](#ConsoleColors)
+    - [Predefined Variables](#predefined-variables)
+    - [Console Color Constants](#console-color-constants)
 - [Library Functions](#library-functions)
     - [StartConsole()](#StartConsole)
     - [AttachConsole( cPID )](#AttachConsole)
@@ -34,12 +34,10 @@ Console Functions & More...
     - [getConsoleWidth()](#getConsoleWidth)
     - [getConsoleHeight()](#getConsoleHeight)
 
-<a id="LibraryFunctions"/>
 ###Library Functions###
 -----
 
-<a id="StartConsole"/>
-**_StartConsole()_**
+####**_StartConsole()_**####
 
 ----
 ```
@@ -50,8 +48,7 @@ Description: Opens up a New Console Window that 'belongs' (attached) to the curr
      Output: Success is Non-Zero, Failure is Zero
 ```
  
-<a id="AttachConsole"/>
-**_AttachConsole( cPID )_**
+####**_AttachConsole( cPID )_**####
 
 ----
 ```
@@ -62,8 +59,7 @@ Description: Attach to a Console was already running. Although, it is suggested 
      Output: Success is Non-Zero, Failure is Zero
 ```
  
-<a id="FreeConsole"/>
-**_FreeConsole()_**
+####**_FreeConsole()_**####
 
 ----
 ```
@@ -73,8 +69,7 @@ Description: Detach/Terminate current Console and keeps AutoHotkey running
      Output: Success is Non-Zero, Failure is Zero
 ```
  
-<a id="setColor"/>
-**_setColor( FG="", BG="" )_**
+####**_setColor( FG="", BG="" )_**####
 
 ----
 ```
@@ -87,8 +82,7 @@ Description: Sets the Current Console's Foreground and Background Colors.
      Output: Success is Non-Zero, Failure is Zero
 ```
  
-<a id="setFgColor"/>
-**_setFgColor( c )_**
+####**_setFgColor( c )_**####
 
 ----
 ```
@@ -97,8 +91,7 @@ Description: Synonym for 'setColor(FG)' - see 'setColor()' for details.
      Output: Success is Non-Zero, Failure is Zero
 ```
  
-<a id="setBgColor"/>
-**_setBgColor( c )_**
+####**_setBgColor( c )_**####
 
 ----
 ```
@@ -107,8 +100,7 @@ Description: Synonym for 'setColor("",BG)' - see 'setColor()' for details.
      Output: Success is Non-Zero, Failure is Zero
 ```
  
-<a id="getColor"/>
-**_getColor()_**
+####**_getColor()_**####
 
 ----
 ```
@@ -121,8 +113,7 @@ Description: Returns the current color (Hexadecimal Value)
      Output: Success is Non-Zero, Failure is Undefined
 ```
  
-<a id="getFgColor"/>
-**_getFgColor()_** 
+####**_getFgColor()_**####
 
 ----
 ```
@@ -132,8 +123,7 @@ Description: Returns the current Foreground color (Hexadecimal Value)
      Output: Success is Non-Zero, Failure is Undefined
 ```
  
-<a id="getBgColor"/>
-**_getBgColor()_** 
+####**_getBgColor()_**####
 
 ----
 ```
@@ -143,8 +133,7 @@ Description: Returns the current Background color (Hexadecimal Value)
      Output: Success is Non-Zero, Failure is Undefined
 ```
  
-<a id="printcolortable"/>
-**_printcolortable()_**
+####**_printcolortable()_**####
 
 ----
 ```
@@ -154,8 +143,7 @@ Description: Prints a Color table with all the Color Constants.
      Output: None
 ```
  
-<a id="newline"/>
-**_newline( x=1 )_**
+####**_newline( x=1 )_**####
 
 ----
 ```
@@ -166,8 +154,7 @@ Description: Prints (empty) new lines. Number of new lines varies
      Output: None
 ```
  
-<a id="puts"/>
-**_puts( string="" )_**
+####**_puts( string="" )_**####
 
 ----
 ```
@@ -177,8 +164,7 @@ Description: Prints a String with a new line.
      Output: None
 ```
  
-<a id="print"/>
-**_print( string="" )_**
+####**_print( string="" )_**####
 
 ----
 ```
@@ -189,8 +175,7 @@ Description: Prints a String without a new line. Same as 'puts()' except
      Output: None
 ```
  
-<a id="printf"/>
-**_printf( msg, vargs* )_**
+####**_printf( msg, vargs* )_**####
 
 ----
 ```
@@ -204,8 +189,7 @@ Description: Synonym for 'print("hello" . Name . "!")' except that in this funti
      Output: None
 ```
  
-<a id="putsf"/>
-**_putsf( msg, vargs* )_**
+####**_putsf( msg, vargs* )_**####
 
 ----
 ```
@@ -217,8 +201,7 @@ Description: Synonym for 'puts("hello" . Name . "!")' except that in this funtio
      Output: None
 ```
  
-<a id="ClearScreen"/>
-**_ClearScreen()_**
+####**_ClearScreen()_**####
  
 ----
 ```
@@ -228,8 +211,7 @@ Description: Clears the Current Console's Screen.
      Output: None
 ```
  
-<a id="gets"/>
-**_gets( ByRef var="" )_**
+####**_gets( ByRef var="" )_**####
 
 ----
 ```
@@ -239,8 +221,7 @@ Description: Gets/Obtains input from the console user, until a carriage return '
      Output: The inputed/obtained string
 ```
  
-<a id="getch"/>
-**_getch( ByRef keyname )_**
+####**_getch( ByRef keyname )_**####
 
 ----
 ```
@@ -251,8 +232,7 @@ Description: Gets/Obtains a single key from the user. This may be used for somet
      Output: The Key Code
 ```
  
-<a id="wait"/>
-**_wait( timeout=0 )_**
+####**_wait( timeout=0 )_**####
 
 ----
 ```
@@ -262,8 +242,7 @@ Description: Gets/Obtains a single key from the user. This may be used for somet
      Output: The Key Code
 ```
  
-<a id="WaitAction"/>
-**_WaitAction()_**
+####**_WaitAction()_**####
 
 ----
 ```
@@ -276,8 +255,7 @@ Description: Gets/Obtains a single input (Captures Everything: mouse move, key p
      Credit: by gwarble
 ```
  
-<a id="pause"/>
-**_pause(show=1)_**
+####**_pause(show=1)_**####
  
 ----
 ```
@@ -288,8 +266,7 @@ Description: Wait until the user presses a key. This may be used for something
      Output: None
 ```
  
-<a id="dec2hex"/>
-**_dec2hex(var)_**
+####**_dec2hex(var)_**####
 
 ----
 ```
@@ -298,8 +275,7 @@ Description: Converts a decimal value to a hexadecimal value.
      Output: The convert value Hexadecimal value (Number)
 ```
  
-<a id="ToBase"/>
-**_ToBase(n,b)_**
+####**_ToBase(n,b)_**####
 
 ----
 ```
@@ -310,8 +286,7 @@ Description: Converts a decimal value to a specified base value. The base is
      Credit: by Laszlo
 ```
  
-<a id="sProgressBar"/>
-**_sProgressBar( Length, Current, Max, Unlock = 0, fixed=1, lp="|", lba="[", lbb="]" )_**
+####**_sProgressBar( Length, Current, Max, Unlock = 0, fixed=1, lp="|", lba="[", lbb="]" )_**####
 
 ----
 ```
@@ -333,8 +308,7 @@ Description: Displays an 'ASCII' progress bar.
              forked by joedf
 ```
  
-<a id="getConsoleSize"/>
-**_getConsoleSize( ByRef bufferwidth, ByRef bufferheight )_**
+####**_getConsoleSize( ByRef bufferwidth, ByRef bufferheight )_**####
 
 ----
 ```
@@ -346,8 +320,7 @@ Description: Get the Console's buffer size in columns and lines (rows),
      Output: Success is Non-Zero, Failure is Zero
 ```
  
-<a id="getConsoleWidth"/>
-**_getConsoleWidth()_**
+####**_getConsoleWidth()_**####
 
 ----
 ```
@@ -356,8 +329,7 @@ Description: Shorthand for 'getConsoleSize()'. Get the Console's buffer's Width.
      Output: The buffer's Width (Number)
 ```
  
-<a id="getConsoleHeight"/>
-**_getConsoleHeight()_**
+####**_getConsoleHeight()_**####
 
 ----
 ```
@@ -366,11 +338,9 @@ Description: Shorthand for 'getConsoleSize()'. Get the Console's buffer's Height
      Output: The buffer's Height (Number)
 ```
 
-<a id="GlobalVars"/>
 ##Global Vars##
 ----
 
-<a id="PreDefVar"/>
 ###Predefined Variables###
 ----
  
@@ -384,7 +354,6 @@ Description: Shorthand for 'getConsoleSize()'. Get the Console's buffer's Height
 *Definition:* ```Stdout :=FileOpen(DllCall("GetStdHandle", "int", -11, "ptr"), "h `n")```
 
 
-<a id="ConsoleColors"/>
 ###Console Color Constants###
 ----
 
