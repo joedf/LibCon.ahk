@@ -2,7 +2,7 @@
 ; AutoHotkey (Tested) Version: 1.1.13.00
 ; Author:         Joe DF  |  http://joedf.co.nr  |  joedf@users.sourceforge.net
 ; Date:           September 1st, 2013
-; Library Version: 1.0.1.2
+; Library Version: 1.0.1.3
 ;
 ;	LibCon - AutoHotkey Library For Console Support
 ;
@@ -256,12 +256,26 @@
 		DllCall("FlushConsoleInputBuffer", uint, stdin.__Handle) ;Flush the input buffer	
 		return key
 	}
-	
+
 	pause(show=1) {
 		n:=""
 		if (!show)
 			n:=">NUL"
 		runwait %ComSpec% /c pause.exe %n%
+	}
+
+	ClearScreen() {
+		;http://msdn.microsoft.com/en-us/library/ms682022.aspx
+		;Currently too lazy to do it programmatically...
+		runwait %ComSpec% /c cls.exe %n%
+	}
+	
+	cls() {
+		ClearScreen()
+	}
+	
+	Clear() {
+		ClearScreen()
 	}
 
 	dec2hex(var) {
