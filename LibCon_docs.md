@@ -36,6 +36,7 @@ Console Functions & More...
 
 <a id="LibraryFunctions"/>
 Library Functions
+  
 -----
 
 <a id="StartConsole"/>
@@ -368,10 +369,12 @@ Description: Shorthand for 'getConsoleSize()'. Get the Console's buffer's Height
 
 <a id="GlobalVars"/>
 ##GlobalVars##
+  
 ----
 
 <a id="PreDefVar"/>
 Predefined Variables
+  
 ----
  
 **_sType_** is an Object that is used when coding with structures and DllCalls.  
@@ -395,6 +398,7 @@ Stdout :=FileOpen(DllCall("GetStdHandle", "int", -11, "ptr"), "h `n")
 
 <a id="ConsoleColors"/>
 Console Color Constants
+  
 ----
 
     Black:=0x0
