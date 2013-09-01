@@ -5,7 +5,7 @@ Console Functions & More...
 - [Library Global Variables](#GlobalVars)
     - [Predefined Variables](#PreDefVar)
     - [Console Color Constants](#ConsoleColors)
-- [Library Functions](#LibraryFunctions)
+- [Library Functions](#Library-Functions)
     - [StartConsole()](#StartConsole)
     - [AttachConsole( cPID )](#AttachConsole)
     - [FreeConsole()](#FreeConsole)
@@ -35,8 +35,7 @@ Console Functions & More...
     - [getConsoleHeight()](#getConsoleHeight)
 
 <a id="LibraryFunctions"/>
-Library Functions
-  
+###Library Functions###
 -----
 
 <a id="StartConsole"/>
@@ -351,9 +350,11 @@ Description: Get the Console's buffer size in columns and lines (rows),
 **_getConsoleWidth()_**
 
 ----
-* Description: Shorthand for 'getConsoleSize()'. Get the Console's buffer's Width.
-*       Input: None
-*      Output: The buffer's Width (Number)
+```
+Description: Shorthand for 'getConsoleSize()'. Get the Console's buffer's Width.
+      Input: None
+     Output: The buffer's Width (Number)
+```
  
 <a id="getConsoleHeight"/>
 **_getConsoleHeight()_**
@@ -367,12 +368,10 @@ Description: Shorthand for 'getConsoleSize()'. Get the Console's buffer's Height
 
 <a id="GlobalVars"/>
 ##GlobalVars##
-  
 ----
 
 <a id="PreDefVar"/>
-Predefined Variables
-  
+###Predefined Variables###
 ----
  
 **_sType_** is an Object that is used when coding with structures and DllCalls.  
@@ -395,8 +394,7 @@ Stdout :=FileOpen(DllCall("GetStdHandle", "int", -11, "ptr"), "h `n")
 
 
 <a id="ConsoleColors"/>
-Console Color Constants
-  
+###Console Color Constants###
 ----
 
     Black:=0x0
