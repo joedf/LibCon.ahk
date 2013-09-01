@@ -1,8 +1,8 @@
 ﻿;
 ; AutoHotkey (Tested) Version: 1.1.13.00
 ; Author:         Joe DF  |  http://joedf.co.nr  |  joedf@users.sourceforge.net
-; Date:           August 31st, 2013
-; Library Version: 1.0.1.1
+; Date:           September 1st, 2013
+; Library Version: 1.0.1.2
 ;
 ;	LibCon - AutoHotkey Library For Console Support
 ;
@@ -163,7 +163,9 @@
 	
 	gets(ByRef var="") {
 		global Stdin
-		return var:=RTrim(Stdin.ReadLine(), "`n")
+		var:=RTrim(Stdin.ReadLine(), "`n")
+		DllCall("FlushConsoleInputBuffer", uint, stdin.__Handle) ;Flush the input buffer
+		return var
 	}
 	
 	_getch() {
@@ -228,6 +230,8 @@
 			keyname:=chr(key)
 		}
 		
+		DllCall("FlushConsoleInputBuffer", uint, stdin.__Handle) ;Flush the input buffer
+		
 		if (key==224)
 			return "224+" skey
 		else
@@ -248,7 +252,8 @@
 		global Stdin
 		VarSetCapacity(INPUT_RECORD, 24, 0)
 		DllCall("ReadConsoleInput", uint, stdin.__Handle, uint, &INPUT_RECORD, uint, 1, "ptr*", 0)
-		key := NumGet(INPUT_RECORD, 8)
+		key := NumGet(INPUT_RECORD,14,"Short")
+		DllCall("FlushConsoleInputBuffer", uint, stdin.__Handle) ;Flush the input buffer	
 		return key
 	}
 	
