@@ -2,7 +2,7 @@
 ; AutoHotkey (Tested) Version: 1.1.13.00
 ; Author:         Joe DF  |  http://joedf.co.nr  |  joedf@users.sourceforge.net
 ; Date:           September 1st, 2013
-; Library Version: 1.0.1.3
+; Library Version: 1.0.1.4
 ;
 ;	LibCon - AutoHotkey Library For Console Support
 ;
@@ -161,6 +161,20 @@
 		return puts(msg)
 	}
 	
+	ClearScreen() {
+		;http://msdn.microsoft.com/en-us/library/ms682022.aspx
+		;Currently too lazy to do it programmatically...
+		runwait %ComSpec% /c cls.exe %n%
+	}
+	
+	cls() {
+		ClearScreen()
+	}
+	
+	Clear() {
+		ClearScreen()
+	}
+	
 	gets(ByRef var="") {
 		global Stdin
 		var:=RTrim(Stdin.ReadLine(), "`n")
@@ -264,20 +278,6 @@
 		runwait %ComSpec% /c pause.exe %n%
 	}
 
-	ClearScreen() {
-		;http://msdn.microsoft.com/en-us/library/ms682022.aspx
-		;Currently too lazy to do it programmatically...
-		runwait %ComSpec% /c cls.exe %n%
-	}
-	
-	cls() {
-		ClearScreen()
-	}
-	
-	Clear() {
-		ClearScreen()
-	}
-
 	dec2hex(var) {
 		OldFormat := A_FormatInteger
 		SetFormat, Integer, Hex
@@ -303,7 +303,7 @@
 	}
 	
 	;Fork of http://www.autohotkey.com/board/topic/90674-ascii-progress-bar/
-	sProgressBar(Length, Current, Max, Unlock = 0, lp="|", lba="[", lbb="]") {
+	sProgressBar(Length, Current, Max, Unlock = 0, fixed=1, lp="|", lba="[", lbb="]") {
 		;Original Made by Bugz000 with assistance from tidbit, Chalamius and Bigvent
 		Progress:=""
 		Percent := (Current / Max) * 100
@@ -312,8 +312,11 @@
 		percent := percent > 100 ? 100 : percent < 0 ? 0 : percent
 		Loop % round(((percent / 100) * length), 0)
 				Progress .= lp
-		loop % Length - round(((percent / 100) * length), 0)
-				Progress .= A_Space
+		if (fixed)
+		{
+			loop % Length - round(((percent / 100) * length), 0)
+					Progress .= A_Space
+		}
 		return lba progress lbb A_space round(percent, 2) "% Complete"
 	}
 	
