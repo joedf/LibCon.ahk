@@ -5,7 +5,6 @@ Console Functions & More...
 - [Library Global Variables](#GlobalVars)
     - [Predefined Variables](#PreDefVar)
     - [Console Color Constants](#ConsoleColors)
-  >
 - [Library Functions](#LibraryFunctions)
     - [StartConsole()](#StartConsole)
     - [AttachConsole( cPID )](#AttachConsole)
@@ -375,14 +374,23 @@ Description: Shorthand for 'getConsoleSize()'. Get the Console's buffer's Height
 ###Predefined Variables###
 ----
  
-**_sType_** is an Object that is used when coding with structures and DllCalls  
-*Definition:* `sType := Object("SHORT", 2, "COORD", 4, "WORD", 2, "SMALL_RECT", 8, "DWORD", 4)`
+**_sType_** is an Object that is used when coding with structures and DllCalls.  
+*Definition:*
+```
+sType := Object("SHORT", 2, "COORD", 4, "WORD", 2, "SMALL_RECT", 8, "DWORD", 4)
+```
 
-**_sType_** is an Object that is used when coding with structures and DllCalls  
-*Definition:* ```Stdin := FileOpen(DllCall("GetStdHandle", "int", -10, "ptr"), "h `n")```
+**_Stdin_** is an Object that is used to reference the currently attached console's Input buffer.  
+*Definition:*
+```
+Stdin := FileOpen(DllCall("GetStdHandle", "int", -10, "ptr"), "h `n")
+```
 
-**_sType_** is an Object that is used when coding with structures and DllCalls  
-*Definition:* ``` Stdout :=FileOpen(DllCall("GetStdHandle", "int", -11, "ptr"), "h `n")```
+**_Stdout_** is an Object that is used to reference the currently attached console's Output buffer.  
+*Definition:*
+```
+Stdout :=FileOpen(DllCall("GetStdHandle", "int", -11, "ptr"), "h `n")
+```
 
 
 <a id="ConsoleColors" />
