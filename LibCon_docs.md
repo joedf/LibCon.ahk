@@ -1,4 +1,4 @@
-LibCon - AutoHotkey Library For Console Support : Documentation
+LibCon : Documentation
 =====================================
 
 #Table of Contents#
