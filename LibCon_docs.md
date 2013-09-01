@@ -351,11 +351,9 @@ Description: Get the Console's buffer size in columns and lines (rows),
 **_getConsoleWidth()_**
 
 ----
-```
-Description: Shorthand for 'getConsoleSize()'. Get the Console's buffer's Width.
-      Input: None
-     Output: The buffer's Width (Number)
-```
+* Description: Shorthand for 'getConsoleSize()'. Get the Console's buffer's Width.
+*       Input: None
+*      Output: The buffer's Width (Number)
  
 <a id="getConsoleHeight"/>
 **_getConsoleHeight()_**
