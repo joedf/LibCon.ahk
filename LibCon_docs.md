@@ -6,33 +6,33 @@ Console Functions & More...
     - [Predefined Variables](#predefined-variables)
     - [Console Color Constants](#console-color-constants)
 - [Library Functions](#library-functions)
-    - [StartConsole()](#StartConsole)
-    - [AttachConsole( cPID )](#AttachConsole)
-    - [FreeConsole()](#FreeConsole)
-    - [setColor( FG="", BG="" )](#setColor)
-    - [setFgColor( c )](#setFgColor)
-    - [setBgColor( c )](#setBgColor)
-    - [getColor()](#getColor)
-    - [getFgColor()](#getFgColor)
-    - [getBgColor()](#getBgColor)
+    - [StartConsole()](#startconsole)
+    - [AttachConsole( cPID )](#attachconsole-cpid-)
+    - [FreeConsole()](#freeconsole)
+    - [setColor( FG="", BG="" )](#setcolor-fg-bg-)
+    - [setFgColor( c )](#setfgcolor-fg-)
+    - [setBgColor( c )](#setbgColor-bg-)
+    - [getColor()](#getcolor)
+    - [getFgColor()](#getfgcolor)
+    - [getBgColor()](#getbgcolor)
     - [printcolortable()](#printcolortable)
-    - [newline( x=1 )](#newline)
-    - [puts( string="" )](#puts)
-    - [print( string="" )](#print)
-    - [printf( msg, vargs* )](#printf)
-    - [putsf( msg, vargs* )](#putsf)
-    - [ClearScreen()](#ClearScreen)
-    - [gets( ByRef var="" )](#gets)
-    - [getch( ByRef keyname )](#getch)
-    - [wait( timeout=0 )](#wait)
-    - [WaitAction()](#WaitAction)
-    - [pause(show=1)](#pause)
-    - [dec2hex(var)](#dec2hex)
-    - [ToBase(n,b)](#ToBase)
+    - [newline( x=1 )](#newline-x1-)
+    - [puts( string="" )](#puts-string-)
+    - [print( string="" )](#print-string-)
+    - [printf( msg, vargs* )](#printf-msg-vargs-)
+    - [putsf( msg, vargs* )](#putsf-msg-vargs-)
+    - [ClearScreen()](#clearscreen)
+    - [gets( ByRef var="" )](#gets-byref-var-)
+    - [getch( ByRef keyname )](#getch-byref-keyname-)
+    - [wait( timeout=0 )](#wait-timeout0-)
+    - [WaitAction()](#waitaction)
+    - [pause( show=1 )](#pause-show1-)
+    - [dec2hex( var )](#dec2hex-var-)
+    - [ToBase( n, b )](#tobase-n-b-)
     - [sProgressBar( Length, Current, Max, Unlock = 0, fixed=1, lp="|", lba="[", lbb="]" )](#sProgressBar)
-    - [getConsoleSize( ByRef bufferwidth, ByRef bufferheight )](#getConsoleSize)
-    - [getConsoleWidth()](#getConsoleWidth)
-    - [getConsoleHeight()](#getConsoleHeight)
+    - [getConsoleSize( ByRef bufferwidth, ByRef bufferheight )](#getconsolesize-byref-bufferwidth-byref-bufferheight-)
+    - [getConsoleWidth()](#getconsolewidth)
+    - [getConsoleHeight()](#getconsoleheight)
 
 ###Library Functions###
 -----
@@ -255,7 +255,7 @@ Description: Gets/Obtains a single input (Captures Everything: mouse move, key p
      Credit: by gwarble
 ```
  
-####**_pause(show=1)_**####
+####**_pause( show=1 )_**####
  
 ----
 ```
@@ -266,7 +266,7 @@ Description: Wait until the user presses a key. This may be used for something
      Output: None
 ```
  
-####**_dec2hex(var)_**####
+####**_dec2hex( var )_**####
 
 ----
 ```
@@ -275,7 +275,7 @@ Description: Converts a decimal value to a hexadecimal value.
      Output: The convert value Hexadecimal value (Number)
 ```
  
-####**_ToBase(n,b)_**####
+####**_ToBase( n, b )_**####
 
 ----
 ```
