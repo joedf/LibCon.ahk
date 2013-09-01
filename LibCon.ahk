@@ -187,7 +187,7 @@
 	}
 
 	getch(ByRef keyname) {
-		;the comments with ;//   are from my original c funtion
+		;the comments with ;//   are from my original c function
 		;this is an AutoHotkey port of that function...
 		key:=_getch()
 		if (key==224)
