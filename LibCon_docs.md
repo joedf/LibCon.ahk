@@ -185,7 +185,7 @@ Description: Synonym for 'print("hello" . Name . "!")' except that in this funti
              only format specifier is '%s', since almost everything in AutoHotkey
              can be treated as a string.
              Default: Prints Nothing. 'Flushes' Stdout. (Same behaviour as 'print()'
-      Input: The String to be printed
+      Input: The 'format' String to be printed
      Output: None
 ```
  
@@ -337,15 +337,235 @@ Description: Shorthand for 'getConsoleSize()'. Get the Console's buffer's Height
       Input: None
      Output: The buffer's Height (Number)
 ```
+ 
+####**_getConsoleHandle()_**####
 
+----
+```
+Description: Get the console's window Handle (Hwnd).  
+    		 (usually under the name of hConsole)  
+      Input: None
+     Output: The Console's window handle (Hwnd)
+```
+ 
+####**_flushInput()_**####
+
+----
+```
+Description: Flushes the console input buffer. All input records currently in the input buffer are discarded.  
+   MSDN URL: http://msdn.microsoft.com/library/ms683147  
+      Input: None  
+     Output: Success is Non-Zero, Failure is Zero
+```
+ 
+####**_getFontSize( Byref fontwidth, ByRef fontheight )_**####
+
+----
+```
+Description: the width and height of each character in the font, in logical units. The X member contains the width, while the Y member contains the height.
+      Input: fontwidth - The Varible in which to store the font's width (Number)
+             fontheight - The Varible in which to store the font's height (Number)
+     Output: Success is Non-Zero, Failure is Zero
+```
+ 
+####**_getFontWidth()_**####
+
+----
+```
+Description: Get the current font's width. Shorthand for getFontSize()
+      Input: None
+     Output: The Font's width (in pixels)
+```
+ 
+####**_getFontHeight()_**####
+
+----
+```
+Description: Get the current font's height. Shorthand for getFontSize()
+      Input: None
+     Output: The Font's height (in pixels)
+```
+ 
+####**_setConsoleSize( width, height, SizeHeight=0 )_**####
+
+----
+```
+Description: Set the Console's buffer size, No need to worry about the window size, this function does automatic resizing of the console's window if necessary. the size is in columns and lines (rows),
+             meaning one line height is a character's height, and the
+             column's width is a character's width.
+   MSDN URL: http://msdn.microsoft.com/library/ms686044
+      Input: width  - The console's width (Number)
+			 height - The console's height (Number)
+     Output: Success is Non-Zero, Failure is Zero
+```
+ 
+####**_LibConError( fname:="", arg1:="", arg2:="", arg3:="", arg4:="" )_**####
+
+----
+```
+Description: Explicit Error Handling towards the user. Msgboxes for Errors (DebugMode Only) (Abort, Retry, Ignore). See source for usage... Used for Basic ErrorHandling.
+      Input: fname - the function's callname
+			 arg1  - the 1st which the function was called with.
+			 arg.. - etc...
+     Output: Success is Non-Zero, Failure is Zero
+```
+ 
+####**_getConsoleCursorPosition( ByRef x, ByRef y )_**####
+
+----
+```
+Description: Get the Cursor's (or caret) current position. The origin is (0,0)
+   MSDN URL: http://msdn.microsoft.com/library/ms683171
+      Input: x - The Varible in which to store the cursor's x pos. (Number)
+             y - The Varible in which to store the cursor's y pos. (Number)
+     Output: Success is Non-Zero, Failure is Zero
+```
+   
+####**_SetConsoleCursorPosition( x="", y="" )_**####
+
+----
+```
+Description: Sets the cursor position in the specified console screen buffer.
+   MSDN URL: http://msdn.microsoft.com/library/ms686025
+      Input: x - The desired Cursor's x pos. (Number)
+			 y - The desired Cursor's y pos. (Number)
+     Output: Success is Non-Zero, Failure is Zero
+```
+ 
+####**_GetConsoleOriginalTitle( byRef Title )_**####
+
+----
+```
+Description: Retrieves the original title for the current console window.
+      Input: Title - The variable in which to store the original title. (String)
+     Output: Success is Non-Zero, Failure is Zero
+```
+ 
+####**_GetConsoleTitle( byRef Title )_**####
+
+----
+```
+Description: Retrieves the title for the current console window.
+   MSDN URL: http://msdn.microsoft.com/library/ms683174
+      Input: Title - The variable in which to store the current title. (String)
+     Output: Success is Non-Zero, Failure is Zero
+```
+ 
+####**_SetConsoleTitle( title="" )_**####
+
+----
+```
+Description: Sets the title for the current console window.
+   MSDN URL: http://msdn.microsoft.com/library/ms686050
+      Input: title - The desired title for the current console window.
+     Output: Success is Non-Zero, Failure is Zero
+```
+ 
+####**_SetConsoleInputCP( codepage )_**####
+
+----
+```
+Description: Sets the input code page used by the console. A console uses its input code page to translate keyboard input into the corresponding character value.
+   MSDN URL: http://msdn.microsoft.com/library/ms686013
+      Input: codepage - (Number) see "Code Page Identifiers" : http://msdn.microsoft.com/library/dd317756
+     Output: Success is Non-Zero, Failure is Zero
+```
+  
+####**_GetConsoleInputCP()_**####
+
+----
+```
+Description: Retrieves the input code page used by the console. A console uses its input code page to translate keyboard input into the corresponding character value.
+   MSDN URL: http://msdn.microsoft.com/library/ms683162
+      Input: None
+     Output: codepage - (Number) see "Code Page Identifiers" : http://msdn.microsoft.com/library/dd317756
+```
+  
+####**_SetConsoleOutputCP( codepage )_**####
+
+----
+```
+Description: Sets the output code page used by the console. A console uses its output code page to translate the character values written by the various output functions into the images displayed in the console window.
+   MSDN URL: http://msdn.microsoft.com/library/ms686036
+      Input:  codepage - (Number) see "Code Page Identifiers" : http://msdn.microsoft.com/library/dd317756
+     Output: Success is Non-Zero, Failure is Zero
+```
+   
+####**_GetConsoleOutputCP()_**####
+
+----
+```
+Description: Retrieves the output code page used by the console. A console uses its output code page to translate the character values written by the various output functions into the images displayed in the console window.
+   MSDN URL: http://msdn.microsoft.com/library/ms683169
+      Input: None
+     Output: codepage - (Number) see "Code Page Identifiers" : http://msdn.microsoft.com/library/dd317756
+```
+  
+####**_printW( str )_**####
+
+----
+```
+Description: "Writes a character string to a console screen buffer beginning at the current cursor location". This function is used for Unicode Printing Support. Otherwise, same as print()
+       Note: Fails (with SetConsoleInputCP(65001) = Unicode (UTF-8) ), if the current (console) font does not have Unicode support, seems to function otherwise...
+   MSDN URL: http://msdn.microsoft.com/library/ms687401
+      Input: The Unicode/other String to be printed
+     Output: Success is Non-Zero, Failure is Zero
+```
+  
+####**_printWf( msg, vargs* )_**####
+
+----
+```
+Description: A 'printf()' version of printW(). see 'printf()'
+      Input: The Unicode/other 'format' String to be printed
+     Output: Success is Non-Zero, Failure is Zero
+```
+   
+####**_putsW( str )_**####
+
+----
+```
+Description: Same as 'printfW()' with a new line.
+   MSDN URL: http://msdn.microsoft.com/library/ms687401
+      Input: The Unicode/other String to be printed
+     Output: Success is Non-Zero, Failure is Zero
+```
+  
+####**_putsWf( msg, vargs* )_**####
+
+----
+```
+Description: A 'printf()' version of putsW(). see 'printf()'
+      Input: The Unicode/other 'format' String to be printed
+     Output: Success is Non-Zero, Failure is Zero
+```
+ 
 ##Global Vars##
 ----
+
+###Defaults###
+----
+
+```
+SetWinDelay, 0
+SetBatchLines,-1
+```
 
 ###Predefined Variables###
 ----
  
+**_LibConDebug_** is either set 1 (true) or 0 (false) to enable/disable LibConDebug Mode.  
+*Definition (default):* ```LibConDebug := 0 ;Enable/Disable DebugMode```
+
+**_LibConErrorLevel_** is a variable that is used internally for LibConDebug Mode.  
+*Definition:* ```LibConErrorLevel := 0 ;Used For DebugMode```
+
 **_sType_** is an Object that is used when coding with structures and DllCalls.  
-*Definition:* ```sType := Object("SHORT", 2, "COORD", 4, "WORD", 2, "SMALL_RECT", 8, "DWORD", 4)```
+*Definition:*  
+```
+;Type sizes // http://msdn.microsoft.com/library/aa383751.aspx // EXAMPLE: SHORT is 2 bytes, etc..  
+sType := Object("SHORT", 2, "COORD", 4, "WORD", 2, "SMALL_RECT", 8, "DWORD", 4, "LONG", 4)
+```
 
 **_Stdin_** is an Object that is used to reference the currently attached console's Input buffer.  
 *Definition:* ```Stdin := FileOpen(DllCall("GetStdHandle", "int", -10, "ptr"), "h `n")```
