@@ -227,8 +227,12 @@ Description: Synonym for 'puts("hello" . Name . "!")' except that in this funtio
 
 ----
 ```
-Description: "Writes a character string to a console screen buffer beginning at the current cursor location". This function is used for Unicode Printing Support. Otherwise, same as print()
-       Note: Fails (with SetConsoleInputCP(65001) = Unicode (UTF-8) ), if the current (console) font does not have Unicode support, seems to function otherwise...
+Description: "Writes a character string to a console screen buffer  
+			 beginning at the current cursor location". This function is  
+			 used for Unicode Printing Support. Otherwise, same as print()
+       Note: Fails (with SetConsoleInputCP(65001) = Unicode (UTF-8) ),  
+			 if the current (console) font does not have Unicode support,  
+			 seems to function otherwise...
    MSDN URL: http://msdn.microsoft.com/library/ms687401
       Input: The Unicode/other String to be printed
      Output: Success is Non-Zero, Failure is Zero
@@ -299,7 +303,8 @@ Description: Gets/Obtains a single key from the user. This may be used for somet
 ```
 Description: Gets/Obtains a single key from the user. This may be used for something
              like "Press any key to continue" or "press Q to quit" with a timeout.
-       Note: 'wait()' triggers persistence, meaning the script will not exit automatically when the end of the script has been reached.
+       Note: 'wait()' triggers persistence, meaning the script will not exit
+			 automatically when the end of the script has been reached.
       Input: The number of seconds until timeout (Optional)
      Output: The Key Code
 ```
@@ -414,7 +419,8 @@ Description: Get the console's window Handle (Hwnd).
 
 ----
 ```
-Description: Flushes the console input buffer. All input records currently in the input buffer are discarded.  
+Description: Flushes the console input buffer. All input records currently in the  
+			 input buffer are discarded.  
    MSDN URL: http://msdn.microsoft.com/library/ms683147  
       Input: None  
      Output: Success is Non-Zero, Failure is Zero
@@ -424,7 +430,8 @@ Description: Flushes the console input buffer. All input records currently in th
 
 ----
 ```
-Description: the width and height of each character in the font, in logical units. The X member contains the width, while the Y member contains the height.
+Description: the width and height of each character in the font, in logical units.
+			 The X member contains the width, while the Y member contains the height.
       Input: fontwidth - The Varible in which to store the font's width (Number)
              fontheight - The Varible in which to store the font's height (Number)
      Output: Success is Non-Zero, Failure is Zero
@@ -452,9 +459,10 @@ Description: Get the current font's height. Shorthand for getFontSize()
 
 ----
 ```
-Description: Set the Console's buffer size, No need to worry about the window size, this function does automatic resizing of the console's window if necessary. the size is in columns and lines (rows),
-             meaning one line height is a character's height, and the
-             column's width is a character's width.
+Description: Set the Console's buffer size, No need to worry about the window size,
+			 this function does automatic resizing of the console's window if necessary.
+			 the size is in columns and lines (rows), meaning one line height is a
+			 character's height, and the column's width is a character's width.
    MSDN URL: http://msdn.microsoft.com/library/ms686044
       Input: width  - The console's width (Number)
 			 height - The console's height (Number)
@@ -516,7 +524,9 @@ Description: Sets the title for the current console window.
 
 ----
 ```
-Description: Sets the input code page used by the console. A console uses its input code page to translate keyboard input into the corresponding character value.
+Description: Sets the input code page used by the console. A console uses its
+			 input code page to translate keyboard input into the corresponding
+			 character value.
    MSDN URL: http://msdn.microsoft.com/library/ms686013
       Input: codepage - (Number) see "Code Page Identifiers" : http://msdn.microsoft.com/library/dd317756
      Output: Success is Non-Zero, Failure is Zero
@@ -526,7 +536,9 @@ Description: Sets the input code page used by the console. A console uses its in
 
 ----
 ```
-Description: Retrieves the input code page used by the console. A console uses its input code page to translate keyboard input into the corresponding character value.
+Description: Retrieves the input code page used by the console. A console uses its
+			 input code page to translate keyboard input into the corresponding
+			 character value.
    MSDN URL: http://msdn.microsoft.com/library/ms683162
       Input: None
      Output: codepage - (Number) see "Code Page Identifiers" : http://msdn.microsoft.com/library/dd317756
@@ -536,7 +548,9 @@ Description: Retrieves the input code page used by the console. A console uses i
 
 ----
 ```
-Description: Sets the output code page used by the console. A console uses its output code page to translate the character values written by the various output functions into the images displayed in the console window.
+Description: Sets the output code page used by the console. A console uses its
+			 output code page to translate the character values written by the
+			 various output functions into the images displayed in the console window.
    MSDN URL: http://msdn.microsoft.com/library/ms686036
       Input:  codepage - (Number) see "Code Page Identifiers" : http://msdn.microsoft.com/library/dd317756
      Output: Success is Non-Zero, Failure is Zero
@@ -546,7 +560,9 @@ Description: Sets the output code page used by the console. A console uses its o
 
 ----
 ```
-Description: Retrieves the output code page used by the console. A console uses its output code page to translate the character values written by the various output functions into the images displayed in the console window.
+Description: Retrieves the output code page used by the console. A console uses its
+			 output code page to translate the character values written by the 
+			 various output functions into the images displayed in the console window.
    MSDN URL: http://msdn.microsoft.com/library/ms683169
       Input: None
      Output: codepage - (Number) see "Code Page Identifiers" : http://msdn.microsoft.com/library/dd317756
@@ -556,7 +572,8 @@ Description: Retrieves the output code page used by the console. A console uses 
 
 ----
 ```
-Description: Explicit Error Handling towards the user. Msgboxes for Errors (DebugMode Only) (Abort, Retry, Ignore). See source for usage... Used for Basic ErrorHandling.
+Description: Explicit Error Handling towards the user. Msgboxes for Errors (DebugMode Only)
+			 (Abort, Retry, Ignore). See source for usage... Used for Basic ErrorHandling.
       Input: fname - the function's callname
     		 arg1  - the 1st which the function was called with.
 			 arg.. - etc...
