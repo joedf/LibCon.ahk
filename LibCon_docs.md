@@ -22,9 +22,9 @@ LibCon : Documentation
     - [print( string="" )](#print-string-)
     - [printf( msg, vargs* )](#printf-msg-vargs-)
     - [putsf( msg, vargs* )](#putsf-msg-vargs-)
-    - [printW( string="" )](#printw-string-)
+    - [printW( string="" )](#printw-string--)
     - [printWf( msg, vargs* )](#printwf-msg-vargs-)
-    - [putsW( string="" )](#putsw-string-)
+    - [putsW( string="" )](#putsw-string--)
     - [putsWf( msg, vargs* )](#putswf-msg-vargs-)
     - [ClearScreen()](#clearscreen)
     - [gets( ByRef var="" )](#gets-byref-var-)
@@ -222,7 +222,7 @@ Description: Synonym for 'puts("hello" . Name . "!")' except that in this funtio
       Input: The String to be printed
      Output: None
 ```
-<a id="printw-string-"></a>
+<a id="printw-string--"></a>
 ####**_printW( str )_**####
 
 ----
@@ -242,7 +242,7 @@ Description: A 'printf()' version of printW(). see 'printf()'
       Input: The Unicode/other 'format' String to be printed
      Output: Success is Non-Zero, Failure is Zero
 ```
-<a id="putsw-string-"></a>
+<a id="putsw-string--"></a>
 ####**_putsW( str )_**####
 
 ----
