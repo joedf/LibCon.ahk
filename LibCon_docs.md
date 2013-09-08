@@ -43,17 +43,17 @@ LibCon : Documentation
     - [getFontSize( Byref fontwidth, ByRef fontheight )](#getfontsize-byref-fontwidth-byref-fontheight-)
     - [getFontWidth()](#getfontwidth)
     - [getFontHeight()](#getfontheight)
-    - [setConsoleSize( width, height, SizeHeight=0 )](#setconsolesize-width-height-sizeheight-0-)
+    - [setConsoleSize( width, height, SizeHeight=0 )](#setconsolesize-width-height-sizeheight0-)
     - [getConsoleCursorPosition( ByRef x, ByRef y )](#getconsolecursorposition-byref-x-byref-y-)
     - [SetConsoleCursorPosition( x="", y="" )](#setconsolecursorposition-x--y--)
     - [GetConsoleOriginalTitle( byRef Title )](#getconsoleoriginaltitle-byref-title-)
     - [GetConsoleTitle( byRef Title )](#getconsoletitle-byref-title-)
     - [SetConsoleTitle( title="" )](#setconsoletitle-title-)
-    - [SetConsoleInputCP( codepage )](#setconsoletinputcp-codepage-)
-    - [GetConsoleInputCP()](#getconsoletinputcp)
-    - [SetConsoleOutputCP( codepage )](#setconsoletoutputcp-codepage-)
-    - [GetConsoleOutputCP()](#getconsoletoutputcp)
-    - [LibConError( fname:="", arg1:="", arg2:="", arg3:="", arg4:="" )](#libconerror-fname--arg1--arg2--arg3--arg4--)
+    - [SetConsoleInputCP( codepage )](#setconsoleinputcp-codepage-)
+    - [GetConsoleInputCP()](#getconsoleinputcp)
+    - [SetConsoleOutputCP( codepage )](#setconsoleoutputcp-codepage-)
+    - [GetConsoleOutputCP()](#getconsoleoutputcp)
+    - [LibConError( fname:="", arg1:="", arg2:="", arg3:="", arg4:="" )](#libconerror-fname-arg1-arg2-arg3-arg4-)
 
 <a id="library-functions"></a>
 ##Library Functions##
@@ -447,7 +447,7 @@ Description: Get the current font's height. Shorthand for getFontSize()
       Input: None
      Output: The Font's height (in pixels)
 ```
-<a id="setconsolesize-width-height-sizeheight-0-"></a>
+<a id="setconsolesize-width-height-sizeheight0-"></a>
 ####**_setConsoleSize( width, height, SizeHeight=0 )_**####
 
 ----
@@ -511,7 +511,7 @@ Description: Sets the title for the current console window.
       Input: title - The desired title for the current console window.
      Output: Success is Non-Zero, Failure is Zero
 ```
-<a id="setconsoletinputcp-codepage-"></a>
+<a id="setconsoleinputcp-codepage-"></a>
 ####**_SetConsoleInputCP( codepage )_**####
 
 ----
@@ -521,7 +521,7 @@ Description: Sets the input code page used by the console. A console uses its in
       Input: codepage - (Number) see "Code Page Identifiers" : http://msdn.microsoft.com/library/dd317756
      Output: Success is Non-Zero, Failure is Zero
 ```
-<a id="getconsoletinputcp"></a>
+<a id="getconsoleinputcp"></a>
 ####**_GetConsoleInputCP()_**####
 
 ----
@@ -531,7 +531,7 @@ Description: Retrieves the input code page used by the console. A console uses i
       Input: None
      Output: codepage - (Number) see "Code Page Identifiers" : http://msdn.microsoft.com/library/dd317756
 ```
-<a id="setconsoletinputcp-codepage-"></a>
+<a id="setconsoleinputcp-codepage-"></a>
 ####**_SetConsoleOutputCP( codepage )_**####
 
 ----
@@ -541,7 +541,7 @@ Description: Sets the output code page used by the console. A console uses its o
       Input:  codepage - (Number) see "Code Page Identifiers" : http://msdn.microsoft.com/library/dd317756
      Output: Success is Non-Zero, Failure is Zero
 ```
-<a id="getconsoletoutputcp"></a>
+<a id="getconsoleoutputcp"></a>
 ####**_GetConsoleOutputCP()_**####
 
 ----
@@ -551,7 +551,7 @@ Description: Retrieves the output code page used by the console. A console uses 
       Input: None
      Output: codepage - (Number) see "Code Page Identifiers" : http://msdn.microsoft.com/library/dd317756
 ```
-<a id="libconerror-fname--arg1--arg2--arg3--arg4--"></a>
+<a id="libconerror-fname-arg1-arg2-arg3-arg4-"></a>
 ####**_LibConError( fname:="", arg1:="", arg2:="", arg3:="", arg4:="" )_**####
 
 ----
