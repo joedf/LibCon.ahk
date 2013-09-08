@@ -222,7 +222,7 @@ Description: Synonym for 'puts("hello" . Name . "!")' except that in this funtio
       Input: The String to be printed
      Output: None
 ```
-<a id="printw-string--"></a>
+<a id="printw-str-"></a>
 ####**_printW( str )_**####
 
 ----
@@ -242,7 +242,7 @@ Description: A 'printf()' version of printW(). see 'printf()'
       Input: The Unicode/other 'format' String to be printed
      Output: Success is Non-Zero, Failure is Zero
 ```
-<a id="putsw-string--"></a>
+<a id="putsw-str-"></a>
 ####**_putsW( str )_**####
 
 ----
