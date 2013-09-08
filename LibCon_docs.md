@@ -3,6 +3,7 @@ LibCon : Documentation
 
 #Table of Contents#
 - [Library Global Variables](#global-vars)
+    - [Defaults](#defaults)
     - [Predefined Variables](#predefined-variables)
     - [Console Color Constants](#console-color-constants)
 - [Library Functions](#library-functions)
@@ -21,6 +22,10 @@ LibCon : Documentation
     - [print( string="" )](#print-string-)
     - [printf( msg, vargs* )](#printf-msg-vargs-)
     - [putsf( msg, vargs* )](#putsf-msg-vargs-)
+    - [printW( string="" )](#printw-string-)
+    - [printWf( msg, vargs* )](#printwf-msg-vargs-)
+    - [putsW( string="" )](#putsw-string-)
+    - [putsWf( msg, vargs* )](#putswf-msg-vargs-)
     - [ClearScreen()](#clearscreen)
     - [gets( ByRef var="" )](#gets-byref-var-)
     - [getch( ByRef keyname )](#getch-byref-keyname-)
@@ -33,10 +38,27 @@ LibCon : Documentation
     - [getConsoleSize( ByRef bufferwidth, ByRef bufferheight )](#getconsolesize-byref-bufferwidth-byref-bufferheight-)
     - [getConsoleWidth()](#getconsolewidth)
     - [getConsoleHeight()](#getconsoleheight)
+    - [getConsoleHandle()](#getconsolehandle)
+    - [flushInput()](#flushinput)
+    - [getFontSize( Byref fontwidth, ByRef fontheight )](#getfontsize-byref-fontwidth-byref-fontheight-)
+    - [getFontWidth()](#getfontwidth)
+    - [getFontHeight()](#getfontheight)
+    - [setConsoleSize( width, height, SizeHeight=0 )](#setconsolesize-width-height-sizeheight-0-)
+    - [getConsoleCursorPosition( ByRef x, ByRef y )](#getconsolecursorposition-byref-x-byref-y-)
+    - [SetConsoleCursorPosition( x="", y="" )](#setconsolecursorposition-x--y--)
+    - [GetConsoleOriginalTitle( byRef Title )](#getconsoleoriginaltitle-byref-title-)
+    - [GetConsoleTitle( byRef Title )](#getconsoletitle-byref-title-)
+    - [SetConsoleTitle( title="" )](#setconsoletitle-title-)
+    - [SetConsoleInputCP( codepage )](#setconsoletinputcp-codepage-)
+    - [GetConsoleInputCP()](#getconsoletinputcp)
+    - [SetConsoleOutputCP( codepage )](#setconsoletoutputcp-codepage-)
+    - [GetConsoleOutputCP()](#getconsoletoutputcp)
+    - [LibConError( fname:="", arg1:="", arg2:="", arg3:="", arg4:="" )](#libconerror-fname--arg1--arg2--arg3--arg4--)
 
+<a id="library-functions"></a>
 ##Library Functions##
 -----
-
+<a id="startconsole"></a>
 ####**_StartConsole()_**####
 
 ----
@@ -47,7 +69,7 @@ Description: Opens up a New Console Window that 'belongs' (attached) to the curr
       Input: None  
      Output: Success is Non-Zero, Failure is Zero
 ```
- 
+<a id="attachconsole-cpid-"></a>
 ####**_AttachConsole( cPID )_**####
 
 ----
@@ -58,7 +80,7 @@ Description: Attach to a Console was already running. Although, it is suggested 
       Input: The target Console's PID 
      Output: Success is Non-Zero, Failure is Zero
 ```
- 
+<a id="freeconsole"></a>
 ####**_FreeConsole()_**####
 
 ----
@@ -68,7 +90,7 @@ Description: Detach/Terminate current Console and keeps AutoHotkey running
       Input: None
      Output: Success is Non-Zero, Failure is Zero
 ```
- 
+<a id="setcolor-fg-bg-"></a>
 ####**_setColor( FG="", BG="" )_**####
 
 ----
@@ -81,7 +103,7 @@ Description: Sets the Current Console's Foreground and Background Colors.
              Default: No change to current color
      Output: Success is Non-Zero, Failure is Zero
 ```
- 
+<a id="setfgcolor-c-"></a>
 ####**_setFgColor( c )_**####
 
 ----
@@ -90,7 +112,7 @@ Description: Synonym for 'setColor(FG)' - see 'setColor()' for details.
       Input: FG (Foreground) - Set the Foreground color (Hexadecimal Value)
      Output: Success is Non-Zero, Failure is Zero
 ```
- 
+<a id="setbgcolor-c-"></a>
 ####**_setBgColor( c )_**####
 
 ----
@@ -99,7 +121,7 @@ Description: Synonym for 'setColor("",BG)' - see 'setColor()' for details.
       Input: BG (Background) - Set the Background color (Hexadecimal Value)
      Output: Success is Non-Zero, Failure is Zero
 ```
- 
+<a id="getcolor"></a>
 ####**_getColor()_**####
 
 ----
@@ -112,7 +134,7 @@ Description: Returns the current color (Hexadecimal Value)
       Input: None
      Output: Success is Non-Zero, Failure is Undefined
 ```
- 
+<a id="getfgcolor"></a>
 ####**_getFgColor()_**####
 
 ----
@@ -122,7 +144,7 @@ Description: Returns the current Foreground color (Hexadecimal Value)
       Input: None
      Output: Success is Non-Zero, Failure is Undefined
 ```
- 
+<a id="getbgcolor"></a>
 ####**_getBgColor()_**####
 
 ----
@@ -132,7 +154,7 @@ Description: Returns the current Background color (Hexadecimal Value)
       Input: None
      Output: Success is Non-Zero, Failure is Undefined
 ```
- 
+<a id="printcolortable"></a>
 ####**_printcolortable()_**####
 
 ----
@@ -142,7 +164,7 @@ Description: Prints a Color table with all the Color Constants.
       Input: None
      Output: None
 ```
- 
+<a id="newline-x1-"></a>
 ####**_newline( x=1 )_**####
 
 ----
@@ -153,7 +175,7 @@ Description: Prints (empty) new lines. Number of new lines varies
       Input: Number of (empty) new lines to print
      Output: None
 ```
- 
+<a id="puts-string-"></a>
 ####**_puts( string="" )_**####
 
 ----
@@ -163,7 +185,7 @@ Description: Prints a String with a new line.
       Input: The String to be printed
      Output: None
 ```
- 
+<a id="print-string-"></a>
 ####**_print( string="" )_**####
 
 ----
@@ -174,7 +196,7 @@ Description: Prints a String without a new line. Same as 'puts()' except
       Input: The String to be printed
      Output: None
 ```
- 
+<a id="printf-msg-vargs-"></a>
 ####**_printf( msg, vargs* )_**####
 
 ----
@@ -188,7 +210,7 @@ Description: Synonym for 'print("hello" . Name . "!")' except that in this funti
       Input: The 'format' String to be printed
      Output: None
 ```
- 
+<a id="putsf-msg-vargs-"></a>
 ####**_putsf( msg, vargs* )_**####
 
 ----
@@ -200,7 +222,46 @@ Description: Synonym for 'puts("hello" . Name . "!")' except that in this funtio
       Input: The String to be printed
      Output: None
 ```
- 
+<a id="printw-string-"></a>
+####**_printW( str )_**####
+
+----
+```
+Description: "Writes a character string to a console screen buffer beginning at the current cursor location". This function is used for Unicode Printing Support. Otherwise, same as print()
+       Note: Fails (with SetConsoleInputCP(65001) = Unicode (UTF-8) ), if the current (console) font does not have Unicode support, seems to function otherwise...
+   MSDN URL: http://msdn.microsoft.com/library/ms687401
+      Input: The Unicode/other String to be printed
+     Output: Success is Non-Zero, Failure is Zero
+```
+<a id="printwf-msg-vargs-"></a>
+####**_printWf( msg, vargs* )_**####
+
+----
+```
+Description: A 'printf()' version of printW(). see 'printf()'
+      Input: The Unicode/other 'format' String to be printed
+     Output: Success is Non-Zero, Failure is Zero
+```
+<a id="putsw-string-"></a>
+####**_putsW( str )_**####
+
+----
+```
+Description: Same as 'printfW()' with a new line.
+   MSDN URL: http://msdn.microsoft.com/library/ms687401
+      Input: The Unicode/other String to be printed
+     Output: Success is Non-Zero, Failure is Zero
+```
+<a id="putswf-msg-vargs-"></a>
+####**_putsWf( msg, vargs* )_**####
+
+----
+```
+Description: A 'printf()' version of putsW(). see 'printf()'
+      Input: The Unicode/other 'format' String to be printed
+     Output: Success is Non-Zero, Failure is Zero
+```
+<a id="clearscreen"></a>
 ####**_ClearScreen()_**####
  
 ----
@@ -210,7 +271,7 @@ Description: Clears the Current Console's Screen.
       Input: None
      Output: None
 ```
- 
+<a id="gets-byref-var-"></a>
 ####**_gets( ByRef var="" )_**####
 
 ----
@@ -220,7 +281,7 @@ Description: Gets/Obtains input from the console user, until a carriage return '
       Input: The Varible in which to store the inputed/obtained string (Optional)
      Output: The inputed/obtained string
 ```
- 
+<a id="getch-byref-keyname-"></a>
 ####**_getch( ByRef keyname )_**####
 
 ----
@@ -231,17 +292,18 @@ Description: Gets/Obtains a single key from the user. This may be used for somet
       Input: The Varible in which to store the Key Name (string) (Optional)
      Output: The Key Code
 ```
- 
+<a id="wait-timeout0-"></a>
 ####**_wait( timeout=0 )_**####
 
 ----
 ```
 Description: Gets/Obtains a single key from the user. This may be used for something
              like "Press any key to continue" or "press Q to quit" with a timeout.
+       Note: 'wait()' triggers persistence, meaning the script will not exit automatically when the end of the script has been reached.
       Input: The number of seconds until timeout (Optional)
      Output: The Key Code
 ```
- 
+<a id="waitaction"></a>
 ####**_WaitAction()_**####
 
 ----
@@ -254,7 +316,7 @@ Description: Gets/Obtains a single input (Captures Everything: mouse move, key p
      Output: The Key Code (vk or sc - Undefined for the moment...)
      Credit: by gwarble
 ```
- 
+<a id="pause-show1-"></a>
 ####**_pause( show=1 )_**####
  
 ----
@@ -265,7 +327,7 @@ Description: Wait until the user presses a key. This may be used for something
       Input: Display the default message (Boolean) (Optional)
      Output: None
 ```
- 
+<a id="dec2hex-var-"></a>
 ####**_dec2hex( var )_**####
 
 ----
@@ -274,7 +336,7 @@ Description: Converts a decimal value to a hexadecimal value.
       Input: The Decimal value to be converted (Number) (Optional)
      Output: The convert value Hexadecimal value (Number)
 ```
- 
+<a id="tobase-n-b-"></a>
 ####**_ToBase( n, b )_**####
 
 ----
@@ -285,7 +347,7 @@ Description: Converts a decimal value to a specified base value. The base is
      Output: The convert value in the specified base value (Number)
      Credit: by Laszlo
 ```
- 
+<a id="sprogressbar-length-current-max-unlock--0-fixed1-lp-lba-lbb-"></a>
 ####**_sProgressBar( Length, Current, Max, Unlock = 0, fixed=1, lp="|", lba="[", lbb="]" )_**####
 
 ----
@@ -307,7 +369,7 @@ Description: Displays an 'ASCII' progress bar.
      Credit: by Bugz000 with assistance from tidbit, Chalamius and Bigvent /
              forked by joedf
 ```
- 
+<a id="getconsolesize-byref-bufferwidth-byref-bufferheight-"></a>
 ####**_getConsoleSize( ByRef bufferwidth, ByRef bufferheight )_**####
 
 ----
@@ -319,7 +381,7 @@ Description: Get the Console's buffer size in columns and lines (rows),
              bufferheight - The Varible in which to store the buffer's height (Number)
      Output: Success is Non-Zero, Failure is Zero
 ```
- 
+<a id="getconsolewidth"></a>
 ####**_getConsoleWidth()_**####
 
 ----
@@ -328,7 +390,7 @@ Description: Shorthand for 'getConsoleSize()'. Get the Console's buffer's Width.
       Input: None
      Output: The buffer's Width (Number)
 ```
- 
+<a id="getconsoleheight"></a>
 ####**_getConsoleHeight()_**####
 
 ----
@@ -337,17 +399,17 @@ Description: Shorthand for 'getConsoleSize()'. Get the Console's buffer's Height
       Input: None
      Output: The buffer's Height (Number)
 ```
- 
+<a id="getconsolehandle"></a>
 ####**_getConsoleHandle()_**####
 
 ----
 ```
 Description: Get the console's window Handle (Hwnd).  
-    		 (usually under the name of hConsole)  
+        	 (usually under the name of hConsole)  
       Input: None
      Output: The Console's window handle (Hwnd)
 ```
- 
+<a id="flushinput"></a>
 ####**_flushInput()_**####
 
 ----
@@ -357,7 +419,7 @@ Description: Flushes the console input buffer. All input records currently in th
       Input: None  
      Output: Success is Non-Zero, Failure is Zero
 ```
- 
+<a id="getfontsize-byref-fontwidth-byref-fontheight-"></a>
 ####**_getFontSize( Byref fontwidth, ByRef fontheight )_**####
 
 ----
@@ -367,7 +429,7 @@ Description: the width and height of each character in the font, in logical unit
              fontheight - The Varible in which to store the font's height (Number)
      Output: Success is Non-Zero, Failure is Zero
 ```
- 
+<a id="getfontwidth"></a>
 ####**_getFontWidth()_**####
 
 ----
@@ -376,7 +438,7 @@ Description: Get the current font's width. Shorthand for getFontSize()
       Input: None
      Output: The Font's width (in pixels)
 ```
- 
+<a id="getfontheight"></a>
 ####**_getFontHeight()_**####
 
 ----
@@ -385,7 +447,7 @@ Description: Get the current font's height. Shorthand for getFontSize()
       Input: None
      Output: The Font's height (in pixels)
 ```
- 
+<a id="setconsolesize-width-height-sizeheight-0-"></a>
 ####**_setConsoleSize( width, height, SizeHeight=0 )_**####
 
 ----
@@ -398,18 +460,7 @@ Description: Set the Console's buffer size, No need to worry about the window si
 			 height - The console's height (Number)
      Output: Success is Non-Zero, Failure is Zero
 ```
- 
-####**_LibConError( fname:="", arg1:="", arg2:="", arg3:="", arg4:="" )_**####
-
-----
-```
-Description: Explicit Error Handling towards the user. Msgboxes for Errors (DebugMode Only) (Abort, Retry, Ignore). See source for usage... Used for Basic ErrorHandling.
-      Input: fname - the function's callname
-			 arg1  - the 1st which the function was called with.
-			 arg.. - etc...
-     Output: Success is Non-Zero, Failure is Zero
-```
- 
+<a id="getconsolecursorposition-byref-x-byref-y-"></a>
 ####**_getConsoleCursorPosition( ByRef x, ByRef y )_**####
 
 ----
@@ -420,7 +471,7 @@ Description: Get the Cursor's (or caret) current position. The origin is (0,0)
              y - The Varible in which to store the cursor's y pos. (Number)
      Output: Success is Non-Zero, Failure is Zero
 ```
-   
+<a id="setconsolecursorposition-x--y--"></a>
 ####**_SetConsoleCursorPosition( x="", y="" )_**####
 
 ----
@@ -431,7 +482,7 @@ Description: Sets the cursor position in the specified console screen buffer.
 			 y - The desired Cursor's y pos. (Number)
      Output: Success is Non-Zero, Failure is Zero
 ```
- 
+<a id="getconsoleoriginaltitle-byref-title-"></a>
 ####**_GetConsoleOriginalTitle( byRef Title )_**####
 
 ----
@@ -440,7 +491,7 @@ Description: Retrieves the original title for the current console window.
       Input: Title - The variable in which to store the original title. (String)
      Output: Success is Non-Zero, Failure is Zero
 ```
- 
+<a id="getconsoletitle-byref-title-"></a>
 ####**_GetConsoleTitle( byRef Title )_**####
 
 ----
@@ -450,7 +501,7 @@ Description: Retrieves the title for the current console window.
       Input: Title - The variable in which to store the current title. (String)
      Output: Success is Non-Zero, Failure is Zero
 ```
- 
+<a id="setconsoletitle-title-"></a>
 ####**_SetConsoleTitle( title="" )_**####
 
 ----
@@ -460,7 +511,7 @@ Description: Sets the title for the current console window.
       Input: title - The desired title for the current console window.
      Output: Success is Non-Zero, Failure is Zero
 ```
- 
+<a id="setconsoletinputcp-codepage-"></a>
 ####**_SetConsoleInputCP( codepage )_**####
 
 ----
@@ -470,7 +521,7 @@ Description: Sets the input code page used by the console. A console uses its in
       Input: codepage - (Number) see "Code Page Identifiers" : http://msdn.microsoft.com/library/dd317756
      Output: Success is Non-Zero, Failure is Zero
 ```
-  
+<a id="getconsoletinputcp"></a>
 ####**_GetConsoleInputCP()_**####
 
 ----
@@ -480,7 +531,7 @@ Description: Retrieves the input code page used by the console. A console uses i
       Input: None
      Output: codepage - (Number) see "Code Page Identifiers" : http://msdn.microsoft.com/library/dd317756
 ```
-  
+<a id="setconsoletinputcp-codepage-"></a>
 ####**_SetConsoleOutputCP( codepage )_**####
 
 ----
@@ -490,7 +541,7 @@ Description: Sets the output code page used by the console. A console uses its o
       Input:  codepage - (Number) see "Code Page Identifiers" : http://msdn.microsoft.com/library/dd317756
      Output: Success is Non-Zero, Failure is Zero
 ```
-   
+<a id="getconsoletoutputcp"></a>
 ####**_GetConsoleOutputCP()_**####
 
 ----
@@ -500,49 +551,21 @@ Description: Retrieves the output code page used by the console. A console uses 
       Input: None
      Output: codepage - (Number) see "Code Page Identifiers" : http://msdn.microsoft.com/library/dd317756
 ```
-  
-####**_printW( str )_**####
+<a id="libconerror-fname--arg1--arg2--arg3--arg4--"></a>
+####**_LibConError( fname:="", arg1:="", arg2:="", arg3:="", arg4:="" )_**####
 
 ----
 ```
-Description: "Writes a character string to a console screen buffer beginning at the current cursor location". This function is used for Unicode Printing Support. Otherwise, same as print()
-       Note: Fails (with SetConsoleInputCP(65001) = Unicode (UTF-8) ), if the current (console) font does not have Unicode support, seems to function otherwise...
-   MSDN URL: http://msdn.microsoft.com/library/ms687401
-      Input: The Unicode/other String to be printed
+Description: Explicit Error Handling towards the user. Msgboxes for Errors (DebugMode Only) (Abort, Retry, Ignore). See source for usage... Used for Basic ErrorHandling.
+      Input: fname - the function's callname
+    		 arg1  - the 1st which the function was called with.
+			 arg.. - etc...
      Output: Success is Non-Zero, Failure is Zero
 ```
-  
-####**_printWf( msg, vargs* )_**####
-
-----
-```
-Description: A 'printf()' version of printW(). see 'printf()'
-      Input: The Unicode/other 'format' String to be printed
-     Output: Success is Non-Zero, Failure is Zero
-```
-   
-####**_putsW( str )_**####
-
-----
-```
-Description: Same as 'printfW()' with a new line.
-   MSDN URL: http://msdn.microsoft.com/library/ms687401
-      Input: The Unicode/other String to be printed
-     Output: Success is Non-Zero, Failure is Zero
-```
-  
-####**_putsWf( msg, vargs* )_**####
-
-----
-```
-Description: A 'printf()' version of putsW(). see 'printf()'
-      Input: The Unicode/other 'format' String to be printed
-     Output: Success is Non-Zero, Failure is Zero
-```
- 
+<a id="global-vars"></a>
 ##Global Vars##
 ----
-
+<a id="defaults"></a>
 ###Defaults###
 ----
 
@@ -550,7 +573,7 @@ Description: A 'printf()' version of putsW(). see 'printf()'
 SetWinDelay, 0
 SetBatchLines,-1
 ```
-
+<a id="predefined-variables"></a>
 ###Predefined Variables###
 ----
  
@@ -562,10 +585,8 @@ SetBatchLines,-1
 
 **_sType_** is an Object that is used when coding with structures and DllCalls.  
 *Definition:*  
-```
-;Type sizes // http://msdn.microsoft.com/library/aa383751.aspx // EXAMPLE: SHORT is 2 bytes, etc..  
-sType := Object("SHORT", 2, "COORD", 4, "WORD", 2, "SMALL_RECT", 8, "DWORD", 4, "LONG", 4)
-```
+```;Type sizes (Bytes) // http://msdn.microsoft.com/library/aa383751.aspx```   
+```sType := Object("SHORT", 2, "COORD", 4, "WORD", 2, "SMALL_RECT", 8, "DWORD", 4, "LONG", 4)```
 
 **_Stdin_** is an Object that is used to reference the currently attached console's Input buffer.  
 *Definition:* ```Stdin := FileOpen(DllCall("GetStdHandle", "int", -10, "ptr"), "h `n")```
@@ -573,7 +594,7 @@ sType := Object("SHORT", 2, "COORD", 4, "WORD", 2, "SMALL_RECT", 8, "DWORD", 4, 
 **_Stdout_** is an Object that is used to reference the currently attached console's Output buffer.  
 *Definition:* ```Stdout :=FileOpen(DllCall("GetStdHandle", "int", -11, "ptr"), "h `n")```
 
-
+<a id="console-color-constants"></a>
 ###Console Color Constants###
 ----
 
