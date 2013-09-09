@@ -1,8 +1,8 @@
 ﻿;
 ; AutoHotkey (Tested) Version: 1.1.13.00
 ; Author:         Joe DF  |  http://joedf.co.nr  |  joedf@users.sourceforge.net
-; Date:           September 6th, 2013
-; Library Version: 1.0.1.5
+; Date:           September 8th, 2013
+; Library Version: 1.0.1.6
 ;
 ;	LibCon - AutoHotkey Library For Console Support
 ;
@@ -277,6 +277,7 @@
 	;FlushConsoleInputBuffer() http://msdn.microsoft.com/library/ms683147
 	flushInput() {
 		global LibConErrorLevel
+		global stdin
 		x:=DllCall("FlushConsoleInputBuffer", uint, stdin.__Handle)
 		if (!x) or (LibConErrorLevel:=ErrorLevel)
 			return LibConError("flushInput") ;Failure
