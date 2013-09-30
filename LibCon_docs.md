@@ -10,7 +10,7 @@ LibCon : Documentation
     - Showing and Hiding the Console
         - [SmartStartConsole()](#smartstartconsole)
         - [StartConsole()](#startconsole)
-        - [AttachConsole( cPID )](#attachconsole-cpid-1-)
+        - [AttachConsole( cPID:=-1 )](#attachconsole-cpid-1-)
         - [FreeConsole()](#freeconsole)
     - Input and Output Functions
         - [newline( x=1 )](#newline-x1-)
@@ -34,7 +34,6 @@ LibCon : Documentation
         - Size, Position & Text
             - [getConsoleWidth()](#getconsolewidth)
             - [getConsoleHeight()](#getconsoleheight)
-            - [getConsoleHandle()](#getconsolehandle)
             - [getFontSize( Byref fontwidth, ByRef fontheight )](#getfontsize-byref-fontwidth-byref-fontheight-)
             - [getFontWidth()](#getfontwidth)
             - [getFontHeight()](#getfontheight)
@@ -49,6 +48,7 @@ LibCon : Documentation
             - [SetConsoleOutputCP( codepage )](#setconsoleoutputcp-codepage-)
             - [GetConsoleOutputCP()](#getconsoleoutputcp)
     - Miscellaneous Functions
+        - [getConsoleHandle()](#getconsolehandle)
         - [LibConError( fname:="", arg1:="", arg2:="", arg3:="", arg4:="" )](#libconerror-fname-arg1-arg2-arg3-arg4-)
         - [wait( timeout=0 )](#wait-timeout0-)
         - [WaitAction()](#waitaction)
