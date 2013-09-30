@@ -1,0 +1,3 @@
+These Binaries are essentially the same as the original except, they have bin modified using a method make the AutoHotkey act/be as console applcation.
+
+see: https://github.com/fincs/Ahk2Exe/issues/14
