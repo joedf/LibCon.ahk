@@ -10,15 +10,19 @@ StartConsole() ;or use startSmart(), if Compiled as a console app
 
 puts("press a key to create the gui...")
 pause(0)
-gui, +HwndhGUI
-Gui, Add, Button,   x82  y50  w100 h30 gButton    Default,   Button
-Gui, Add, Button,   x82  y90  w100 h30 gButton,   Button
-Gui, Add, Radio,    x212 y50  w80  h20 gRadio,    Radio
-Gui, Add, CheckBox, x212 y80  w100 h30 gCheckbox, CheckBox
-Gui, Add, Slider,   x82  y130 w240 h40 gSlider    AltSubmit,   25
-Gui, Add, ComboBox, x332 y50  w100 h20 gComboBox, ComboBox
-Gui, Add, Edit,     x342 y90  w100 h30 gEdit,     Edit
-Gui, Show, w470 h194, LibCon Test GUI Interaction ; Generated using SmartGUI Creator for SciTE
+Gui, +HwndhGUI +ToolWindow +E0x40000
+Gui, Add, Button,   x4       gButton    Default,   Button
+Gui, Add, Button,   x+4 yp   gButton2,  Button2
+Gui, Add, Radio,    x4       gRadio,    Radio
+Gui, Add, CheckBox, x+4 yp   gCheckbox, CheckBox
+Gui, Add, ComboBox, x4  w120 gComboBox, ComboBox
+Gui, Add, Edit,     x4  w120 gEdit,     Edit
+Gui, Add, Slider,x4 y+4 w248 gSlider    AltSubmit,   25
+Gui, Add, Picture,y4 x130 w48 h48 Icon1 gPic1,%A_ahkpath%
+Gui, Add, Picture,y4 x184 w48 h48 Icon2 gPic2,%A_ahkpath%
+Gui, Add, Picture,y56 x130 w48 h48 Icon3 gPic3,%A_ahkpath%
+Gui, Add, Picture,y56 x180 w48 h48 Icon4 gPic4,%A_ahkpath%
+Gui, Show,w256, LibCon Test GUI Interaction
 WinWaitClose, ahk_id %hGUI%
 puts("testing Unicode Input/Output... press a key to continue")
 pause(0)
@@ -36,6 +40,10 @@ Button:
 puts("Button was pressed")
 return
 
+Button2:
+puts("Button2 was pressed")
+return
+
 Radio:
 puts("Radio was clicked")
 return
@@ -44,16 +52,32 @@ CheckBox:
 puts("CheckBox was clicked")
 return
 
-Slider:
-puts("Slider was clicked/Moved")
-return
-
 ComboBox:
 puts("ComboBox was clicked/changed")
 return
 
 Edit:
 puts("Edit was changed")
+return
+
+Slider:
+puts("Slider was clicked/Moved")
+return
+
+Pic1:
+puts("Picture 1 was clicked")
+return
+
+Pic2:
+puts("Picture 2 was clicked")
+return
+
+Pic3:
+puts("Picture 3 was clicked")
+return
+
+Pic4:
+puts("Picture 4 was clicked")
 return
 
 GuiClose:
