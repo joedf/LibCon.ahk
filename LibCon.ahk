@@ -1,8 +1,8 @@
 ﻿;
 ; AutoHotkey (Tested) Version: 1.1.13.00
 ; Author:         Joe DF  |  http://joedf.co.nr  |  joedf@users.sourceforge.net
-; Date:           September 8th, 2013
-; Library Version: 1.0.1.6
+; Date:           September 29th, 2013
+; Library Version: 1.0.2.0
 ;
 ;	LibCon - AutoHotkey Library For Console Support
 ;
@@ -12,11 +12,25 @@
 	SetWinDelay, 0
 	SetBatchLines,-1
 
+;Get Arguments
+	if 0 != 0
+	{
+		argc=%0%
+		args:=[]
+		args[0]:=argc
+		
+		Loop, %0%
+		{
+			args.Insert(%A_Index%)
+			args["CSV"]:=args["CSV"] """" %A_Index% "" ((A_Index==args[0]) ? """" : """,")
+		}
+	}	
+
 ;Console Constants ;{
 	LibConDebug := 0 ;Enable/Disable DebugMode
 	LibConErrorLevel := 0 ;Used For DebugMode
 	
-	;Type sizes // http://msdn.microsoft.com/library/aa383751.aspx // EXAMPLE: SHORT is 2 bytes, etc..
+	;Type sizes // http://msdn.microsoft.com/library/aa383751 // EXAMPLE: SHORT is 2 bytes, etc..
 	sType := Object("SHORT", 2, "COORD", 4, "WORD", 2, "SMALL_RECT", 8, "DWORD", 4, "LONG", 4)
 
 	;Console Color Constants
@@ -44,9 +58,30 @@
 ;}
 
 ;Console Functions + More... ;{
+	SmartStartConsole() { ;will run accordingly
+		if (A_IsCompiled) {
+			winget,x,ProcessName,A
+			if (x="explorer.exe")
+				return StartConsole()
+			else
+				return AttachConsole()
+		} else {
+			return StartConsole()
+		}
+	}
+
 	StartConsole() {
 		global Stdout
 		global Stdin
+		global LibConErrorLevel
+		
+		ERROR_INVALID_PARAMETER := 87 ;see http://msdn.microsoft.com/library/ms683150
+		if (!DllCall("FreeConsole")) {
+			LibConErrorLevel:=ErrorLevel
+			if (A_LastError!=ERROR_INVALID_PARAMETER) ;if was attached and error occured..
+				return LibConError("FreeConsole") ;return error
+		} ;otherwise means no console was attached
+		
 		x:=AllocConsole()
 		Stdout:=getStdoutObject()
 		Stdin:=getStdinObject()
@@ -54,12 +89,13 @@
 	}
 	
 	;AttachConsole() http://msdn.microsoft.com/library/ms681952
-	AttachConsole(cPID) {
+	;Defaults to calling process... ATTACH_PARENT_PROCESS = (DWORD)-1
+	AttachConsole(cPID:=-1) {
 		global LibConErrorLevel
 		global Stdout
 		global Stdin
-		x:=DllCall("AttachConsole", "int", cPID, "Cdecl int")
-		if (!x) or (LibConErrorLevel:=ErrorLevel)
+		x:=DllCall("AttachConsole", "UInt", cPID, "Cdecl int")
+		if ((!x) or (LibConErrorLevel:=ErrorLevel)) and (cPID!=-1) ;reject error if ATTACH_PARENT_PROCESS is set
 			return LibConError("AttachConsole",cPID) ;Failure
 		Stdout:=getStdoutObject()
 		Stdin:=getStdinObject()
@@ -112,81 +148,13 @@
 			return %hConsole% ;Success
 	}
 	
-	;SetConsoleTextAttribute() http://msdn.microsoft.com/library/ms686047
-	setColor(FG="",BG="") { ;Sets the color (int Hexadecimal number)
-		global LibConErrorLevel
-		global Stdout
-		if FG is not integer
-			FG:=getFgColor()
-		if BG is not integer
-			BG:=getBgColor()
-		FG:=abs(FG)
-		BG:=abs(BG)*16
-		x:=DllCall("SetConsoleTextAttribute","UPtr",Stdout.__Handle,"Int",(BG+FG))
-		if (!x) or (LibConErrorLevel:=ErrorLevel)
-			return LibConError("setColor",FG,BG) ;Failure
-		return x
-	}
-	
-	setFgColor(c) {
-		return setcolor(c)
-	}
-	
-	setBgColor(c) {
-		return setColor("",c)
-	}
-
-	;GetConsoleScreenBufferInfo() http://msdn.microsoft.com/library/ms683171
-	getColor() { ;Returns the current color (int Hexadecimal number)
-		global LibConErrorLevel
-		global Stdout
-		global sType
-		VarSetCapacity(consoleInfo,(3*sType.COORD)+sType.WORD+sType.SMALL_RECT,0)
-		x:=DllCall("GetConsoleScreenBufferInfo","UPtr",Stdout.__Handle,"Ptr",&consoleInfo)
-		if (!x) or (LibConErrorLevel:=ErrorLevel)
-			return LibConError("getColor") ;Failure
-		return dec2hex(NumGet(&consoleInfo,(2*sType.COORD),"Short"))
-	}
-	
-	getFgColor() {
-		c:=getColor()
-		return dec2hex(c-(16*getBgColor()))
-	}
-	
-	getBgColor() {
-		c:=getColor()
-		return dec2hex(c >> 16)
-	}
-	
-	printcolortable() {
-		f:=0
-		b:=0
-		cf:=getFGColor()
-		cb:=getBGColor()
-		
-		puts("`n`t1st Digit: Background 2nd Digit: Foreground")
-		puts("_______________________________________________________________")
-		
-		Loop, 16 
-		{
-			b:=(A_Index-1)
-			print("`t" . "")
-			Loop, 16 
-			{
-				setColor(f:=(A_Index-1), b)
-				print(dec2shex(b) . dec2shex(f) . ((f=15 or f="F") ? "`n" : " "))
-			}
-			setColor(cf,cb)
-		}
-		puts("_______________________________________________________________")
-		puts("Current Color: " . getColor())
-	}
-	
 	newline(x=1) {
 	loop %x%
 		puts()
 	}
 	
+	/* Deprecated old method
+	--------------------------------
 	puts(string="") {
 		global Stdout
 		Stdout.WriteLine(string) ;Stdout.write(string . "`n")
@@ -200,6 +168,8 @@
 		Stdout.Read(0)
 	}
 	
+	Removed/Deprecated
+	--------------------------------
 	;Unicode Printing Support http://msdn.microsoft.com/library/ms687401
 	;Fails (with SetConsoleInputCP(65001) = Unicode (UTF-8) ), if the current (console) font does not have Unicode support
 	;Seems to function otherwise...
@@ -216,6 +186,37 @@
 	putsW(str) {
 		return printW(str . "`n")
 	}
+	*/
+	
+	;New Method - Supports Both Unicode and ANSI
+	;------------------
+	print(string=""){
+		global Stdout
+		global LibConErrorLevel
+		
+		if (!StrLen(string))
+			return 1
+		
+		e:=DllCall("WriteConsole" . ((A_IsUnicode) ? "W" : "A")
+				, "UPtr", Stdout.__Handle
+				, "Str", string
+				, "UInt", strlen(string)
+				, "UInt*", Written
+				, "uint", 0)
+		LibConErrorLevel:=ErrorLevel
+		
+		if (!e) or (LibConErrorLevel)
+			return LibConError("getColor") ;Failure
+		Stdout.Read(0)
+		return e
+	}
+	
+	puts(string="") {
+		global Stdout
+		r:=print(string . "`n")
+		Stdout.Read(0)
+		return r
+	}
 	
 	;fork of 'formatprint' :  http://www.autohotkey.com/board/topic/60731-printf-the-ahk-way/#entry382968
 	printf(msg, vargs*) {
@@ -230,6 +231,7 @@
 		return puts(msg)
 	}
 	
+	/* Removed/Deprecated - Old Method
 	printWf(msg, vargs*) {
 		for each, varg in vargs
 			StringReplace,msg,msg,`%s, % varg ;msg:=RegExReplace(msg,"i)`%.",varg)
@@ -241,6 +243,7 @@
 			StringReplace,msg,msg,`%s, % varg ;msg:=RegExReplace(msg,"i)`%.",varg)
 		return putsW(msg)
 	}
+	*/
 	
 	ClearScreen() {
 		global LibConErrorLevel
@@ -261,6 +264,7 @@
 		ClearScreen()
 	}
 	
+	/* Deprecated Old Method
 	gets(ByRef var="") {
 		global LibConErrorLevel
 		global Stdin
@@ -268,10 +272,49 @@
 		flushInput() ;Flush the input buffer
 		return var
 	}
+	*/
+	; New Method - Supports Both Unicode and ANSI
+	;Forked from the German CMD Lib
+	;http://www.autohotkey.com/de/forum/topic8517.html
+	gets(ByRef str="") {
+		global StdIn
+		global LibConErrorLevel
+		
+		BufferSize:=8192 ;65536 bytes is the maximum
+		charsRead:=0
+		Ptr := (A_PtrSize) ? "uptr" : "uint"
+		
+		VarSetCapacity(str,BufferSize)
+		e:=DllCall("ReadConsole" . ((A_IsUnicode) ? "W" : "A")
+				,Ptr,stdin.__Handle
+				,Ptr,&str
+				,"UInt",BufferSize
+				,Ptr "*",charsRead
+				,Ptr,0
+				,UInt)
+		LibConErrorLevel:=ErrorLevel
+		
+		if (e) and (!charsRead)
+			return ""
+		if (!e) or (LibConErrorLevel)
+			return LibConError("gets",str)
+		
+		Loop, % charsRead
+			msg .= Chr(NumGet(str, (A_Index-1) * ((A_IsUnicode) ? 2 : 1), (A_IsUnicode) ? "ushort" : "uchar"))
+		StringSplit, msg, msg,`r`n
+		str:=msg1
+		flushInput()
+		
+		return str
+	}
 	
 	;_getch() http://msdn.microsoft.com/library/078sfkak
 	_getch() {
 		return DllCall("msvcrt.dll\_getch","int")
+	}
+	
+	_getchW() {
+		return DllCall("msvcrt.dll\_getwch","int")
 	}
 	
 	;FlushConsoleInputBuffer() http://msdn.microsoft.com/library/ms683147
@@ -449,6 +492,76 @@
 					Progress .= A_Space
 		}
 		return lba progress lbb A_space round(percent, 2) "% Complete"
+	}
+	
+	;SetConsoleTextAttribute() http://msdn.microsoft.com/library/ms686047
+	setColor(FG="",BG="") { ;Sets the color (int Hexadecimal number)
+		global LibConErrorLevel
+		global Stdout
+		if FG is not integer
+			FG:=getFgColor()
+		if BG is not integer
+			BG:=getBgColor()
+		FG:=abs(FG)
+		BG:=abs(BG)*16
+		x:=DllCall("SetConsoleTextAttribute","UPtr",Stdout.__Handle,"Int",(BG+FG))
+		if (!x) or (LibConErrorLevel:=ErrorLevel)
+			return LibConError("setColor",FG,BG) ;Failure
+		return x
+	}
+	
+	setFgColor(c) {
+		return setcolor(c)
+	}
+	
+	setBgColor(c) {
+		return setColor("",c)
+	}
+
+	;GetConsoleScreenBufferInfo() http://msdn.microsoft.com/library/ms683171
+	getColor() { ;Returns the current color (int Hexadecimal number)
+		global LibConErrorLevel
+		global Stdout
+		global sType
+		VarSetCapacity(consoleInfo,(3*sType.COORD)+sType.WORD+sType.SMALL_RECT,0)
+		x:=DllCall("GetConsoleScreenBufferInfo","UPtr",Stdout.__Handle,"Ptr",&consoleInfo)
+		if (!x) or (LibConErrorLevel:=ErrorLevel)
+			return LibConError("getColor") ;Failure
+		return dec2hex(NumGet(&consoleInfo,(2*sType.COORD),"Short"))
+	}
+	
+	getFgColor() {
+		c:=getColor()
+		return dec2hex(c-(16*getBgColor()))
+	}
+	
+	getBgColor() {
+		c:=getColor()
+		return dec2hex(c >> 16)
+	}
+	
+	printcolortable() {
+		f:=0
+		b:=0
+		cf:=getFGColor()
+		cb:=getBGColor()
+		
+		puts("`n`t1st Digit: Background 2nd Digit: Foreground")
+		puts("_______________________________________________________________")
+		
+		Loop, 16 
+		{
+			b:=(A_Index-1)
+			print("`t" . "")
+			Loop, 16 
+			{
+				setColor(f:=(A_Index-1), b)
+				print(dec2shex(b) . dec2shex(f) . ((f=15 or f="F") ? "`n" : " "))
+			}
+			setColor(cf,cb)
+		}
+		puts("_______________________________________________________________")
+		puts("Current Color: " . getColor())
 	}
 	
 	;see "Code Page Identifiers" (CP) - http://msdn.microsoft.com/library/dd317756
@@ -713,7 +826,7 @@
 			fname := "Undefined"
 		if (LibConDebug)
 		{
-			MsgBox, 262194, LibConError, %fname%() Failure`nErrorlevel: %LibConErrorLevel%`n`nWill now Exit.
+			MsgBox, 262194, LibConError, %fname%() Failure`nErrorlevel: %LibConErrorLevel%`nA_LastError: %A_LastError%`n`nWill now Exit.
 			IfMsgBox, Abort
 				ExitApp
 			IfMsgBox, Ignore

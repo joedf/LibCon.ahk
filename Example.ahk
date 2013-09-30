@@ -1,18 +1,26 @@
 ﻿;
 ; AutoHotkey (Tested) Version: 1.1.13.00
 ; Author:         Joe DF  |  http://joedf.co.nr  |  joedf@users.sourceforge.net
-; Date:           August 31st, 2013
+; Date:           September 8th, 2013
 ;
 ;	LibCon.ahk Usage Example
 ;
 ;/////////////////////////////////////////////////////////////
 
-#SingleInstance,force
+#SingleInstance,Off
 #Include LibCon.ahk ;Needed
 #NoTrayIcon ;Suggested
 SetBatchLines,-1 ;suggested
 StartConsole() ;Shows the Console and 'initializes' the library
 ;<<<<<<<<  HEADER END  >>>>>>>>>
+
+if (args) {
+	putsf("argc = %s",args[0]) ;use args[0] or argc
+	loop % args[0]
+		putsf("%s: %s",A_Index,args[A_Index])
+	putsf("args (CSV Format): %s",args.CSV)
+	newline()
+}
 
 puts("Hello World!")
 print("Enter Your Name: ")

@@ -4,80 +4,96 @@ LibCon : Documentation
 #Table of Contents#
 - [Library Global Variables](#global-vars)
     - [Defaults](#defaults)
-    - [Predefined Variables](#predefined-variables)
+    - [Predefined Variables & Objects](#predefined-variables--objects)
     - [Console Color Constants](#console-color-constants)
 - [Library Functions](#library-functions)
-    - [StartConsole()](#startconsole)
-    - [AttachConsole( cPID )](#attachconsole-cpid-)
-    - [FreeConsole()](#freeconsole)
-    - [setColor( FG="", BG="" )](#setcolor-fg-bg-)
-    - [setFgColor( c )](#setfgcolor-c-)
-    - [setBgColor( c )](#setbgcolor-c-)
-    - [getColor()](#getcolor)
-    - [getFgColor()](#getfgcolor)
-    - [getBgColor()](#getbgcolor)
-    - [printcolortable()](#printcolortable)
-    - [newline( x=1 )](#newline-x1-)
-    - [puts( string="" )](#puts-string-)
-    - [print( string="" )](#print-string-)
-    - [printf( msg, vargs* )](#printf-msg-vargs-)
-    - [putsf( msg, vargs* )](#putsf-msg-vargs-)
-    - [printW( str )](#printw-str-)
-    - [printWf( msg, vargs* )](#printwf-msg-vargs-)
-    - [putsW( str )](#putsw-str-)
-    - [putsWf( msg, vargs* )](#putswf-msg-vargs-)
-    - [ClearScreen()](#clearscreen)
-    - [gets( ByRef var="" )](#gets-byref-var-)
-    - [getch( ByRef keyname )](#getch-byref-keyname-)
-    - [wait( timeout=0 )](#wait-timeout0-)
-    - [WaitAction()](#waitaction)
-    - [pause( show=1 )](#pause-show1-)
-    - [dec2hex( var )](#dec2hex-var-)
-    - [ToBase( n, b )](#tobase-n-b-)
-    - [sProgressBar( Length, Current, Max, Unlock = 0, fixed=1, lp="|", lba="[", lbb="]" )](#sprogressbar-length-current-max-unlock--0-fixed1-lp-lba-lbb-)
-    - [getConsoleSize( ByRef bufferwidth, ByRef bufferheight )](#getconsolesize-byref-bufferwidth-byref-bufferheight-)
-    - [getConsoleWidth()](#getconsolewidth)
-    - [getConsoleHeight()](#getconsoleheight)
-    - [getConsoleHandle()](#getconsolehandle)
-    - [flushInput()](#flushinput)
-    - [getFontSize( Byref fontwidth, ByRef fontheight )](#getfontsize-byref-fontwidth-byref-fontheight-)
-    - [getFontWidth()](#getfontwidth)
-    - [getFontHeight()](#getfontheight)
-    - [setConsoleSize( width, height, SizeHeight=0 )](#setconsolesize-width-height-sizeheight0-)
-    - [getConsoleCursorPosition( ByRef x, ByRef y )](#getconsolecursorposition-byref-x-byref-y-)
-    - [SetConsoleCursorPosition( x="", y="" )](#setconsolecursorposition-x--y--)
-    - [GetConsoleOriginalTitle( byRef Title )](#getconsoleoriginaltitle-byref-title-)
-    - [GetConsoleTitle( byRef Title )](#getconsoletitle-byref-title-)
-    - [SetConsoleTitle( title="" )](#setconsoletitle-title-)
-    - [SetConsoleInputCP( codepage )](#setconsoleinputcp-codepage-)
-    - [GetConsoleInputCP()](#getconsoleinputcp)
-    - [SetConsoleOutputCP( codepage )](#setconsoleoutputcp-codepage-)
-    - [GetConsoleOutputCP()](#getconsoleoutputcp)
-    - [LibConError( fname:="", arg1:="", arg2:="", arg3:="", arg4:="" )](#libconerror-fname-arg1-arg2-arg3-arg4-)
+    - Showing and Hiding the Console
+        - [SmartStartConsole()](#smartstartconsole)
+        - [StartConsole()](#startconsole)
+        - [AttachConsole( cPID )](#attachconsole-cpid-1-)
+        - [FreeConsole()](#freeconsole)
+    - Input and Output Functions
+        - [newline( x=1 )](#newline-x1-)
+        - [puts( string="" )](#puts-string-)
+        - [print( string="" )](#print-string-)
+        - [printf( msg, vargs* )](#printf-msg-vargs-)
+        - [putsf( msg, vargs* )](#putsf-msg-vargs-)
+        - [gets( ByRef var="" )](#gets-byref-var-)
+        - [getch( ByRef keyname )](#getch-byref-keyname-)
+        - [ClearScreen()](#clearscreen)
+        - [flushInput()](#flushinput)
+    - Console Properties & Settings
+        - Color Functions
+            - [setColor( FG="", BG="" )](#setcolor-fg-bg-)
+            - [setFgColor( c )](#setfgcolor-c-)
+            - [setBgColor( c )](#setbgcolor-c-)
+            - [getColor()](#getcolor)
+            - [getFgColor()](#getfgcolor)
+            - [getBgColor()](#getbgcolor)
+            - [printcolortable()](#printcolortable)
+        - Size, Position & Text
+            - [getConsoleWidth()](#getconsolewidth)
+            - [getConsoleHeight()](#getconsoleheight)
+            - [getConsoleHandle()](#getconsolehandle)
+            - [getFontSize( Byref fontwidth, ByRef fontheight )](#getfontsize-byref-fontwidth-byref-fontheight-)
+            - [getFontWidth()](#getfontwidth)
+            - [getFontHeight()](#getfontheight)
+            - [setConsoleSize( width, height, SizeHeight=0 )](#setconsolesize-width-height-sizeheight0-)
+            - [getConsoleCursorPosition( ByRef x, ByRef y )](#getconsolecursorposition-byref-x-byref-y-)
+            - [SetConsoleCursorPosition( x="", y="" )](#setconsolecursorposition-x--y--)
+            - [GetConsoleOriginalTitle( byRef Title )](#getconsoleoriginaltitle-byref-title-)
+            - [GetConsoleTitle( byRef Title )](#getconsoletitle-byref-title-)
+            - [SetConsoleTitle( title="" )](#setconsoletitle-title-)
+            - [SetConsoleInputCP( codepage )](#setconsoleinputcp-codepage-)
+            - [GetConsoleInputCP()](#getconsoleinputcp)
+            - [SetConsoleOutputCP( codepage )](#setconsoleoutputcp-codepage-)
+            - [GetConsoleOutputCP()](#getconsoleoutputcp)
+    - Miscellaneous Functions
+        - [LibConError( fname:="", arg1:="", arg2:="", arg3:="", arg4:="" )](#libconerror-fname-arg1-arg2-arg3-arg4-)
+        - [wait( timeout=0 )](#wait-timeout0-)
+        - [WaitAction()](#waitaction)
+        - [pause( show=1 )](#pause-show1-)
+        - [dec2hex( var )](#dec2hex-var-)
+        - [ToBase( n, b )](#tobase-n-b-)
+        - [sProgressBar( Length, Current, Max, Unlock = 0, fixed=1, lp="|", lba="[", lbb="]" )](#sprogressbar-length-current-max-unlock--0-fixed1-lp-lba-lbb-)
+
 
 <a id="library-functions"></a>
 ##Library Functions##
 -----
+<a id="smartstartconsole"></a>
+####**_SmartStartConsole()_**####
+
+----
+```
+Description: Runs StartConsole() if the script was launched run from "Explorer.exe" or
+             if the script is not compiled, otherwise it will use AttachConsole on its 
+             parent process.
+      Input: None  
+     Output: Success is Non-Zero, Failure is Zero
+```
 <a id="startconsole"></a>
 ####**_StartConsole()_**####
 
 ----
 ```
-Description: Opens up a New Console Window that 'belongs' (attached) to the current
+Description: Opens up a New/Sepera Console Window that 'belongs' (attached) to the current
              AutoHotkey Thread. Also, Sets the Library's Global variables:
              Stdout (Object) and Stdin (Object)
       Input: None  
      Output: Success is Non-Zero, Failure is Zero
 ```
-<a id="attachconsole-cpid-"></a>
-####**_AttachConsole( cPID )_**####
+<a id="attachconsole-cpid-1-"></a>
+####**_AttachConsole( cPID:=-1 )_**####
 
 ----
 ```
 Description: Attach to a Console was already running. Although, it is suggested to use
-             'StartConsole()' when possible. (Since this mode is still experimental
-             and rarely used anyways)
-      Input: The target Console's PID 
+             'StartConsole()' when possible. (Since this mode is for console 
+             applications, it is suggested to compile your script as console 
+             application, then use StartSmart() Instead.)
+      Input: cPID - The target Console's PID 
+             Default: Defaults to calling process. ATTACH_PARENT_PROCESS = (DWORD)-1
      Output: Success is Non-Zero, Failure is Zero
 ```
 <a id="freeconsole"></a>
@@ -180,7 +196,7 @@ Description: Prints (empty) new lines. Number of new lines varies
 
 ----
 ```
-Description: Prints a String with a new line.
+Description: Prints a String with a new line. (has Unicode Support)
              Default: Prints an empty new line.
       Input: The String to be printed
      Output: None
@@ -191,7 +207,7 @@ Description: Prints a String with a new line.
 ----
 ```
 Description: Prints a String without a new line. Same as 'puts()' except
-             without a new line.
+             without a new line. (has Unicode Support)
              Default: Prints Nothing. 'Flushes' Stdout.
       Input: The String to be printed
      Output: None
@@ -222,59 +238,6 @@ Description: Synonym for 'puts("hello" . Name . "!")' except that in this funtio
       Input: The String to be printed
      Output: None
 ```
-<a id="printw-str-"></a>
-####**_printW( str )_**####
-
-----
-```
-Description: "Writes a character string to a console screen buffer  
-			 beginning at the current cursor location". This function is  
-			 used for Unicode Printing Support. Otherwise, same as print()
-       Note: Fails (with SetConsoleInputCP(65001) = Unicode (UTF-8) ),  
-			 if the current (console) font does not have Unicode support,  
-			 seems to function otherwise...
-   MSDN URL: http://msdn.microsoft.com/library/ms687401
-      Input: The Unicode/other String to be printed
-     Output: Success is Non-Zero, Failure is Zero
-```
-<a id="printwf-msg-vargs-"></a>
-####**_printWf( msg, vargs* )_**####
-
-----
-```
-Description: A 'printf()' version of printW(). see 'printf()'
-      Input: The Unicode/other 'format' String to be printed
-     Output: Success is Non-Zero, Failure is Zero
-```
-<a id="putsw-str-"></a>
-####**_putsW( str )_**####
-
-----
-```
-Description: Same as 'printfW()' with a new line.
-   MSDN URL: http://msdn.microsoft.com/library/ms687401
-      Input: The Unicode/other String to be printed
-     Output: Success is Non-Zero, Failure is Zero
-```
-<a id="putswf-msg-vargs-"></a>
-####**_putsWf( msg, vargs* )_**####
-
-----
-```
-Description: A 'printf()' version of putsW(). see 'printf()'
-      Input: The Unicode/other 'format' String to be printed
-     Output: Success is Non-Zero, Failure is Zero
-```
-<a id="clearscreen"></a>
-####**_ClearScreen()_**####
- 
-----
-```
-Description: Clears the Current Console's Screen.
-   Synonyms: 'cls()' and 'Clear()'
-      Input: None
-     Output: None
-```
 <a id="gets-byref-var-"></a>
 ####**_gets( ByRef var="" )_**####
 
@@ -282,6 +245,7 @@ Description: Clears the Current Console's Screen.
 ```
 Description: Gets/Obtains input from the console user, until a carriage return '`r'
              has been received. The carriage return is trimmed off (not recorded).
+             (has Unicode Support)
       Input: The Varible in which to store the inputed/obtained string (Optional)
      Output: The inputed/obtained string
 ```
@@ -293,8 +257,30 @@ Description: Gets/Obtains input from the console user, until a carriage return '
 Description: Gets/Obtains a single key from the user. This may be used for something
              like "Press any key to continue" or "press Q to quit".
              Note: This function is "case sensitive" (Capture)
+             (No Unicode Support yet)
       Input: The Varible in which to store the Key Name (string) (Optional)
      Output: The Key Code
+```
+<a id="clearscreen"></a>
+####**_ClearScreen()_**####
+ 
+----
+```
+Description: Clears the Current Console's Screen.
+   Synonyms: 'cls()' and 'Clear()'
+      Input: None
+     Output: None
+```
+<a id="flushinput"></a>
+####**_flushInput()_**####
+
+----
+```
+Description: Flushes the console input buffer. All input records currently in the  
+       input buffer are discarded.  
+   MSDN URL: http://msdn.microsoft.com/library/ms683147  
+      Input: None  
+     Output: Success is Non-Zero, Failure is Zero
 ```
 <a id="wait-timeout0-"></a>
 ####**_wait( timeout=0 )_**####
@@ -328,7 +314,8 @@ Description: Gets/Obtains a single input (Captures Everything: mouse move, key p
 ```
 Description: Wait until the user presses a key. This may be used for something
              like "Press any key to continue".
-             Default: Displays "Press any key to continue".
+             Default: Displays "Press any key to continue..." translated in
+             the system's default language.
       Input: Display the default message (Boolean) (Optional)
      Output: None
 ```
@@ -413,17 +400,6 @@ Description: Get the console's window Handle (Hwnd).
         	 (usually under the name of hConsole)  
       Input: None
      Output: The Console's window handle (Hwnd)
-```
-<a id="flushinput"></a>
-####**_flushInput()_**####
-
-----
-```
-Description: Flushes the console input buffer. All input records currently in the  
-			 input buffer are discarded.  
-   MSDN URL: http://msdn.microsoft.com/library/ms683147  
-      Input: None  
-     Output: Success is Non-Zero, Failure is Zero
 ```
 <a id="getfontsize-byref-fontwidth-byref-fontheight-"></a>
 ####**_getFontSize( Byref fontwidth, ByRef fontheight )_**####
@@ -543,7 +519,7 @@ Description: Retrieves the input code page used by the console. A console uses i
       Input: None
      Output: codepage - (Number) see "Code Page Identifiers" : http://msdn.microsoft.com/library/dd317756
 ```
-<a id="setconsoleinputcp-codepage-"></a>
+<a id="setconsoleoutputcp-codepage-"></a>
 ####**_SetConsoleOutputCP( codepage )_**####
 
 ----
@@ -590,20 +566,20 @@ Description: Explicit Error Handling towards the user. Msgboxes for Errors (Debu
 SetWinDelay, 0
 SetBatchLines,-1
 ```
-<a id="predefined-variables"></a>
-###Predefined Variables###
+<a id="predefined-variables--objects"></a>
+###Predefined Variables & Objects###
 ----
  
 **_LibConDebug_** is either set 1 (true) or 0 (false) to enable/disable LibConDebug Mode.  
-*Definition (default):* ```LibConDebug := 0 ;Enable/Disable DebugMode```
+*Definition (default):* `LibConDebug := 0 ;Enable/Disable DebugMode`
 
 **_LibConErrorLevel_** is a variable that is used internally for LibConDebug Mode.  
-*Definition:* ```LibConErrorLevel := 0 ;Used For DebugMode```
+*Definition:* `LibConErrorLevel := 0 ;Used For DebugMode`
 
 **_sType_** is an Object that is used when coding with structures and DllCalls.  
+It contains a few type sizes (Bytes). See "[Windows Data Types](http://msdn.microsoft.com/library/aa383751)" : http://msdn.microsoft.com/library/aa383751  
 *Definition:*  
-```;Type sizes (Bytes) // http://msdn.microsoft.com/library/aa383751.aspx```   
-```sType := Object("SHORT", 2, "COORD", 4, "WORD", 2, "SMALL_RECT", 8, "DWORD", 4, "LONG", 4)```
+`sType := Object("SHORT", 2, "COORD", 4, "WORD", 2, "SMALL_RECT", 8, "DWORD", 4, "LONG", 4)`
 
 **_Stdin_** is an Object that is used to reference the currently attached console's Input buffer.  
 *Definition:* ```Stdin := FileOpen(DllCall("GetStdHandle", "int", -10, "ptr"), "h `n")```
@@ -611,28 +587,39 @@ SetBatchLines,-1
 **_Stdout_** is an Object that is used to reference the currently attached console's Output buffer.  
 *Definition:* ```Stdout :=FileOpen(DllCall("GetStdHandle", "int", -11, "ptr"), "h `n")```
 
+**_args_** is an Object that is used to reference the arguments the script has received.  
+Note: `if (args)` will return true, if the object exists, otherwise, it will return false.
+
+- **_args.CSV_** (or args["CSV"]) - Contains the arguments in [CSV](http://en.wikipedia.org/w/index.php?title=Comma-separated_values&oldid=574459319) format.
+- **_args[n]_** - where '**_n_**' (n>0) is the **_n_**'th argument
+- **_args[0]_** - is equal to **_argc_**
+
+**_argc_** exists only if the args Object exists. It is set to the number of arguments received.  
+*Definition:* `argc=%0%`
+
 <a id="console-color-constants"></a>
 ###Console Color Constants###
 ----
-
-    Black:=0x0
-	DarkBlue:=0x1
-	DarkGreen:=0x2
-	Turquoise:=0x3
-	DarkGreenBlue:=0x3
-	GreenBlue:=0x3
-	DarkRed:=0x4
-	Purple:=0x5
-	Brown:=0x6
-	Gray:=0x7
-	Grey:=0x7
-	DarkGray:=0x8
-	DarkGrey:=0x8
-	Blue:=0x9
-	Green:=0xA
-	Cyan:=0xB
-	Red:=0xC
-	Magenta:=0xD
-	Pink:=0xD
-	Yellow:=0xE
-	White:=0xF
+```AutoHotkey
+Black:=0x0
+DarkBlue:=0x1
+DarkGreen:=0x2
+Turquoise:=0x3
+DarkGreenBlue:=0x3
+GreenBlue:=0x3
+DarkRed:=0x4
+Purple:=0x5
+Brown:=0x6
+Gray:=0x7
+Grey:=0x7
+DarkGray:=0x8
+DarkGrey:=0x8
+Blue:=0x9
+Green:=0xA
+Cyan:=0xB
+Red:=0xC
+Magenta:=0xD
+Pink:=0xD
+Yellow:=0xE
+White:=0xF
+```
