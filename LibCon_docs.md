@@ -588,7 +588,7 @@ It contains a few type sizes (Bytes). See "[Windows Data Types](http://msdn.micr
 *Definition:* ```Stdout :=FileOpen(DllCall("GetStdHandle", "int", -11, "ptr"), "h `n")```
 
 **_args_** is an Object that is used to reference the arguments the script has received.  
-The object is created only when the number of arguments is greater than zero.
+The object is created only when the number of arguments is greater than zero.  
 Note: `if (args)` will return true, if the object exists, otherwise, it will return false.
 
 - **_args.CSV_** (or args["CSV"]) - Contains the arguments in [CSV](http://en.wikipedia.org/w/index.php?title=Comma-separated_values&oldid=574459319) format.
