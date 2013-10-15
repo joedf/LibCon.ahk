@@ -1,8 +1,8 @@
 ﻿;
 ; AutoHotkey (Tested) Version: 1.1.13.00
 ; Author:         Joe DF  |  http://joedf.co.nr  |  joedf@users.sourceforge.net
-; Date:           September 29th, 2013
-; Library Version: 1.0.2.0
+; Date:           October 14th, 2013
+; Library Version: 1.0.2.1
 ;
 ;	LibCon - AutoHotkey Library For Console Support
 ;
@@ -13,7 +13,7 @@
 	SetBatchLines,-1
 
 ;Get Arguments
-	if 0 != 0
+	if 0 > 0
 	{
 		argc=%0%
 		args:=[]
