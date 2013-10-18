@@ -40,6 +40,8 @@ Compile:
 		MsgBox Invalid file...
 		return
 	} else {
+		if (SubStr(obExe,-3)!=".exe")
+			obExe:=obExe ".exe"
 		cIcon:=""
 		GuiControlGet,Script,,tScript
 		GuiControlGet,Icon,,tIcon
