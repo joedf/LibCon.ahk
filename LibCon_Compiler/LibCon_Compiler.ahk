@@ -2,7 +2,7 @@
 
 regread,ahkdir,HKLM,SOFTWARE\AutoHotkey,InstallDir
 AhkCompiler:=ahkdir "\Compiler\Ahk2Exe.exe"
-AhkVersion:="1.1.13.00"
+AhkVersion:="1.1.13.01"
 
 Gui, Add, Text,     x12  y12 w32  h20 , Script:
 Gui, Add, Text,     x12  y32 w32  h20 , Icon:
@@ -46,11 +46,11 @@ Compile:
 		GuiControlGet,Type,,tType
 		GuiControlGet,Mpress,,tMpress
 			if (Type==2)
-				bin:=A_scriptDir "\bin\x64U_CLI.bin"
+				bin:=A_scriptDir "\bin\AutoHotkeyU64_CLI.bin"
 			else if (Type==3)
-				bin:=A_scriptDir "\bin\x86A_CLI.bin"
+				bin:=A_scriptDir "\bin\AutoHotkeyA32_CLI.bin"
 			else
-				bin:=A_scriptDir "\bin\x86U_CLI.bin"
+				bin:=A_scriptDir "\bin\AutoHotkeyU32_CLI.bin"
 			
 			if Script is space
 			{

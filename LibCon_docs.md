@@ -317,7 +317,7 @@ Description: Wait until the user presses a key. This may be used for something
              Default: Displays "Press any key to continue..." translated in
              the system's default language.
       Input: Display the default message (Boolean) (Optional)
-     Output: None
+     Output: Success is Non-Zero, Failure is Zero
 ```
 <a id="dec2hex-var-"></a>
 ####**_dec2hex( var )_**####

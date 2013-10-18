@@ -1,8 +1,8 @@
 ﻿;
-; AutoHotkey (Tested) Version: 1.1.13.00
+; AutoHotkey (Tested) Version: 1.1.13.01
 ; Author:         Joe DF  |  http://joedf.co.nr  |  joedf@users.sourceforge.net
-; Date:           October 14th, 2013
-; Library Version: 1.0.2.1
+; Date:           October 17th, 2013
+; Library Version: 1.0.2.2
 ;
 ;	LibCon - AutoHotkey Library For Console Support
 ;
@@ -56,6 +56,13 @@
 	Yellow:=0xE
 	White:=0xF
 ;}
+
+/* CmdPaste
+	
+	#IfWinActive ahk_class ConsoleWindowClass
+	^v::SendInput {Raw}%clipboard% ; LibConConsolePaste
+	#IfWinActive
+*/
 
 ;Console Functions + More... ;{
 	SmartStartConsole() { ;will run accordingly
@@ -206,7 +213,7 @@
 		LibConErrorLevel:=ErrorLevel
 		
 		if (!e) or (LibConErrorLevel)
-			return LibConError("getColor") ;Failure
+			return LibConError("print",string) ;Failure
 		Stdout.Read(0)
 		return e
 	}
@@ -336,11 +343,13 @@
 		if (key==224) or (key==0)
 		skey:=_getch()
 		
-		if (key==3) ;//note 'c' is 63
+		if (key==1) ;//note 'a' is 0x61
+			keyname:="Ctrl+a"
+		else if (key==3) ;//note 'c' is 0x63
 			keyname:="Ctrl+c"
-		else if (key==4) ;//note 'd' is 64
+		else if (key==4) ;//note 'd' is 0x64
 			keyname:="Ctrl+d"
-		else if (key==5)  ;//therefore "Ctrl+c" = 63 - 60 = 3
+		else if (key==5)  ;//therefore "Ctrl+c" = 0x63 - 0x60 = 3
 			keyname:="Ctrl+e" ;//and so on...
 		else if (key==6)
 			keyname:="Ctrl+f"
@@ -352,8 +361,12 @@
 			keyname:="Tab"
 		else if (key==13)
 			keyname:="Return"
+		else if (key==24)
+			keyname:="Ctrl+x" ;etc..
+		else if (key==25)
+			keyname:="Ctrl+y" ;and so on...
 		else if (key==26)
-			keyname:="Ctrl+z"
+			keyname:="Ctrl+z" ;future key support will be added...
 		else if (key==27)
 			keyname:="Esc"
 		else if (key==32)
@@ -377,14 +390,35 @@
 				keyname:="Down"
 			else if (skey=81)
 				keyname:="PgDn"
+			else if (skey=82)
+				keyname:="Ins"
 			else if (skey=83)
 				keyname:="Del"
+			else if (skey=133)
+				keyname:="F11"
+			else if (skey=134)
+				keyname:="F12"
 			else
 				keyname:="Special"
 		}
 		else if (key==0) ;Function Keys?!  code: '0' (value)
 		{
 			;skey:=DllCall("msvcrt.dll\_getch","int")
+			
+			keyname:="FunctionKey"
+			
+			if (skey>=59) && (skey<=68)
+				keyname:="F" (skey-58)
+			
+			/*
+			Loop, 10 {
+				if (skey==A_Index+58) {
+					keyname:="F" A_Index
+					break
+				}
+			}
+			*/
+			/*
 			if (skey==59)
 				keyname:="F1"
 			else if (skey=60)
@@ -407,6 +441,7 @@
 				keyname:="F10"
 			else
 				keyname:="FunctionKey"
+			*/
 		}
 		else
 		{
@@ -449,7 +484,10 @@
 		n:=""
 		if (!show)
 			n:=">NUL"
-		runwait %ComSpec% /c pause.exe %n%
+		runwait %ComSpec% /c pause.exe %n%,,UseErrorLevel
+		if (LibConErrorLevel:=ErrorLevel)
+			return LibConError("pause",show)
+		return 1
 	}
 
 	dec2hex(var) {
@@ -457,12 +495,6 @@
 		SetFormat, Integer, Hex
 		var += 0
 		SetFormat, Integer, %OldFormat%
-		return var
-	}
-
-	dec2shex(var) { ;dec to S(tring)Hex
-		var:=("" . dec2hex(var))
-		StringRight,var,var,1
 		return var
 	}
 	
@@ -532,7 +564,7 @@
 	
 	getFgColor() {
 		c:=getColor()
-		return dec2hex(c-(16*getBgColor()))
+		return dec2hex(c-(16*(c >> 16)))
 	}
 	
 	getBgColor() {
@@ -541,6 +573,11 @@
 	}
 	
 	printcolortable() {
+		
+		OldFormat := A_FormatInteger
+		SetFormat, Integer, Hex
+		var += 0
+		
 		f:=0
 		b:=0
 		cf:=getFGColor()
@@ -556,12 +593,16 @@
 			Loop, 16 
 			{
 				setColor(f:=(A_Index-1), b)
-				print(dec2shex(b) . dec2shex(f) . ((f=15 or f="F") ? "`n" : " "))
+				;print(dec2shex(b) . dec2shex(f) . ((f=15 or f="F") ? "`n" : " "))
+				;print(RegExReplace(k:=((b*16)+f),"0x",(k<16?"0":"")) . ((f=15)?"`n":" "))
+				print((((b*16)+f)<16?"0":"") . SubStr(((b*16)+f),3) . ((f=15)?"`n":" "))
 			}
 			setColor(cf,cb)
 		}
 		puts("_______________________________________________________________")
 		puts("Current Color: " . getColor())
+		
+		SetFormat, Integer, %OldFormat%
 	}
 	
 	;see "Code Page Identifiers" (CP) - http://msdn.microsoft.com/library/dd317756
