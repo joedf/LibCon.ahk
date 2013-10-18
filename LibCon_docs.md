@@ -88,7 +88,7 @@ Description: Opens up a New/Sepera Console Window that 'belongs' (attached) to t
 
 ----
 ```
-Description: Attach to a Console was already running. Although, it is suggested to use
+Description: Attach to a Console that is currently running. Although, it is suggested to use
              'StartConsole()' when possible. (Since this mode is for console 
              applications, it is suggested to compile your script as console 
              application, then use StartSmart() Instead.)
