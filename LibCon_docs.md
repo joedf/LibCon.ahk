@@ -184,7 +184,7 @@ Description: Gets/Obtains input from the console user, until a carriage return '
 Description: Gets/Obtains a single key from the user. This may be used for something
              like "Press any key to continue" or "press Q to quit".
              Note: This function is "case sensitive" (Capture)
-             (No Unicode Support yet)
+             (has Unicode Support)
       Input: The Varible in which to store the Key Name (string) (Optional)
      Output: The Key Code
 ```

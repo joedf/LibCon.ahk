@@ -1,8 +1,8 @@
 ﻿;
 ; AutoHotkey (Tested) Version: 1.1.13.01
 ; Author:         Joe DF  |  http://joedf.co.nr  |  joedf@users.sourceforge.net
-; Date:           October 17th, 2013
-; Library Version: 1.0.2.2
+; Date:           October 18th, 2013
+; Library Version: 1.0.3.0
 ;
 ;	LibCon - AutoHotkey Library For Console Support
 ;
@@ -315,15 +315,6 @@
 		return str
 	}
 	
-	;_getch() http://msdn.microsoft.com/library/078sfkak
-	_getch() {
-		return DllCall("msvcrt.dll\_getch","int")
-	}
-	
-	_getchW() {
-		return DllCall("msvcrt.dll\_getwch","int")
-	}
-	
 	;FlushConsoleInputBuffer() http://msdn.microsoft.com/library/ms683147
 	flushInput() {
 		global LibConErrorLevel
@@ -333,15 +324,55 @@
 			return LibConError("flushInput") ;Failure
 		return x
 	}
+	
+	;_getch() http://msdn.microsoft.com/library/078sfkak
+	_getch(Lock=1) {
+		if (!Lock)
+			return DllCall("msvcrt.dll\_getch_nolock","int")
+		else
+			return DllCall("msvcrt.dll\_getch","int")
+	}
+	
+	_getchW(Lock=1) {
+		if (!Lock)
+			return DllCall("msvcrt.dll\_getwch_nolock","int")
+		else
+			return DllCall("msvcrt.dll\_getwch","int")
+	}
+	
+	;_ungetch() http://msdn.microsoft.com/library/yezzac74
+	_ungetch(c,Lock=1) {
+		if (!Lock)
+			return DllCall("msvcrt.dll\_ungetch_nolock","int",c,"int")
+		else
+			return DllCall("msvcrt.dll\_ungetch","int",c,"int")
+	}
+	
+	_ungetchW(c,Lock=1) {
+		if (!Lock)
+			return DllCall("msvcrt.dll\_ungetwch_nolock","int",c,"int")
+		else
+			return DllCall("msvcrt.dll\_ungetwch","int",c,"int")
+	}
 
 	getch(ByRef keyname="") {
 		;the comments with ;//   are from my original c function
 		;this is an AutoHotkey port of that function...
 		flushInput()
 		
-		key:=_getch()
-		if (key==224) or (key==0)
-		skey:=_getch()
+		If (A_IsUnicode) { ;enable unicode "getch" => _getchW()
+			key:=_getchw()
+			if (key==224) or (key==0) ; 'à' in Unicode is 224 or 0xE0
+			{
+				_ungetch(key) ;ungetch twice is neccessary...
+				_ungetchW(key) ;we're using a "sort-of bug" at our advantage
+				skey:=_getchW()
+			}
+		} else {
+			key:=_getch()
+			if (key==224) or (key==0)
+				skey:=_getch()
+		}
 		
 		if (key==1) ;//note 'a' is 0x61
 			keyname:="Ctrl+a"
@@ -398,6 +429,11 @@
 				keyname:="F11"
 			else if (skey=134)
 				keyname:="F12"
+			else if (skey=224) and (A_IsUnicode)
+			{
+				keyname:=chr(224) ; 'à' in Unicode is 224 or 0xE0
+				return 224
+			}
 			else
 				keyname:="Special"
 		}
