@@ -59,7 +59,14 @@ Compile:
 				MsgBox No Script was selected.
 				return
 			}
-			if Icon is not space
+			RegRead, LastIconDir, HKCU, Software\AutoHotkey\Ahk2Exe, LastIconDir
+			RegRead, LastIcon, HKCU, Software\AutoHotkey\Ahk2Exe, LastIcon
+			if Icon is space
+			{
+				RegDelete, HKCU, Software\AutoHotkey\Ahk2Exe, LastIconDir
+				RegDelete, HKCU, Software\AutoHotkey\Ahk2Exe, LastIcon
+			}
+			else
 			{
 				cIcon=/icon "%Icon%"
 			}
@@ -67,6 +74,11 @@ Compile:
 		ToolTip Compiling... Please wait...
 		RunWait, %AhkCompiler% /in "%Script%" /out "%obExe%" %cIcon% /bin "%bin%" /mpress %mpress%,,UseErrorLevel
 		e:=ErrorLevel
+			if Icon is space
+			{
+				RegWrite, REG_SZ, HKCU, Software\AutoHotkey\Ahk2Exe, LastIconDir, %LastIconDir%
+				RegWrite, REG_SZ, HKCU, Software\AutoHotkey\Ahk2Exe, LastIcon, %LastIcon%
+			}
 		ToolTip
 		MsgBox Done.
 	}

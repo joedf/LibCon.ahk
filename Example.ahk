@@ -11,7 +11,9 @@
 #Include LibCon.ahk ;Needed
 #NoTrayIcon ;Suggested
 SetBatchLines,-1 ;suggested
-StartConsole() ;Shows the Console and 'initializes' the library
+LibConDebug:=1 ;let the user know about errors
+
+SmartStartConsole() ;Shows the Console and 'initializes' the library
 ;<<<<<<<<  HEADER END  >>>>>>>>>
 
 if (args) {

@@ -3,9 +3,9 @@
 #Include LibCon.ahk ;Needed
 #NoTrayIcon ;Suggested
 SetBatchLines,-1 ;suggested
-LibConDebug:=1
+LibConDebug:=1 ;let the user know about errors
 
-StartConsole() ;or use startSmart(), if Compiled as a console app
+SmartStartConsole() ;Shows the Console and 'initializes' the library
 ;<<<<<<<<  HEADER END  >>>>>>>>>
 
 puts("press a key to create the gui...")
