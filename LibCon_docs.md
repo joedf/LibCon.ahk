@@ -32,11 +32,12 @@ LibCon : Documentation
             - [getBgColor()](#getbgcolor)
             - [printcolortable()](#printcolortable)
         - Size, Position & Text
-            - [getConsoleWidth()](#getconsolewidth)
-            - [getConsoleHeight()](#getconsoleheight)
             - [getFontSize( Byref fontwidth, ByRef fontheight )](#getfontsize-byref-fontwidth-byref-fontheight-)
             - [getFontWidth()](#getfontwidth)
             - [getFontHeight()](#getfontheight)
+            - [getConsoleSize( ByRef bufferwidth, ByRef bufferheight )](#getconsolesize-byref-bufferwidth-byref-bufferheight-)
+            - [getConsoleWidth()](#getconsolewidth)
+            - [getConsoleHeight()](#getconsoleheight)
             - [setConsoleSize( width, height, SizeHeight=0 )](#setconsolesize-width-height-sizeheight0-)
             - [getConsoleCursorPosition( ByRef x, ByRef y )](#getconsolecursorposition-byref-x-byref-y-)
             - [SetConsoleCursorPosition( x="", y="" )](#setconsolecursorposition-x--y--)
@@ -105,80 +106,6 @@ Description: Detach/Terminate current Console and keeps AutoHotkey running
              till the script exits.
       Input: None
      Output: Success is Non-Zero, Failure is Zero
-```
-<a id="setcolor-fg-bg-"></a>
-####**_setColor( FG="", BG="" )_**####
-
-----
-```
-Description: Sets the Current Console's Foreground and Background Colors.
-             (A.K.A. Text color and Text Background color)
-      Input: FG (Foreground) - Set the Foreground color (Hexadecimal Value)
-             BG (Background) - Set the Background color (Hexadecimal Value)
-             Note: The 'Console Color Constants' may be used here.
-             Default: No change to current color
-     Output: Success is Non-Zero, Failure is Zero
-```
-<a id="setfgcolor-c-"></a>
-####**_setFgColor( c )_**####
-
-----
-```
-Description: Synonym for 'setColor(FG)' - see 'setColor()' for details.
-      Input: FG (Foreground) - Set the Foreground color (Hexadecimal Value)
-     Output: Success is Non-Zero, Failure is Zero
-```
-<a id="setbgcolor-c-"></a>
-####**_setBgColor( c )_**####
-
-----
-```
-Description: Synonym for 'setColor("",BG)' - see 'setColor()' for details.
-      Input: BG (Background) - Set the Background color (Hexadecimal Value)
-     Output: Success is Non-Zero, Failure is Zero
-```
-<a id="getcolor"></a>
-####**_getColor()_**####
-
-----
-```
-Description: Returns the current color (Hexadecimal Value)
-             Note: It may be suggest to simply use the 'getFgColor()'
-             and the 'getBgColor()' functions instead since they are
-             more user friendly. See 'Console Color Constants' for all
-             possible color values.
-      Input: None
-     Output: Success is Non-Zero, Failure is Undefined
-```
-<a id="getfgcolor"></a>
-####**_getFgColor()_**####
-
-----
-```
-Description: Returns the current Foreground color (Hexadecimal Value)
-             See 'Console Color Constants' for all possible color values.
-      Input: None
-     Output: Success is Non-Zero, Failure is Undefined
-```
-<a id="getbgcolor"></a>
-####**_getBgColor()_**####
-
-----
-```
-Description: Returns the current Background color (Hexadecimal Value)
-             See 'Console Color Constants' for all possible color values.
-      Input: None
-     Output: Success is Non-Zero, Failure is Undefined
-```
-<a id="printcolortable"></a>
-####**_printcolortable()_**####
-
-----
-```
-Description: Prints a Color table with all the Color Constants.
-             See 'Console Color Constants' for all possible color values.
-      Input: None
-     Output: None
 ```
 <a id="newline-x1-"></a>
 ####**_newline( x=1 )_**####
@@ -282,84 +209,108 @@ Description: Flushes the console input buffer. All input records currently in th
       Input: None  
      Output: Success is Non-Zero, Failure is Zero
 ```
-<a id="wait-timeout0-"></a>
-####**_wait( timeout=0 )_**####
+<a id="setcolor-fg-bg-"></a>
+####**_setColor( FG="", BG="" )_**####
 
 ----
 ```
-Description: Gets/Obtains a single key from the user. This may be used for something
-             like "Press any key to continue" or "press Q to quit" with a timeout.
-       Note: 'wait()' triggers persistence, meaning the script will not exit
-			 automatically when the end of the script has been reached.
-      Input: The number of seconds until timeout (Optional)
-     Output: The Key Code
-```
-<a id="waitaction"></a>
-####**_WaitAction()_**####
-
-----
-```
-Description: Gets/Obtains a single input (Captures Everything: mouse move, key press,
-             etc...) from the user. This may be used for something
-             like "Press any key to continue" or "Mouse Click to quit".
-             IMPORTANT Note: This function is still experimental!
-      Input: None
-     Output: The Key Code (vk or sc - Undefined for the moment...)
-     Credit: by gwarble
-```
-<a id="pause-show1-"></a>
-####**_pause( show=1 )_**####
- 
-----
-```
-Description: Wait until the user presses a key. This may be used for something
-             like "Press any key to continue".
-             Default: Displays "Press any key to continue..." translated in
-             the system's default language.
-      Input: Display the default message (Boolean) (Optional)
+Description: Sets the Current Console's Foreground and Background Colors.
+             (A.K.A. Text color and Text Background color)
+      Input: FG (Foreground) - Set the Foreground color (Hexadecimal Value)
+             BG (Background) - Set the Background color (Hexadecimal Value)
+             Note: The 'Console Color Constants' may be used here.
+             Default: No change to current color
      Output: Success is Non-Zero, Failure is Zero
 ```
-<a id="dec2hex-var-"></a>
-####**_dec2hex( var )_**####
+<a id="setfgcolor-c-"></a>
+####**_setFgColor( c )_**####
 
 ----
 ```
-Description: Converts a decimal value to a hexadecimal value.
-      Input: The Decimal value to be converted (Number) (Optional)
-     Output: The convert value Hexadecimal value (Number)
+Description: Synonym for 'setColor(FG)' - see 'setColor()' for details.
+      Input: FG (Foreground) - Set the Foreground color (Hexadecimal Value)
+     Output: Success is Non-Zero, Failure is Zero
 ```
-<a id="tobase-n-b-"></a>
-####**_ToBase( n, b )_**####
+<a id="setbgcolor-c-"></a>
+####**_setBgColor( c )_**####
 
 ----
 ```
-Description: Converts a decimal value to a specified base value. The base is
-             between 10 to 36 inclusive.
-      Input: The Decimal value to be converted (Number) (Optional)
-     Output: The convert value in the specified base value (Number)
-     Credit: by Laszlo
+Description: Synonym for 'setColor("",BG)' - see 'setColor()' for details.
+      Input: BG (Background) - Set the Background color (Hexadecimal Value)
+     Output: Success is Non-Zero, Failure is Zero
 ```
-<a id="sprogressbar-length-current-max-unlock--0-fixed1-lp-lba-lbb-"></a>
-####**_sProgressBar( Length, Current, Max, Unlock = 0, fixed=1, lp="|", lba="[", lbb="]" )_**####
+<a id="getcolor"></a>
+####**_getColor()_**####
 
 ----
 ```
-Description: Displays an 'ASCII' progress bar.
-      Input: Length  - The total lenght of the progress bar (strlen)
-             Current - The current progress value
-             Max     - The maximum value possible of progress
-             Unlock  - Remove Length limitations, default: Minimum of 4,
-                       Maximum of 97.
-             fixed   - Forces the progress bar to grow (instead of fixed size)
-                       Example: |||||| 60% Completed
-                                ||||||||| 90% Completed
-                                etc..
-             lp      - Progress Indicator Charater (Line progress)
-             lba     - Start Progress Border Character (Line Border A)
-             lbb     - End Progress Border Character (Line Border B)
-     Output: The 'ASCII' progress bar (String)
-     Credit: by Bugz000 with assistance from tidbit, Chalamius and Bigvent /
-             forked by joedf
+Description: Returns the current color (Hexadecimal Value)
+             Note: It may be suggest to simply use the 'getFgColor()'
+             and the 'getBgColor()' functions instead since they are
+             more user friendly. See 'Console Color Constants' for all
+             possible color values.
+      Input: None
+     Output: Success is Non-Zero, Failure is Undefined
+```
+<a id="getfgcolor"></a>
+####**_getFgColor()_**####
+
+----
+```
+Description: Returns the current Foreground color (Hexadecimal Value)
+             See 'Console Color Constants' for all possible color values.
+      Input: None
+     Output: Success is Non-Zero, Failure is Undefined
+```
+<a id="getbgcolor"></a>
+####**_getBgColor()_**####
+
+----
+```
+Description: Returns the current Background color (Hexadecimal Value)
+             See 'Console Color Constants' for all possible color values.
+      Input: None
+     Output: Success is Non-Zero, Failure is Undefined
+```
+<a id="printcolortable"></a>
+####**_printcolortable()_**####
+
+----
+```
+Description: Prints a Color table with all the Color Constants.
+             See 'Console Color Constants' for all possible color values.
+      Input: None
+     Output: None
+```
+<a id="getfontsize-byref-fontwidth-byref-fontheight-"></a>
+####**_getFontSize( Byref fontwidth, ByRef fontheight )_**####
+
+----
+```
+Description: the width and height of each character in the font, in logical units.
+			 The X member contains the width, while the Y member contains the height.
+      Input: fontwidth - The Varible in which to store the font's width (Number)
+             fontheight - The Varible in which to store the font's height (Number)
+     Output: Success is Non-Zero, Failure is Zero
+```
+<a id="getfontwidth"></a>
+####**_getFontWidth()_**####
+
+----
+```
+Description: Get the current font's width. Shorthand for getFontSize()
+      Input: None
+     Output: The Font's width (in pixels)
+```
+<a id="getfontheight"></a>
+####**_getFontHeight()_**####
+
+----
+```
+Description: Get the current font's height. Shorthand for getFontSize()
+      Input: None
+     Output: The Font's height (in pixels)
 ```
 <a id="getconsolesize-byref-bufferwidth-byref-bufferheight-"></a>
 ####**_getConsoleSize( ByRef bufferwidth, ByRef bufferheight )_**####
@@ -390,45 +341,6 @@ Description: Shorthand for 'getConsoleSize()'. Get the Console's buffer's Width.
 Description: Shorthand for 'getConsoleSize()'. Get the Console's buffer's Height.
       Input: None
      Output: The buffer's Height (Number)
-```
-<a id="getconsolehandle"></a>
-####**_getConsoleHandle()_**####
-
-----
-```
-Description: Get the console's window Handle (Hwnd).  
-        	 (usually under the name of hConsole)  
-      Input: None
-     Output: The Console's window handle (Hwnd)
-```
-<a id="getfontsize-byref-fontwidth-byref-fontheight-"></a>
-####**_getFontSize( Byref fontwidth, ByRef fontheight )_**####
-
-----
-```
-Description: the width and height of each character in the font, in logical units.
-			 The X member contains the width, while the Y member contains the height.
-      Input: fontwidth - The Varible in which to store the font's width (Number)
-             fontheight - The Varible in which to store the font's height (Number)
-     Output: Success is Non-Zero, Failure is Zero
-```
-<a id="getfontwidth"></a>
-####**_getFontWidth()_**####
-
-----
-```
-Description: Get the current font's width. Shorthand for getFontSize()
-      Input: None
-     Output: The Font's width (in pixels)
-```
-<a id="getfontheight"></a>
-####**_getFontHeight()_**####
-
-----
-```
-Description: Get the current font's height. Shorthand for getFontSize()
-      Input: None
-     Output: The Font's height (in pixels)
 ```
 <a id="setconsolesize-width-height-sizeheight0-"></a>
 ####**_setConsoleSize( width, height, SizeHeight=0 )_**####
@@ -543,6 +455,16 @@ Description: Retrieves the output code page used by the console. A console uses 
       Input: None
      Output: codepage - (Number) see "Code Page Identifiers" : http://msdn.microsoft.com/library/dd317756
 ```
+<a id="getconsolehandle"></a>
+####**_getConsoleHandle()_**####
+
+----
+```
+Description: Get the console's window Handle (Hwnd).  
+        	 (usually under the name of hConsole)  
+      Input: None
+     Output: The Console's window handle (Hwnd)
+```
 <a id="libconerror-fname-arg1-arg2-arg3-arg4-"></a>
 ####**_LibConError( fname:="", arg1:="", arg2:="", arg3:="", arg4:="" )_**####
 
@@ -554,6 +476,85 @@ Description: Explicit Error Handling towards the user. Msgboxes for Errors (Debu
     		 arg1  - the 1st which the function was called with.
 			 arg.. - etc...
      Output: Success is Non-Zero, Failure is Zero
+```
+<a id="wait-timeout0-"></a>
+####**_wait( timeout=0 )_**####
+
+----
+```
+Description: Gets/Obtains a single key from the user. This may be used for something
+             like "Press any key to continue" or "press Q to quit" with a timeout.
+       Note: 'wait()' triggers persistence, meaning the script will not exit
+			 automatically when the end of the script has been reached.
+      Input: The number of seconds until timeout (Optional)
+     Output: The Key Code
+```
+<a id="waitaction"></a>
+####**_WaitAction()_**####
+
+----
+```
+Description: Gets/Obtains a single input (Captures Everything: mouse move, key press,
+             etc...) from the user. This may be used for something
+             like "Press any key to continue" or "Mouse Click to quit".
+             IMPORTANT Note: This function is still experimental!
+      Input: None
+     Output: The Key Code (vk or sc - Undefined for the moment...)
+     Credit: by gwarble
+```
+<a id="pause-show1-"></a>
+####**_pause( show=1 )_**####
+ 
+----
+```
+Description: Wait until the user presses a key. This may be used for something
+             like "Press any key to continue".
+             Default: Displays "Press any key to continue..." translated in
+             the system's default language.
+      Input: Display the default message (Boolean) (Optional)
+     Output: Success is Non-Zero, Failure is Zero
+```
+<a id="dec2hex-var-"></a>
+####**_dec2hex( var )_**####
+
+----
+```
+Description: Converts a decimal value to a hexadecimal value.
+      Input: The Decimal value to be converted (Number) (Optional)
+     Output: The convert value Hexadecimal value (Number)
+```
+<a id="tobase-n-b-"></a>
+####**_ToBase( n, b )_**####
+
+----
+```
+Description: Converts a decimal value to a specified base value. The base is
+             between 10 to 36 inclusive.
+      Input: The Decimal value to be converted (Number) (Optional)
+     Output: The convert value in the specified base value (Number)
+     Credit: by Laszlo
+```
+<a id="sprogressbar-length-current-max-unlock--0-fixed1-lp-lba-lbb-"></a>
+####**_sProgressBar( Length, Current, Max, Unlock = 0, fixed=1, lp="|", lba="[", lbb="]" )_**####
+
+----
+```
+Description: Displays an 'ASCII' progress bar.
+      Input: Length  - The total lenght of the progress bar (strlen)
+             Current - The current progress value
+             Max     - The maximum value possible of progress
+             Unlock  - Remove Length limitations, default: Minimum of 4,
+                       Maximum of 97.
+             fixed   - Forces the progress bar to grow (instead of fixed size)
+                       Example: |||||| 60% Completed
+                                ||||||||| 90% Completed
+                                etc..
+             lp      - Progress Indicator Charater (Line progress)
+             lba     - Start Progress Border Character (Line Border A)
+             lbb     - End Progress Border Character (Line Border B)
+     Output: The 'ASCII' progress bar (String)
+     Credit: by Bugz000 with assistance from tidbit, Chalamius and Bigvent /
+             forked by joedf
 ```
 <a id="global-vars"></a>
 ##Global Vars##
