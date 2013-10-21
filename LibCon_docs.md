@@ -13,33 +13,33 @@ LibCon : Documentation
         - [AttachConsole( cPID:=-1 )](#attachconsole-cpid-1-)
         - [FreeConsole()](#freeconsole)
     - Input and Output Functions
-        - [newline( x=1 )](#newline-x1-)
-        - [puts( string="" )](#puts-string-)
-        - [print( string="" )](#print-string-)
-        - [printf( msg, vargs* )](#printf-msg-vargs-)
-        - [putsf( msg, vargs* )](#putsf-msg-vargs-)
-        - [gets( ByRef var="" )](#gets-byref-var-)
-        - [getch( ByRef keyname )](#getch-byref-keyname-)
+        - [NewLine( x=1 )](#newline-x1-)
+        - [Puts( string="" )](#puts-string-)
+        - [Print( string="" )](#print-string-)
+        - [Printf( msg, vargs* )](#printf-msg-vargs-)
+        - [Putsf( msg, vargs* )](#putsf-msg-vargs-)
+        - [Gets( ByRef var="" )](#gets-byref-var-)
+        - [Getch( ByRef keyname )](#getch-byref-keyname-)
         - [ClearScreen()](#clearscreen)
-        - [flushInput()](#flushinput)
+        - [FlushInput()](#flushinput)
     - Console Properties & Settings
         - Color Functions
-            - [setColor( FG="", BG="" )](#setcolor-fg-bg-)
-            - [setFgColor( c )](#setfgcolor-c-)
-            - [setBgColor( c )](#setbgcolor-c-)
-            - [getColor()](#getcolor)
-            - [getFgColor()](#getfgcolor)
-            - [getBgColor()](#getbgcolor)
-            - [printcolortable()](#printcolortable)
+            - [SetColor( FG="", BG="" )](#setcolor-fg-bg-)
+            - [SetFgColor( c )](#setfgcolor-c-)
+            - [SetBgColor( c )](#setbgcolor-c-)
+            - [GetColor()](#getcolor)
+            - [GetFgColor()](#getfgcolor)
+            - [GetBgColor()](#getbgcolor)
+            - [PrintColorTable()](#printcolortable)
         - Size, Position & Text
-            - [getFontSize( Byref fontwidth, ByRef fontheight )](#getfontsize-byref-fontwidth-byref-fontheight-)
-            - [getFontWidth()](#getfontwidth)
-            - [getFontHeight()](#getfontheight)
-            - [getConsoleSize( ByRef bufferwidth, ByRef bufferheight )](#getconsolesize-byref-bufferwidth-byref-bufferheight-)
-            - [getConsoleWidth()](#getconsolewidth)
-            - [getConsoleHeight()](#getconsoleheight)
-            - [setConsoleSize( width, height, SizeHeight=0 )](#setconsolesize-width-height-sizeheight0-)
-            - [getConsoleCursorPosition( ByRef x, ByRef y )](#getconsolecursorposition-byref-x-byref-y-)
+            - [GetFontSize( Byref fontwidth, ByRef fontheight )](#getfontsize-byref-fontwidth-byref-fontheight-)
+            - [GetFontWidth()](#getfontwidth)
+            - [GetFontHeight()](#getfontheight)
+            - [GetConsoleSize( ByRef bufferwidth, ByRef bufferheight )](#getconsolesize-byref-bufferwidth-byref-bufferheight-)
+            - [GetConsoleWidth()](#getconsolewidth)
+            - [GetConsoleHeight()](#getconsoleheight)
+            - [SetConsoleSize( width, height, SizeHeight=0 )](#setconsolesize-width-height-sizeheight0-)
+            - [GetConsoleCursorPosition( ByRef x, ByRef y )](#getconsolecursorposition-byref-x-byref-y-)
             - [SetConsoleCursorPosition( x="", y="" )](#setconsolecursorposition-x--y--)
             - [GetConsoleOriginalTitle( byRef Title )](#getconsoleoriginaltitle-byref-title-)
             - [GetConsoleTitle( byRef Title )](#getconsoletitle-byref-title-)
@@ -49,12 +49,12 @@ LibCon : Documentation
             - [SetConsoleOutputCP( codepage )](#setconsoleoutputcp-codepage-)
             - [GetConsoleOutputCP()](#getconsoleoutputcp)
     - Miscellaneous Functions
-        - [getConsoleHandle()](#getconsolehandle)
+        - [GetConsoleHandle()](#getconsolehandle)
         - [LibConError( fname:="", arg1:="", arg2:="", arg3:="", arg4:="" )](#libconerror-fname-arg1-arg2-arg3-arg4-)
-        - [wait( timeout=0 )](#wait-timeout0-)
+        - [Wait( timeout=0 )](#wait-timeout0-)
         - [WaitAction()](#waitaction)
-        - [pause( show=1 )](#pause-show1-)
-        - [dec2hex( var )](#dec2hex-var-)
+        - [Pause( show=1 )](#pause-show1-)
+        - [Dec2Hex( var )](#dec2hex-var-)
         - [ToBase( n, b )](#tobase-n-b-)
         - [sProgressBar( Length, Current, Max, Unlock = 0, fixed=1, lp="|", lba="[", lbb="]" )](#sprogressbar-length-current-max-unlock--0-fixed1-lp-lba-lbb-)
 
@@ -108,7 +108,7 @@ Description: Detach/Terminate current Console and keeps AutoHotkey running
      Output: Success is Non-Zero, Failure is Zero
 ```
 <a id="newline-x1-"></a>
-####**_newline( x=1 )_**####
+####**_NewLine( x=1 )_**####
 
 ----
 ```
@@ -119,7 +119,7 @@ Description: Prints (empty) new lines. Number of new lines varies
      Output: None
 ```
 <a id="puts-string-"></a>
-####**_puts( string="" )_**####
+####**_Puts( string="" )_**####
 
 ----
 ```
@@ -129,7 +129,7 @@ Description: Prints a String with a new line. (has Unicode Support)
      Output: None
 ```
 <a id="print-string-"></a>
-####**_print( string="" )_**####
+####**_Print( string="" )_**####
 
 ----
 ```
@@ -140,7 +140,7 @@ Description: Prints a String without a new line. Same as 'puts()' except
      Output: None
 ```
 <a id="printf-msg-vargs-"></a>
-####**_printf( msg, vargs* )_**####
+####**_Printf( msg, vargs* )_**####
 
 ----
 ```
@@ -154,7 +154,7 @@ Description: Synonym for 'print("hello" . Name . "!")' except that in this funti
      Output: None
 ```
 <a id="putsf-msg-vargs-"></a>
-####**_putsf( msg, vargs* )_**####
+####**_Putsf( msg, vargs* )_**####
 
 ----
 ```
@@ -166,7 +166,7 @@ Description: Synonym for 'puts("hello" . Name . "!")' except that in this funtio
      Output: None
 ```
 <a id="gets-byref-var-"></a>
-####**_gets( ByRef var="" )_**####
+####**_Gets( ByRef var="" )_**####
 
 ----
 ```
@@ -177,7 +177,7 @@ Description: Gets/Obtains input from the console user, until a carriage return '
      Output: The inputed/obtained string
 ```
 <a id="getch-byref-keyname-"></a>
-####**_getch( ByRef keyname )_**####
+####**_Getch( ByRef keyname )_**####
 
 ----
 ```
@@ -199,7 +199,7 @@ Description: Clears the Current Console's Screen.
      Output: None
 ```
 <a id="flushinput"></a>
-####**_flushInput()_**####
+####**_FlushInput()_**####
 
 ----
 ```
@@ -210,7 +210,7 @@ Description: Flushes the console input buffer. All input records currently in th
      Output: Success is Non-Zero, Failure is Zero
 ```
 <a id="setcolor-fg-bg-"></a>
-####**_setColor( FG="", BG="" )_**####
+####**_SetColor( FG="", BG="" )_**####
 
 ----
 ```
@@ -223,7 +223,7 @@ Description: Sets the Current Console's Foreground and Background Colors.
      Output: Success is Non-Zero, Failure is Zero
 ```
 <a id="setfgcolor-c-"></a>
-####**_setFgColor( c )_**####
+####**_SetFgColor( c )_**####
 
 ----
 ```
@@ -232,7 +232,7 @@ Description: Synonym for 'setColor(FG)' - see 'setColor()' for details.
      Output: Success is Non-Zero, Failure is Zero
 ```
 <a id="setbgcolor-c-"></a>
-####**_setBgColor( c )_**####
+####**_SetBgColor( c )_**####
 
 ----
 ```
@@ -241,7 +241,7 @@ Description: Synonym for 'setColor("",BG)' - see 'setColor()' for details.
      Output: Success is Non-Zero, Failure is Zero
 ```
 <a id="getcolor"></a>
-####**_getColor()_**####
+####**_GetColor()_**####
 
 ----
 ```
@@ -254,7 +254,7 @@ Description: Returns the current color (Hexadecimal Value)
      Output: Success is Non-Zero, Failure is Undefined
 ```
 <a id="getfgcolor"></a>
-####**_getFgColor()_**####
+####**_GetFgColor()_**####
 
 ----
 ```
@@ -264,7 +264,7 @@ Description: Returns the current Foreground color (Hexadecimal Value)
      Output: Success is Non-Zero, Failure is Undefined
 ```
 <a id="getbgcolor"></a>
-####**_getBgColor()_**####
+####**_GetBgColor()_**####
 
 ----
 ```
@@ -274,7 +274,7 @@ Description: Returns the current Background color (Hexadecimal Value)
      Output: Success is Non-Zero, Failure is Undefined
 ```
 <a id="printcolortable"></a>
-####**_printcolortable()_**####
+####**_PrintColorTable()_**####
 
 ----
 ```
@@ -284,7 +284,7 @@ Description: Prints a Color table with all the Color Constants.
      Output: None
 ```
 <a id="getfontsize-byref-fontwidth-byref-fontheight-"></a>
-####**_getFontSize( Byref fontwidth, ByRef fontheight )_**####
+####**_GetFontSize( Byref fontwidth, ByRef fontheight )_**####
 
 ----
 ```
@@ -295,7 +295,7 @@ Description: the width and height of each character in the font, in logical unit
      Output: Success is Non-Zero, Failure is Zero
 ```
 <a id="getfontwidth"></a>
-####**_getFontWidth()_**####
+####**_GetFontWidth()_**####
 
 ----
 ```
@@ -304,7 +304,7 @@ Description: Get the current font's width. Shorthand for getFontSize()
      Output: The Font's width (in pixels)
 ```
 <a id="getfontheight"></a>
-####**_getFontHeight()_**####
+####**_GetFontHeight()_**####
 
 ----
 ```
@@ -313,7 +313,7 @@ Description: Get the current font's height. Shorthand for getFontSize()
      Output: The Font's height (in pixels)
 ```
 <a id="getconsolesize-byref-bufferwidth-byref-bufferheight-"></a>
-####**_getConsoleSize( ByRef bufferwidth, ByRef bufferheight )_**####
+####**_GetConsoleSize( ByRef bufferwidth, ByRef bufferheight )_**####
 
 ----
 ```
@@ -325,7 +325,7 @@ Description: Get the Console's buffer size in columns and lines (rows),
      Output: Success is Non-Zero, Failure is Zero
 ```
 <a id="getconsolewidth"></a>
-####**_getConsoleWidth()_**####
+####**_GetConsoleWidth()_**####
 
 ----
 ```
@@ -334,7 +334,7 @@ Description: Shorthand for 'getConsoleSize()'. Get the Console's buffer's Width.
      Output: The buffer's Width (Number)
 ```
 <a id="getconsoleheight"></a>
-####**_getConsoleHeight()_**####
+####**_GetConsoleHeight()_**####
 
 ----
 ```
@@ -343,7 +343,7 @@ Description: Shorthand for 'getConsoleSize()'. Get the Console's buffer's Height
      Output: The buffer's Height (Number)
 ```
 <a id="setconsolesize-width-height-sizeheight0-"></a>
-####**_setConsoleSize( width, height, SizeHeight=0 )_**####
+####**_SetConsoleSize( width, height, SizeHeight=0 )_**####
 
 ----
 ```
@@ -357,7 +357,7 @@ Description: Set the Console's buffer size, No need to worry about the window si
      Output: Success is Non-Zero, Failure is Zero
 ```
 <a id="getconsolecursorposition-byref-x-byref-y-"></a>
-####**_getConsoleCursorPosition( ByRef x, ByRef y )_**####
+####**_GetConsoleCursorPosition( ByRef x, ByRef y )_**####
 
 ----
 ```
@@ -456,7 +456,7 @@ Description: Retrieves the output code page used by the console. A console uses 
      Output: codepage - (Number) see "Code Page Identifiers" : http://msdn.microsoft.com/library/dd317756
 ```
 <a id="getconsolehandle"></a>
-####**_getConsoleHandle()_**####
+####**_GetConsoleHandle()_**####
 
 ----
 ```
@@ -478,7 +478,7 @@ Description: Explicit Error Handling towards the user. Msgboxes for Errors (Debu
      Output: Success is Non-Zero, Failure is Zero
 ```
 <a id="wait-timeout0-"></a>
-####**_wait( timeout=0 )_**####
+####**_Wait( timeout=0 )_**####
 
 ----
 ```
@@ -503,7 +503,7 @@ Description: Gets/Obtains a single input (Captures Everything: mouse move, key p
      Credit: by gwarble
 ```
 <a id="pause-show1-"></a>
-####**_pause( show=1 )_**####
+####**_Pause( show=1 )_**####
  
 ----
 ```
@@ -515,7 +515,7 @@ Description: Wait until the user presses a key. This may be used for something
      Output: Success is Non-Zero, Failure is Zero
 ```
 <a id="dec2hex-var-"></a>
-####**_dec2hex( var )_**####
+####**_Dec2Hex( var )_**####
 
 ----
 ```

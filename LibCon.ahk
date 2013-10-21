@@ -128,7 +128,7 @@
 	}
 	
 	;GetStdHandle() http://msdn.microsoft.com/library/ms683231
-	getStdinObject() {
+	GetStdinObject() {
 		global LibConErrorLevel
 		x:=FileOpen(DllCall("GetStdHandle", "int", -10, "ptr"), "h `n")
 		if (!x) or (LibConErrorLevel:=ErrorLevel)
@@ -136,7 +136,7 @@
 		return x
 	}
 
-	getStdoutObject() {
+	GetStdoutObject() {
 		global LibConErrorLevel
 		x:=FileOpen(DllCall("GetStdHandle", "int", -11, "ptr"), "h `n")
 		if (!x) or (LibConErrorLevel:=ErrorLevel)
@@ -146,7 +146,7 @@
 	
 	;Get the console's window Handle
 	;GetConsoleWindow() http://msdn.microsoft.com/library/ms683175
-	getConsoleHandle() {
+	GetConsoleHandle() {
 		global LibConErrorLevel
 		hConsole := DllCall("GetConsoleWindow","UPtr") ;or WinGet, hConsole, ID, ahk_pid %cPID%
 		if (!hConsole) or (LibConErrorLevel:=ErrorLevel)
@@ -155,7 +155,7 @@
 			return %hConsole% ;Success
 	}
 	
-	newline(x=1) {
+	NewLine(x=1) {
 	loop %x%
 		puts()
 	}
@@ -197,7 +197,7 @@
 	
 	;New Method - Supports Both Unicode and ANSI
 	;------------------
-	print(string=""){
+	Print(string=""){
 		global Stdout
 		global LibConErrorLevel
 		
@@ -218,7 +218,7 @@
 		return e
 	}
 	
-	puts(string="") {
+	Puts(string="") {
 		global Stdout
 		r:=print(string . "`n")
 		Stdout.Read(0)
@@ -226,13 +226,13 @@
 	}
 	
 	;fork of 'formatprint' :  http://www.autohotkey.com/board/topic/60731-printf-the-ahk-way/#entry382968
-	printf(msg, vargs*) {
+	Printf(msg, vargs*) {
 		for each, varg in vargs
 			StringReplace,msg,msg,`%s, % varg ;msg:=RegExReplace(msg,"i)`%.",varg)
 		return print(msg)
 	}
 	
-	putsf(msg, vargs*) {
+	Putsf(msg, vargs*) {
 		for each, varg in vargs
 			StringReplace,msg,msg,`%s, % varg ;msg:=RegExReplace(msg,"i)`%.",varg)
 		return puts(msg)
@@ -283,7 +283,7 @@
 	; New Method - Supports Both Unicode and ANSI
 	;Forked from the German CMD Lib
 	;http://www.autohotkey.com/de/forum/topic8517.html
-	gets(ByRef str="") {
+	Gets(ByRef str="") {
 		global StdIn
 		global LibConErrorLevel
 		
@@ -316,7 +316,7 @@
 	}
 	
 	;FlushConsoleInputBuffer() http://msdn.microsoft.com/library/ms683147
-	flushInput() {
+	FlushInput() {
 		global LibConErrorLevel
 		global stdin
 		x:=DllCall("FlushConsoleInputBuffer", uint, stdin.__Handle)
@@ -355,10 +355,10 @@
 			return DllCall("msvcrt.dll\_ungetwch","int",c,"int")
 	}
 
-	getch(ByRef keyname="") {
+	Getch(ByRef keyname="") {
 		;the comments with ;//   are from my original c function
 		;this is an AutoHotkey port of that function...
-		flushInput()
+		FlushInput()
 		
 		If (A_IsUnicode) { ;enable unicode "getch" => _getchW()
 			key:=_getchw()
@@ -404,7 +404,6 @@
 			keyname:="Space"
 		else if (key==224) ;//or FFFFFFE0 or 4294967264 ;*keyname ="Special";
 		{
-			;skey:=DllCall("msvcrt.dll\_getch","int")
 			if (skey==71)
 				keyname:="Home"
 			else if (skey=72)
@@ -439,45 +438,9 @@
 		}
 		else if (key==0) ;Function Keys?!  code: '0' (value)
 		{
-			;skey:=DllCall("msvcrt.dll\_getch","int")
-			
 			keyname:="FunctionKey"
-			
 			if (skey>=59) && (skey<=68)
 				keyname:="F" (skey-58)
-			
-			/*
-			Loop, 10 {
-				if (skey==A_Index+58) {
-					keyname:="F" A_Index
-					break
-				}
-			}
-			*/
-			/*
-			if (skey==59)
-				keyname:="F1"
-			else if (skey=60)
-				keyname:="F2"
-			else if (skey=61)
-				keyname:="F3"
-			else if (skey=62)
-				keyname:="F4"
-			else if (skey=63)
-				keyname:="F5"
-			else if (skey=64)
-				keyname:="F6"
-			else if (skey=65)
-				keyname:="F7"
-			else if (skey=66)
-				keyname:="F8"
-			else if (skey=67)
-				keyname:="F9"
-			else if (skey=68)
-				keyname:="F10"
-			else
-				keyname:="FunctionKey"
-			*/
 		}
 		else
 		{
@@ -494,7 +457,7 @@
 			return key
 	}
 	
-	wait(timeout=0) {
+	Wait(timeout=0) {
 		global LibConErrorLevel
 		opt:=""
 		if (!timeout=0)
@@ -515,7 +478,7 @@
 		return key
 	}
 
-	pause(show=1) {
+	Pause(show=1) {
 		global LibConErrorLevel
 		n:=""
 		if (!show)
@@ -526,7 +489,7 @@
 		return 1
 	}
 
-	dec2hex(var) {
+	Dec2Hex(var) {
 		OldFormat := A_FormatInteger
 		SetFormat, Integer, Hex
 		var += 0
@@ -563,7 +526,7 @@
 	}
 	
 	;SetConsoleTextAttribute() http://msdn.microsoft.com/library/ms686047
-	setColor(FG="",BG="") { ;Sets the color (int Hexadecimal number)
+	SetColor(FG="",BG="") { ;Sets the color (int Hexadecimal number)
 		global LibConErrorLevel
 		global Stdout
 		if FG is not integer
@@ -578,16 +541,16 @@
 		return x
 	}
 	
-	setFgColor(c) {
+	SetFgColor(c) {
 		return setcolor(c)
 	}
 	
-	setBgColor(c) {
+	SetBgColor(c) {
 		return setColor("",c)
 	}
 
 	;GetConsoleScreenBufferInfo() http://msdn.microsoft.com/library/ms683171
-	getColor() { ;Returns the current color (int Hexadecimal number)
+	GetColor() { ;Returns the current color (int Hexadecimal number)
 		global LibConErrorLevel
 		global Stdout
 		global sType
@@ -598,17 +561,17 @@
 		return dec2hex(NumGet(&consoleInfo,(2*sType.COORD),"Short"))
 	}
 	
-	getFgColor() {
+	GetFgColor() {
 		c:=getColor()
 		return dec2hex(c-(16*(c >> 16)))
 	}
 	
-	getBgColor() {
+	GetBgColor() {
 		c:=getColor()
 		return dec2hex(c >> 16)
 	}
 	
-	printcolortable() {
+	PrintColorTable() {
 		
 		OldFormat := A_FormatInteger
 		SetFormat, Integer, Hex
@@ -716,7 +679,7 @@
 	
 	;For the Cursor of CLI -> Caret
 	;getConsoleCursorPosition, GetConsoleScreenBufferInfo() http://msdn.microsoft.com/library/ms683171
-	getConsoleCursorPosition(ByRef x, ByRef y) {
+	GetConsoleCursorPosition(ByRef x, ByRef y) {
 		global LibConErrorLevel
 		global Stdout
 		global sType
@@ -751,7 +714,7 @@
 		return 1
 	}
 	
-	getConsoleCursorPos(ByRef x, ByRef y) {
+	GetConsoleCursorPos(ByRef x, ByRef y) {
 		return getConsoleCursorPosition(x,y)
 	}
 	
@@ -760,7 +723,7 @@
 	}
 	
 	;Get BufferSize, GetConsoleScreenBufferInfo() http://msdn.microsoft.com/library/ms683171
-	getConsoleSize(ByRef bufferwidth, ByRef bufferheight) {
+	GetConsoleSize(ByRef bufferwidth, ByRef bufferheight) {
 		global LibConErrorLevel
 		global Stdout
 		global sType
@@ -775,14 +738,14 @@
 		return 1
 	}
 
-	getConsoleWidth() {
+	GetConsoleWidth() {
 		if (!getConsoleSize(bufferwidth,bufferheight))
 			return 0 ;Failure
 		else
 			return %bufferwidth% ;Success
 	}
 
-	getConsoleHeight() {
+	GetConsoleHeight() {
 		if (getConsoleSize(bufferwidth,bufferheight))
 			return 0 ;Failure
 		else
@@ -790,7 +753,7 @@
 	}
 	
 	;GetCurrentConsoleFont() http://msdn.microsoft.com/library/ms683176
-	getFontSize(Byref fontwidth, ByRef fontheight) {
+	GetFontSize(Byref fontwidth, ByRef fontheight) {
 		global LibConErrorLevel
 		global sType
 		global Stdout
@@ -819,7 +782,7 @@
 		return 1
 	}
 
-	getFontWidth() {
+	GetFontWidth() {
 		if (getFontSize(fontwidth,fontheight))
 		{
 			return 0 ;Failure
@@ -828,7 +791,7 @@
 			return %fontwidth% ;Success
 	}
 
-	getFontHeight() {
+	GetFontHeight() {
 		if (getFontSize(fontwidth,fontheight))
 		{
 			return 0 ;Failure
@@ -839,7 +802,7 @@
 	
 	;SetConsoleScreenBufferSize() http://msdn.microsoft.com/library/ms686044
 	;set Console window size ; - Width in Columns and Lines : (Fontheight and Fontwidth)
-	setConsoleSize(width,height,SizeHeight=0) {
+	SetConsoleSize(width,height,SizeHeight=0) {
 		global LibConErrorLevel
 		global sType
 		global Stdout
