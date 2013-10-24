@@ -21,6 +21,7 @@ LibCon : Documentation
         - [Gets( ByRef var="" )](#gets-byref-var-)
         - [Getch( ByRef keyname )](#getch-byref-keyname-)
         - [ClearScreen()](#clearscreen)
+        - [FillConsoleOutputCharacter( cCharacter, nLength, x, y, ByRef lpNumberOfCharsWritten="" )](#fillconsoleoutputcharacter-ccharacter-nlength-x-y-byref-lpnumberofcharswritten-)
         - [FlushInput()](#flushinput)
     - Console Properties & Settings
         - Color Functions
@@ -31,6 +32,7 @@ LibCon : Documentation
             - [GetFgColor()](#getfgcolor)
             - [GetBgColor()](#getbgcolor)
             - [PrintColorTable()](#printcolortable)
+            - [FillConsoleOutputAttribute( wAttribute, nLength, x, y, ByRef lpNumberOfAttrsWritten="" )](#fillconsoleoutputattribute-wattribute-nlength-x-y-byref-lpnumberofattrswritten-)
         - Size, Position & Text
             - [GetFontSize( Byref fontwidth, ByRef fontheight )](#getfontsize-byref-fontwidth-byref-fontheight-)
             - [GetFontWidth()](#getfontwidth)
@@ -50,7 +52,7 @@ LibCon : Documentation
             - [GetConsoleOutputCP()](#getconsoleoutputcp)
     - Miscellaneous Functions
         - [GetConsoleHandle()](#getconsolehandle)
-        - [LibConError( fname:="", arg1:="", arg2:="", arg3:="", arg4:="" )](#libconerror-fname-arg1-arg2-arg3-arg4-)
+        - [LibConError( fname:="", arg1:="", arg2:="", arg3:="", arg4:="", arg5:="" )](#libconerror-fname-arg1-arg2-arg3-arg4-arg5-)
         - [Wait( timeout=0 )](#wait-timeout0-)
         - [WaitAction()](#waitaction)
         - [Pause( show=1 )](#pause-show1-)
@@ -195,8 +197,28 @@ Description: Gets/Obtains a single key from the user. This may be used for somet
 ```
 Description: Clears the Current Console's Screen.
    Synonyms: 'cls()' and 'Clear()'
+   MSDN URL: http://msdn.microsoft.com/library/ms682022
       Input: None
      Output: None
+```
+<a id="fillconsoleoutputcharacter-ccharacter-nlength-x-y-byref-lpnumberofcharswritten-"></a>
+####**_FillConsoleOutputCharacter( cCharacter, nLength, x, y, ByRef lpNumberOfCharsWritten="" )_**####
+
+----
+```
+Description: Writes a character to the console screen buffer a specified number of times,
+             beginning at the specified coordinates.
+   MSDN URL: http://msdn.microsoft.com/library/ms682663
+      Input: cCharacter - The character to be written to the console screen buffer.
+             nLength    - The number of character cells to which the character
+                          should be written.
+             x          - The x coordinate of the COORD structure that specifies
+                          the character coordinates of the first cell to which the
+                          character is to be written.
+             y          - The y coordinate of the COORD structure.
+             lpNumberOfCharsWritten - The Varible in which to store the number characters
+                                      to the console screen buffer.
+     Output: Success is Non-Zero, Failure is Zero
 ```
 <a id="flushinput"></a>
 ####**_FlushInput()_**####
@@ -204,7 +226,7 @@ Description: Clears the Current Console's Screen.
 ----
 ```
 Description: Flushes the console input buffer. All input records currently in the  
-       input buffer are discarded.  
+             input buffer are discarded.  
    MSDN URL: http://msdn.microsoft.com/library/ms683147  
       Input: None  
      Output: Success is Non-Zero, Failure is Zero
@@ -283,13 +305,32 @@ Description: Prints a Color table with all the Color Constants.
       Input: None
      Output: None
 ```
+<a id="fillconsoleoutputattribute-wattribute-nlength-x-y-byref-lpnumberofattrswritten-"></a>
+####**_FillConsoleOutputAttribute( wAttribute, nLength, x, y, ByRef lpNumberOfAttrsWritten="" )_**####
+
+----
+```
+Description: Sets the character attributes for a specified number of character cells,
+             beginning at the specified coordinates in a screen buffer.
+   MSDN URL: http://msdn.microsoft.com/library/ms682662
+      Input: wAttribute - The "Character attributes" to use when writing to the console screen
+                          buffer. Basically, the Color : GetColor() is applicable here.
+             nLength    - The number of character cells to be set to the specified
+                          color attributes.
+             x          - The x coordinate of the COORD structure that specifies the character
+                          coordinates of the first cell whose attributes are to be set.
+             y          - The y coordinate of the COORD structure.
+             lpNumberOfAttrsWritten - The Varible in which to store the number of character
+                                      cells whose attributes were actually set.
+     Output: Success is Non-Zero, Failure is Zero
+```
 <a id="getfontsize-byref-fontwidth-byref-fontheight-"></a>
 ####**_GetFontSize( Byref fontwidth, ByRef fontheight )_**####
 
 ----
 ```
 Description: the width and height of each character in the font, in logical units.
-			 The X member contains the width, while the Y member contains the height.
+       The X member contains the width, while the Y member contains the height.
       Input: fontwidth - The Varible in which to store the font's width (Number)
              fontheight - The Varible in which to store the font's height (Number)
      Output: Success is Non-Zero, Failure is Zero
@@ -348,12 +389,12 @@ Description: Shorthand for 'getConsoleSize()'. Get the Console's buffer's Height
 ----
 ```
 Description: Set the Console's buffer size, No need to worry about the window size,
-			 this function does automatic resizing of the console's window if necessary.
-			 the size is in columns and lines (rows), meaning one line height is a
-			 character's height, and the column's width is a character's width.
+             this function does automatic resizing of the console's window if necessary.
+             the size is in columns and lines (rows), meaning one line height is a
+             character's height, and the column's width is a character's width.
    MSDN URL: http://msdn.microsoft.com/library/ms686044
       Input: width  - The console's width (Number)
-			 height - The console's height (Number)
+             height - The console's height (Number)
      Output: Success is Non-Zero, Failure is Zero
 ```
 <a id="getconsolecursorposition-byref-x-byref-y-"></a>
@@ -375,7 +416,7 @@ Description: Get the Cursor's (or caret) current position. The origin is (0,0)
 Description: Sets the cursor position in the specified console screen buffer.
    MSDN URL: http://msdn.microsoft.com/library/ms686025
       Input: x - The desired Cursor's x pos. (Number)
-			 y - The desired Cursor's y pos. (Number)
+             y - The desired Cursor's y pos. (Number)
      Output: Success is Non-Zero, Failure is Zero
 ```
 <a id="getconsoleoriginaltitle-byref-title-"></a>
@@ -413,8 +454,8 @@ Description: Sets the title for the current console window.
 ----
 ```
 Description: Sets the input code page used by the console. A console uses its
-			 input code page to translate keyboard input into the corresponding
-			 character value.
+             input code page to translate keyboard input into the corresponding
+             character value.
    MSDN URL: http://msdn.microsoft.com/library/ms686013
       Input: codepage - (Number) see "Code Page Identifiers" : http://msdn.microsoft.com/library/dd317756
      Output: Success is Non-Zero, Failure is Zero
@@ -425,8 +466,8 @@ Description: Sets the input code page used by the console. A console uses its
 ----
 ```
 Description: Retrieves the input code page used by the console. A console uses its
-			 input code page to translate keyboard input into the corresponding
-			 character value.
+             input code page to translate keyboard input into the corresponding
+             character value.
    MSDN URL: http://msdn.microsoft.com/library/ms683162
       Input: None
      Output: codepage - (Number) see "Code Page Identifiers" : http://msdn.microsoft.com/library/dd317756
@@ -437,8 +478,8 @@ Description: Retrieves the input code page used by the console. A console uses i
 ----
 ```
 Description: Sets the output code page used by the console. A console uses its
-			 output code page to translate the character values written by the
-			 various output functions into the images displayed in the console window.
+             output code page to translate the character values written by the
+             various output functions into the images displayed in the console window.
    MSDN URL: http://msdn.microsoft.com/library/ms686036
       Input:  codepage - (Number) see "Code Page Identifiers" : http://msdn.microsoft.com/library/dd317756
      Output: Success is Non-Zero, Failure is Zero
@@ -449,8 +490,8 @@ Description: Sets the output code page used by the console. A console uses its
 ----
 ```
 Description: Retrieves the output code page used by the console. A console uses its
-			 output code page to translate the character values written by the 
-			 various output functions into the images displayed in the console window.
+             output code page to translate the character values written by the 
+             various output functions into the images displayed in the console window.
    MSDN URL: http://msdn.microsoft.com/library/ms683169
       Input: None
      Output: codepage - (Number) see "Code Page Identifiers" : http://msdn.microsoft.com/library/dd317756
@@ -461,20 +502,20 @@ Description: Retrieves the output code page used by the console. A console uses 
 ----
 ```
 Description: Get the console's window Handle (Hwnd).  
-        	 (usually under the name of hConsole)  
+             (usually under the name of hConsole)  
       Input: None
      Output: The Console's window handle (Hwnd)
 ```
-<a id="libconerror-fname-arg1-arg2-arg3-arg4-"></a>
-####**_LibConError( fname:="", arg1:="", arg2:="", arg3:="", arg4:="" )_**####
+<a id="libconerror-fname-arg1-arg2-arg3-arg4-arg5-"></a>
+####**_LibConError( fname:="", arg1:="", arg2:="", arg3:="", arg4:="", arg5:="" )_**####
 
 ----
 ```
 Description: Explicit Error Handling towards the user. Msgboxes for Errors (DebugMode Only)
-			 (Abort, Retry, Ignore). See source for usage... Used for Basic ErrorHandling.
+             (Abort, Retry, Ignore). See source for usage... Used for Basic ErrorHandling.
       Input: fname - the function's callname
-    		 arg1  - the 1st which the function was called with.
-			 arg.. - etc...
+             arg1  - the 1st which the function was called with.
+             arg.. - etc...
      Output: Success is Non-Zero, Failure is Zero
 ```
 <a id="wait-timeout0-"></a>
@@ -485,7 +526,7 @@ Description: Explicit Error Handling towards the user. Msgboxes for Errors (Debu
 Description: Gets/Obtains a single key from the user. This may be used for something
              like "Press any key to continue" or "press Q to quit" with a timeout.
        Note: 'wait()' triggers persistence, meaning the script will not exit
-			 automatically when the end of the script has been reached.
+             automatically when the end of the script has been reached.
       Input: The number of seconds until timeout (Optional)
      Output: The Key Code
 ```

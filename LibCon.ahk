@@ -1,8 +1,8 @@
 ﻿;
 ; AutoHotkey (Tested) Version: 1.1.13.01
 ; Author:         Joe DF  |  http://joedf.co.nr  |  joedf@users.sourceforge.net
-; Date:           October 18th, 2013
-; Library Version: 1.0.3.0
+; Date:           October 23rd, 2013
+; Library Version: 1.0.3.3
 ;
 ;	LibCon - AutoHotkey Library For Console Support
 ;
@@ -252,6 +252,7 @@
 	}
 	*/
 	
+	/* Deprecated Method ....
 	ClearScreen() {
 		global LibConErrorLevel
 		;http://msdn.microsoft.com/en-us/library/ms682022.aspx
@@ -261,6 +262,22 @@
 		if LibConErrorLevel = ERROR
 			return LibConError("ClearScreen") ;Failure
 		return LibConErrorLevel
+	}
+	*/
+	;New Method using WinAPI - Way Faster, better performance
+	;Implementation from: http://msdn.microsoft.com/library/ms682022
+	ClearScreen() {
+		global LibConErrorLevel
+		global Stdout
+		global sType
+		GetConsoleSize(dwSize_X,dwSize_Y)
+		dwConSize:=dwSize_X*dwSize_Y
+		x:=FillConsoleOutputCharacter(chr(32),dwConSize,0,0,lpNumberOfCharsWritten)
+		y:=FillConsoleOutputAttribute(GetColor(),dwConSize,0,0,lpNumberOfAttrsWritten)
+		SetConsoleCursorPosition(0,0)
+		if (!x) or (LibConErrorLevel:=ErrorLevel) or (!y)
+			return LibConError("ClearScreen") ;Failure
+		return 1
 	}
 	
 	cls() {
@@ -854,8 +871,68 @@
 		}
 	}
 	
+	;http://msdn.microsoft.com/library/ms682663
+	FillConsoleOutputCharacter(cCharacter,nLength,x,y,ByRef lpNumberOfCharsWritten="") {
+		global LibConErrorLevel
+		global sType
+		global Stdout
+		hStdout:=Stdout.__Handle
+	/*	
+		BOOL WINAPI FillConsoleOutputCharacter(
+			_In_   HANDLE hConsoleOutput,
+			_In_   TCHAR cCharacter,
+			_In_   DWORD nLength,
+			_In_   COORD dwWriteCoord,
+			_Out_  LPDWORD lpNumberOfCharsWritten
+		);
+	*/
+		VarSetCapacity(dwWriteCoord,sType.COORD,0)
+			NumPut(x,dwWriteCoord,"UShort")
+			NumPut(y,dwWriteCoord,sType.SHORT,"UShort")
+		
+		x:=DllCall("FillConsoleOutputCharacter"
+					,"UInt",hStdOut
+					,"UChar",c
+					,"UInt",nLength
+					,"uint",Numget(dwWriteCoord,"uint")
+					,"UInt*",lpNumberOfCharsWritten,"Int")
+		if (!x) or (LibConErrorLevel:=ErrorLevel)
+			return LibConError("FillConsoleOutputCharacter",cCharacter,nLength,x,y,lpNumberOfCharsWritten) ;Failure
+		return 1
+	}
+	
+	;http://msdn.microsoft.com/library/ms682662
+	FillConsoleOutputAttribute(wAttribute,nLength,x,y,ByRef lpNumberOfAttrsWritten="") {
+		global LibConErrorLevel
+		global sType
+		global Stdout
+		hStdout:=Stdout.__Handle
+	/*
+		BOOL WINAPI FillConsoleOutputAttribute(
+			_In_   HANDLE hConsoleOutput,
+			_In_   WORD wAttribute,
+			_In_   DWORD nLength,
+			_In_   COORD dwWriteCoord,
+			_Out_  LPDWORD lpNumberOfAttrsWritten
+		);
+	*/
+		VarSetCapacity(dwWriteCoord,sType.COORD,0)
+			NumPut(x,dwWriteCoord,"UShort")
+			NumPut(y,dwWriteCoord,sType.SHORT,"UShort")
+		
+		x:=DllCall("FillConsoleOutputAttribute"
+					,"UInt",hStdOut
+					,"UShort",wAttribute
+					,"UInt",nLength
+					,"uint",Numget(dwWriteCoord,"uint")
+					,"UInt*",lpNumberOfAttrsWritten,"Int")
+		if (!x) or (LibConErrorLevel:=ErrorLevel)
+			return LibConError("FillConsoleOutputAttribute",wAttribute,nLength,x,y,lpNumberOfAttrsWritten) ;Failure
+		return 1
+	}
+	
 	;Msgbox for Errors (DebugMode Only)
-	LibConError(fname:="",arg1:="",arg2:="",arg3:="",arg4:="") {
+	LibConError(fname:="",arg1:="",arg2:="",arg3:="",arg4:="",arg5:="") {
 		global LibConDebug
 		global LibConErrorLevel
 		;calling function name: msgbox % Exception("",-2).what ; from jethrow
@@ -873,7 +950,7 @@
 				return 0
 			IfMsgBox, Retry
 			{
-				return %fname%(arg1,arg2,arg3,arg4)
+				return %fname%(arg1,arg2,arg3,arg4,arg5)
 			}
 		}
 		return 0
