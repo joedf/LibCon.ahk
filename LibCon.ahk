@@ -1,7 +1,7 @@
 ﻿;
 ; AutoHotkey (Tested) Version: 1.1.13.01
 ; Author:         Joe DF  |  http://joedf.co.nr  |  joedf@users.sourceforge.net
-; Date:           October 23rd, 2013
+; Date:           October 24th, 2013
 ; Library Version: 1.0.3.3
 ;
 ;	LibCon - AutoHotkey Library For Console Support
@@ -272,7 +272,7 @@
 		global sType
 		GetConsoleSize(dwSize_X,dwSize_Y)
 		dwConSize:=dwSize_X*dwSize_Y
-		x:=FillConsoleOutputCharacter(chr(32),dwConSize,0,0,lpNumberOfCharsWritten)
+		x:=FillConsoleOutputCharacter(" ",dwConSize,0,0,lpNumberOfCharsWritten)
 		y:=FillConsoleOutputAttribute(GetColor(),dwConSize,0,0,lpNumberOfAttrsWritten)
 		SetConsoleCursorPosition(0,0)
 		if (!x) or (LibConErrorLevel:=ErrorLevel) or (!y)
@@ -892,7 +892,7 @@
 		
 		x:=DllCall("FillConsoleOutputCharacter"
 					,"UInt",hStdOut
-					,"UChar",c
+					,"UChar",asc(cCharacter)
 					,"UInt",nLength
 					,"uint",Numget(dwWriteCoord,"uint")
 					,"UInt*",lpNumberOfCharsWritten,"Int")
