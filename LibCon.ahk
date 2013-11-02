@@ -1,8 +1,8 @@
 ﻿;
 ; AutoHotkey (Tested) Version: 1.1.13.01
 ; Author:         Joe DF  |  http://joedf.co.nr  |  joedf@users.sourceforge.net
-; Date:           October 24th, 2013
-; Library Version: 1.0.3.3
+; Date:           November 2nd, 2013
+; Library Version: 1.0.3.4
 ;
 ;	LibCon - AutoHotkey Library For Console Support
 ;
@@ -763,7 +763,7 @@
 	}
 
 	GetConsoleHeight() {
-		if (getConsoleSize(bufferwidth,bufferheight))
+		if (!getConsoleSize(bufferwidth,bufferheight))
 			return 0 ;Failure
 		else
 			return %bufferheight% ;Success
@@ -800,7 +800,7 @@
 	}
 
 	GetFontWidth() {
-		if (getFontSize(fontwidth,fontheight))
+		if (!getFontSize(fontwidth,fontheight))
 		{
 			return 0 ;Failure
 		}
@@ -809,7 +809,7 @@
 	}
 
 	GetFontHeight() {
-		if (getFontSize(fontwidth,fontheight))
+		if (!getFontSize(fontwidth,fontheight))
 		{
 			return 0 ;Failure
 		}
