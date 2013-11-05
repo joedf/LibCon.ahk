@@ -515,7 +515,8 @@ Description: Get the console's window Handle (Hwnd).
 ```
 Description: Explicit Error Handling towards the user. Msgboxes for Errors (DebugMode Only)
              (Abort, Retry, Ignore). See source for usage... Used for Basic ErrorHandling.
-             See ["Windows Error Codes"](http://msdn.microsoft.com/library/ms681381) ([A_LastError](http://l.autohotkey.net/docs/commands/DllCall.htm#LastError))
+             See "Windows Error Codes" : http://msdn.microsoft.com/library/ms681381
+             See "A_LastError" : http://l.autohotkey.net/docs/commands/DllCall.htm#LastError
       Input: fname - the function's callname
              arg1  - the 1st which the function was called with.
              arg.. - etc...
