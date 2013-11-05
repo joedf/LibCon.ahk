@@ -1,8 +1,8 @@
 ﻿;
 ; AutoHotkey (Tested) Version: 1.1.13.01
 ; Author:         Joe DF  |  http://joedf.co.nr  |  joedf@users.sourceforge.net
-; Date:           November 2nd, 2013
-; Library Version: 1.0.3.4
+; Date:           November 4th, 2013
+; Library Version: 1.0.3.5
 ;
 ;	LibCon - AutoHotkey Library For Console Support
 ;
@@ -826,7 +826,7 @@
 		hStdout:=Stdout.__Handle
 		hConsole:=getConsoleHandle()
 		
-		getConsoleSize(hcW,cH) ;buffer size
+		getConsoleSize(cW,cH) ;buffer size
 		WinGetPos,wX,wY,,wH,ahk_id %hConsole% ;window size
 		getFontSize(fW,fH) ;font size
 		

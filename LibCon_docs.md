@@ -393,8 +393,10 @@ Description: Set the Console's buffer size, No need to worry about the window si
              the size is in columns and lines (rows), meaning one line height is a
              character's height, and the column's width is a character's width.
    MSDN URL: http://msdn.microsoft.com/library/ms686044
-      Input: width  - The console's width (Number)
-             height - The console's height (Number)
+      Input: width      - The console's width (Number)
+             height     - The console's height (Number)
+             SizeHeight - (Boolean) if true, it will try to size the window to
+                          its original window height that was before resizing.
      Output: Success is Non-Zero, Failure is Zero
 ```
 <a id="getconsolecursorposition-byref-x-byref-y-"></a>
@@ -513,6 +515,7 @@ Description: Get the console's window Handle (Hwnd).
 ```
 Description: Explicit Error Handling towards the user. Msgboxes for Errors (DebugMode Only)
              (Abort, Retry, Ignore). See source for usage... Used for Basic ErrorHandling.
+             See ["Windows Error Codes"](http://msdn.microsoft.com/library/ms681381) ([A_LastError](http://l.autohotkey.net/docs/commands/DllCall.htm#LastError))
       Input: fname - the function's callname
              arg1  - the 1st which the function was called with.
              arg.. - etc...
