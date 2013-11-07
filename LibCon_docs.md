@@ -127,6 +127,7 @@ Description: Prints (empty) new lines. Number of new lines varies
 ```
 Description: Prints a String with a new line. (has Unicode Support)
              Default: Prints an empty new line.
+             Fallback Method: Unicode Support not guaranteed
       Input: The String to be printed
      Output: None
 ```
@@ -138,6 +139,7 @@ Description: Prints a String with a new line. (has Unicode Support)
 Description: Prints a String without a new line. Same as 'puts()' except
              without a new line. (has Unicode Support)
              Default: Prints Nothing. 'Flushes' Stdout.
+             Fallback Method: Unicode Support not guaranteed
       Input: The String to be printed
      Output: None
 ```
@@ -175,6 +177,7 @@ Description: Synonym for 'puts("hello" . Name . "!")' except that in this funtio
 Description: Gets/Obtains input from the console user, until a carriage return '`r'
              has been received. The carriage return is trimmed off (not recorded).
              (has Unicode Support)
+             Fallback Method: Unicode Support not guaranteed
       Input: The Varible in which to store the inputed/obtained string (Optional)
      Output: The inputed/obtained string
 ```
@@ -196,6 +199,7 @@ Description: Gets/Obtains a single key from the user. This may be used for somet
 ----
 ```
 Description: Clears the Current Console's Screen.
+             Fallback Method: Small Performance Drop
    Synonyms: 'cls()' and 'Clear()'
    MSDN URL: http://msdn.microsoft.com/library/ms682022
       Input: None

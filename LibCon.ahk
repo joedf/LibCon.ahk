@@ -1,8 +1,8 @@
 ﻿;
 ; AutoHotkey (Tested) Version: 1.1.13.01
 ; Author:         Joe DF  |  http://joedf.co.nr  |  joedf@users.sourceforge.net
-; Date:           November 4th, 2013
-; Library Version: 1.0.3.5
+; Date:           November 6th, 2013
+; Library Version: 1.0.3.6
 ;
 ;	LibCon - AutoHotkey Library For Console Support
 ;
@@ -160,41 +160,6 @@
 		puts()
 	}
 	
-	/* Deprecated old method
-	--------------------------------
-	puts(string="") {
-		global Stdout
-		Stdout.WriteLine(string) ;Stdout.write(string . "`n")
-		Stdout.Read(0)
-	}
-	
-	print(string="") {
-		global Stdout
-		if strlen(string) > 0
-			Stdout.write(string)
-		Stdout.Read(0)
-	}
-	
-	Removed/Deprecated
-	--------------------------------
-	;Unicode Printing Support http://msdn.microsoft.com/library/ms687401
-	;Fails (with SetConsoleInputCP(65001) = Unicode (UTF-8) ), if the current (console) font does not have Unicode support
-	;Seems to function otherwise...
-	printW(str) {
-		global Stdout
-		global LibConErrorLevel
-		e:=DllCall("WriteConsole","Ptr",Stdout.__Handle,"WStr",str,"UInt",StrLen(str),"UInt",charsWritten,"Ptr*",0)
-		LibConErrorLevel:=ErrorLevel
-		if (!e) or (LibConErrorLevel)
-			return LibConError("printW",str)
-		return 1
-	}
-	
-	putsW(str) {
-		return printW(str . "`n")
-	}
-	*/
-	
 	;New Method - Supports Both Unicode and ANSI
 	;------------------
 	Print(string=""){
@@ -237,39 +202,11 @@
 			StringReplace,msg,msg,`%s, % varg ;msg:=RegExReplace(msg,"i)`%.",varg)
 		return puts(msg)
 	}
-	
-	/* Removed/Deprecated - Old Method
-	printWf(msg, vargs*) {
-		for each, varg in vargs
-			StringReplace,msg,msg,`%s, % varg ;msg:=RegExReplace(msg,"i)`%.",varg)
-		return printW(msg)
-	}
-	
-	putsWf(msg, vargs*) {
-		for each, varg in vargs
-			StringReplace,msg,msg,`%s, % varg ;msg:=RegExReplace(msg,"i)`%.",varg)
-		return putsW(msg)
-	}
-	*/
-	
-	/* Deprecated Method ....
-	ClearScreen() {
-		global LibConErrorLevel
-		;http://msdn.microsoft.com/en-us/library/ms682022.aspx
-		;Currently too lazy to do it programmatically...
-		runwait %ComSpec% /c cls.exe %n%,,UseErrorLevel
-		LibConErrorLevel:=ErrorLevel
-		if LibConErrorLevel = ERROR
-			return LibConError("ClearScreen") ;Failure
-		return LibConErrorLevel
-	}
-	*/
+
 	;New Method using WinAPI - Way Faster, better performance
 	;Implementation from: http://msdn.microsoft.com/library/ms682022
 	ClearScreen() {
 		global LibConErrorLevel
-		global Stdout
-		global sType
 		GetConsoleSize(dwSize_X,dwSize_Y)
 		dwConSize:=dwSize_X*dwSize_Y
 		x:=FillConsoleOutputCharacter(" ",dwConSize,0,0,lpNumberOfCharsWritten)
@@ -288,15 +225,6 @@
 		ClearScreen()
 	}
 	
-	/* Deprecated Old Method
-	gets(ByRef var="") {
-		global LibConErrorLevel
-		global Stdin
-		var:=RTrim(Stdin.ReadLine(), "`n")
-		flushInput() ;Flush the input buffer
-		return var
-	}
-	*/
 	; New Method - Supports Both Unicode and ANSI
 	;Forked from the German CMD Lib
 	;http://www.autohotkey.com/de/forum/topic8517.html
@@ -941,6 +869,35 @@
 			fname := Exception("",-2).what
 		if !IsFunc(fname) ;try again since sometime it return -2() meaning not found...
 			fname := "Undefined"
+		
+		;Fallback to Classic/Deprecated Old Methods
+		;If the new methods failed
+		global Stdout
+		global Stdin
+		if (fname="print") and (A_LastError=6)
+		{
+			if strlen(arg1) > 0
+				x:=Stdout.write(arg1)
+			Stdout.Read(0)
+			return x
+		}
+		if (fname="puts") and (A_LastError=6)
+		{
+			Stdout.WriteLine(string) ;Stdout.write(string . "`n")
+			Stdout.Read(0)
+			return x
+		}
+		if (fname="gets") and (A_LastError=6)
+		{
+			return arg1:=RTrim(Stdin.ReadLine(), "`n")
+			;flushInput() ;Flush the input buffer
+		}
+		if (fname="ClearScreen") and (A_LastError=6)
+		{
+			runwait %ComSpec% /c cls.exe %n%,, UseErrorLevel
+			return LibConErrorLevel:=ErrorLevel
+		}
+		
 		if (LibConDebug)
 		{
 			MsgBox, 262194, LibConError, %fname%() Failure`nErrorlevel: %LibConErrorLevel%`nA_LastError: %A_LastError%`n`nWill now Exit.
