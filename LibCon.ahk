@@ -1,8 +1,8 @@
 ﻿;
 ; AutoHotkey (Tested) Version: 1.1.13.01
 ; Author:         Joe DF  |  http://joedf.co.nr  |  joedf@users.sourceforge.net
-; Date:           November 6th, 2013
-; Library Version: 1.0.3.6
+; Date:           November 7th, 2013
+; Library Version: 1.0.3.7
 ;
 ;	LibCon - AutoHotkey Library For Console Support
 ;
@@ -860,9 +860,12 @@
 	}
 	
 	;Msgbox for Errors (DebugMode Only)
-	LibConError(fname:="",arg1:="",arg2:="",arg3:="",arg4:="",arg5:="") {
+	LibConError(fname:="",ByRef arg1:="",arg2:="",arg3:="",arg4:="",arg5:="") {
 		global LibConDebug
 		global LibConErrorLevel
+		
+		static LibConErrorsIgnoreList
+		
 		;calling function name: msgbox % Exception("",-2).what ; from jethrow
 		;http://www.autohotkey.com/board/topic/95002-how-to-nest-functions/#entry598796
 		if !IsFunc(fname) ;or fname is space
@@ -900,11 +903,18 @@
 		
 		if (LibConDebug)
 		{
+			
+			if fname in %LibConErrorsIgnoreList%
+				return 0
+			
 			MsgBox, 262194, LibConError, %fname%() Failure`nErrorlevel: %LibConErrorLevel%`nA_LastError: %A_LastError%`n`nWill now Exit.
 			IfMsgBox, Abort
 				ExitApp
 			IfMsgBox, Ignore
+			{
+				LibConErrorsIgnoreList:=fname`,LibConErrorsIgnoreList
 				return 0
+			}
 			IfMsgBox, Retry
 			{
 				return %fname%(arg1,arg2,arg3,arg4,arg5)

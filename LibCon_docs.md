@@ -52,7 +52,7 @@ LibCon : Documentation
             - [GetConsoleOutputCP()](#getconsoleoutputcp)
     - Miscellaneous Functions
         - [GetConsoleHandle()](#getconsolehandle)
-        - [LibConError( fname:="", arg1:="", arg2:="", arg3:="", arg4:="", arg5:="" )](#libconerror-fname-arg1-arg2-arg3-arg4-arg5-)
+        - [LibConError( fname:="", ByRef arg1:="", arg2:="", arg3:="", arg4:="", arg5:="" )](#libconerror-fname-byref-arg1-arg2-arg3-arg4-arg5-)
         - [Wait( timeout=0 )](#wait-timeout0-)
         - [WaitAction()](#waitaction)
         - [Pause( show=1 )](#pause-show1-)
@@ -512,8 +512,8 @@ Description: Get the console's window Handle (Hwnd).
       Input: None
      Output: The Console's window handle (Hwnd)
 ```
-<a id="libconerror-fname-arg1-arg2-arg3-arg4-arg5-"></a>
-####**_LibConError( fname:="", arg1:="", arg2:="", arg3:="", arg4:="", arg5:="" )_**####
+<a id="libconerror-fname-byref-arg1-arg2-arg3-arg4-arg5-"></a>
+####**_LibConError( fname:="", ByRef arg1:="", arg2:="", arg3:="", arg4:="", arg5:="" )_**####
 
 ----
 ```
