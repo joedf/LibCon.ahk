@@ -1,8 +1,8 @@
 ﻿;
 ; AutoHotkey (Tested) Version: 1.1.13.01
 ; Author:         Joe DF  |  http://joedf.co.nr  |  joedf@users.sourceforge.net
-; Date:           November 7th, 2013
-; Library Version: 1.0.3.7
+; Date:           November 11th, 2013 - Remembrance day Release
+; Library Version: 1.0.4.0
 ;
 ;	LibCon - AutoHotkey Library For Console Support
 ;
@@ -29,24 +29,25 @@
 ;Console Constants ;{
 	LibConDebug := 0 ;Enable/Disable DebugMode
 	LibConErrorLevel := 0 ;Used For DebugMode
+	LibConVersion := "1.0.4.0"
 	
 	;Type sizes // http://msdn.microsoft.com/library/aa383751 // EXAMPLE: SHORT is 2 bytes, etc..
-	sType := Object("SHORT", 2, "COORD", 4, "WORD", 2, "SMALL_RECT", 8, "DWORD", 4, "LONG", 4)
+	sType := Object("SHORT", 2, "COORD", 4, "WORD", 2, "SMALL_RECT", 8, "DWORD", 4, "LONG", 4, "BOOL", 4)
 
 	;Console Color Constants
 	Black:=0x0
 	DarkBlue:=0x1
 	DarkGreen:=0x2
 	Turquoise:=0x3
-	DarkGreenBlue:=0x3
-	GreenBlue:=0x3
+	;GreenBlue:=0x3
+	;BlueGreen:=0x3
 	DarkRed:=0x4
 	Purple:=0x5
 	Brown:=0x6
 	Gray:=0x7
-	Grey:=0x7
+	;Grey:=0x7
 	DarkGray:=0x8
-	DarkGrey:=0x8
+	;DarkGrey:=0x8
 	Blue:=0x9
 	Green:=0xA
 	Cyan:=0xB
@@ -175,9 +176,8 @@
 				, "UInt", strlen(string)
 				, "UInt*", Written
 				, "uint", 0)
-		LibConErrorLevel:=ErrorLevel
-		
-		if (!e) or (LibConErrorLevel)
+
+		if (!e) or (LibConErrorLevel:=ErrorLevel)
 			return LibConError("print",string) ;Failure
 		Stdout.Read(0)
 		return e
@@ -403,7 +403,6 @@
 	}
 	
 	Wait(timeout=0) {
-		global LibConErrorLevel
 		opt:=""
 		if (!timeout=0)
 			opt=T%timeout%
@@ -414,7 +413,6 @@
 	;from gwarble
 	;http://www.autohotkey.com/board/topic/96304-real-console-applications-command-line-apps/?hl=console
 	WaitAction() {
-		global LibConErrorLevel
 		global Stdin
 		VarSetCapacity(INPUT_RECORD, 24, 0)
 		DllCall("ReadConsoleInput", uint, stdin.__Handle, uint, &INPUT_RECORD, uint, 1, "ptr*", 0)
@@ -508,12 +506,12 @@
 	
 	GetFgColor() {
 		c:=getColor()
-		return dec2hex(c-(16*(c >> 16)))
+		return dec2hex(c-(16*(c >> 4)))
 	}
 	
 	GetBgColor() {
 		c:=getColor()
-		return dec2hex(c >> 16)
+		return dec2hex(c >> 4)
 	}
 	
 	PrintColorTable() {
@@ -553,54 +551,75 @@
 	
 	;SetConsoleOutputCP() http://msdn.microsoft.com/library/ms686036
 	SetConsoleOutputCP(codepage) {
+		global LibConErrorLevel
 		e:=DllCall("SetConsoleOutputCP","UInt",codepage)
-		LibConErrorLevel:=ErrorLevel
-		if (!e) or (LibConErrorLevel)
+		if (!e) or (LibConErrorLevel:=ErrorLevel)
 			return LibConError("SetConsoleOutputCP",codepage) ;Failure
 		return 1
 	}
 	
 	;GetConsoleOutputCP() http://msdn.microsoft.com/library/ms683169
 	GetConsoleOutputCP() {
+		global LibConErrorLevel
 		codepage:=DllCall("GetConsoleOutputCP","Int")
-		if (!codepage) or (LibConErrorLevel)
+		if (!codepage) or (LibConErrorLevel:=ErrorLevel)
 			return LibConError("GetConsoleOutputCP") ;Failure
 		return codepage
 	}
 	
 	;SetConsoleCP() http://msdn.microsoft.com/library/ms686013
 	SetConsoleInputCP(codepage) {
+		global LibConErrorLevel
 		e:=DllCall("SetConsoleCP","UInt",codepage)
-		LibConErrorLevel:=ErrorLevel
-		if (!e) or (LibConErrorLevel)
+		if (!e) or (LibConErrorLevel:=ErrorLevel)
 			return LibConError("SetConsoleInputCP",codepage) ;Failure
 		return 1
 	}
 	
 	;GetConsoleCP() http://msdn.microsoft.com/library/ms683162
 	GetConsoleInputCP() {
+		global LibConErrorLevel
 		codepage:=DllCall("GetConsoleCP","Int")
-		if (!codepage) or (LibConErrorLevel)
+		if (!codepage) or (LibConErrorLevel:=ErrorLevel)
 			return LibConError("GetConsoleInputCP") ;Failure
 		return codepage
 	}
 	
+	;GetConsoleMode() http://msdn.microsoft.com/library/ms683167
+	GetConsoleMode(ByRef Mode) {
+		global LibConErrorLevel
+		global stdout
+		e:=DllCall("GetConsoleMode","UInt",stdout.__handle,"UInt*",Mode)
+		if (!e) or (LibConErrorLevel:=ErrorLevel)
+			return LibConError("GetConsoleMode",Mode) ;Failure
+		return 1
+	}
+	;SetConsoleMode() http://msdn.microsoft.com/library/ms686033
+	SetConsoleMode(Mode) {
+		global LibConErrorLevel
+		global stdin
+		e:=DllCall("SetConsoleMode","UInt",stdin.__handle,"UInt",Mode)
+		if (!e) or (LibConErrorLevel:=ErrorLevel)
+			return LibConError("SetConsoleMode",Mode) ;Failure
+		return 1
+	}
+	
 	;GetConsoleOriginalTitle() http://msdn.microsoft.com/library/ms683168
 	GetConsoleOriginalTitle(byRef Title) {
+		global LibConErrorLevel
 		VarSetCapacity(title,6400,0)
 		e:=DllCall("GetConsoleOriginalTitle","Str",Title,"UInt",6400)
-		LibConErrorLevel:=ErrorLevel
-		if (!e) or (LibConErrorLevel)
+		if (!e) or (LibConErrorLevel:=ErrorLevel)
 			return LibConError("GetConsoleTitle",Title) ;Failure
 		return 1
 	}
 	
 	;GetConsoleTitle() http://msdn.microsoft.com/library/ms683174
 	GetConsoleTitle(byRef Title) {
+		global LibConErrorLevel
 		VarSetCapacity(title,6400,0)
 		e:=DllCall("GetConsoleTitle","Str",Title,"UInt",6400)
-		LibConErrorLevel:=ErrorLevel
-		if (!e) or (LibConErrorLevel)
+		if (!e) or (LibConErrorLevel:=ErrorLevel)
 			return LibConError("GetConsoleTitle",Title) ;Failure
 		return 1
 	}
@@ -614,12 +633,72 @@
 			if strlen(string) >= 6400
 				StringTrimRight,string,string,% strlen(string) - (strlen(string)-6400)
 			e:=DllCall("SetConsoleTitle","Str",string)
-			LibConErrorLevel:=ErrorLevel
-			if (!e) or (LibConErrorLevel)
+			if (!e) or (LibConErrorLevel:=ErrorLevel)
 				return LibConError("SetConsoleTitle",title) ;Failure
 			return 1
 		}
 		return 0
+	}
+	
+	;GetCurrentDirectory() http://msdn.microsoft.com/library/aa364934
+	GetCurrentDirectory() {
+		global LibConErrorLevel
+		VarSetCapacity(cdir,cdir_size:=260*(A_IsUnicode?6:1)+1,0)
+		e:=DllCall("GetCurrentDirectory" (A_IsUnicode?"W":"A"),"UInt",cdir_size,"Str",cdir)
+		if (!e) or (LibConErrorLevel:=ErrorLevel)
+			return LibConError("GetCurrentDirectory") ;Failure
+		return cdir
+	}
+	
+	;SetCurrentDirectory() http://msdn.microsoft.com/library/aa365530
+	SetCurrentDirectory(dir) {
+		global LibConErrorLevel
+		StringReplace,dir,dir,\,\\,All
+		if (dir!="") {
+			e:=DllCall("SetCurrentDirectory" (A_IsUnicode?"W":"A"),"Str",dir,"int")
+			if (!e) or (LibConErrorLevel:=ErrorLevel)
+				return LibConError("SetCurrentDirectory",dir) ;Failure
+		}
+		return 1
+	}
+	
+	;GetConsoleCursorInfo() http://msdn.microsoft.com/library/ms683163
+	GetConsoleCursorInfo(ByRef Size="", ByRef Shown="") {
+		global LibConErrorLevel
+		global stdout
+		global sType
+		VarSetCapacity(s,sType.DWORD+sType.BOOL,0)
+		e:=DllCall("GetConsoleCursorInfo","UInt",stdout.__handle,"Ptr",&s)
+		if (!e) or (LibConErrorLevel:=ErrorLevel)
+			return LibConError("GetConsoleCursorInfo",Shown,Size) ;Failure
+		Size:=NumGet(&s,"UInt")
+		Shown:=NumGet(&s,sType.DWORD,"Int")
+		return 1
+	}
+
+	;SetConsoleCursorInfo() http://msdn.microsoft.com/library/ms686019
+	SetConsoleCursorInfo(Size="", Shown="") {
+		global LibConErrorLevel
+		global stdout
+		global sType
+		if size is not Integer
+		{ ;and 
+			if Shown is not Integer
+				return 0
+		}
+		if size is not Integer
+			GetConsoleCursorInfo(size)
+		if size not between 1 and 100
+			GetConsoleCursorInfo(size)
+		if Shown is not Integer
+			GetConsoleCursorInfo("",Shown)
+		VarSetCapacity(s,sType.DWORD+sType.BOOL,0)
+		NumPut(Size,s,"UInt")
+		NumPut(Shown,s,sType.DWORD,"Int")
+		e:=DllCall("SetConsoleCursorInfo","UInt",stdout.__handle,"Ptr",&s)
+		if (!e) or (LibConErrorLevel:=ErrorLevel)
+			return LibConError("SetConsoleCursorInfo",Shown,Size) ;Failure
+		return 1
 	}
 	
 	;For the Cursor of CLI -> Caret
@@ -631,11 +710,10 @@
 		hStdout := Stdout.__Handle
 		VarSetCapacity(struct,(sType.COORD*3)+sType.WORD+sType.SMALL_RECT,0)
 		e:=DllCall("GetConsoleScreenBufferInfo","UPtr",hStdout,"Ptr",&struct)
-		LibConErrorLevel:=ErrorLevel
+		if (!e) or (LibConErrorLevel:=ErrorLevel)
+			return LibConError("getConsoleCursorPosition",x,y) ;Failure
 		x:=NumGet(&struct,sType.COORD,"UShort")
 		y:=NumGet(&struct,sType.COORD+sType.SHORT,"UShort")
-		if (!e) or (LibConErrorLevel)
-			return LibConError("getConsoleCursorPosition",x,y) ;Failure
 		return 1
 	}
 	
@@ -654,7 +732,7 @@
 		Numput(x,struct,"UShort")
 		Numput(y,struct,sType.SHORT,"UShort")
 		e:=DllCall("SetConsoleCursorPosition","Ptr",hStdout,"uint",Numget(struct,"uint"))
-		if (!e) or (LibConErrorLevel)
+		if (!e) or (LibConErrorLevel:=ErrorLevel)
 			return LibConError("SetConsoleCursorPosition",x,y) ;Failure
 		return 1
 	}
@@ -678,7 +756,7 @@
 		LibConErrorLevel:=ErrorLevel
 		bufferwidth:=NumGet(&struct,"UShort")
 		bufferheight:=NumGet(&struct,sType.SHORT,"UShort")
-		if (!x) or (LibConErrorLevel)
+		if (!x) or (LibConErrorLevel:=ErrorLevel)
 			return LibConError("getConsoleSize",bufferwidth,bufferheight) ;Failure
 		return 1
 	}
@@ -722,7 +800,7 @@
 		fontwidth:=NumGet(&struct,sType.DWORD,"UShort")
 		fontheight:=NumGet(&struct,sType.DWORD+sType.SHORT,"UShort")
 		
-		if (!x) or (LibConErrorLevel)
+		if (!x) or (LibConErrorLevel:=ErrorLevel)
 			return LibConError("getFontSize",fontwidth,fontheight) ;Failure
 		return 1
 	}
@@ -799,6 +877,31 @@
 		}
 	}
 	
+	GetConsoleClientSize(ByRef width, ByRef height) {
+		global LibConErrorLevel
+		VarSetCapacity(r,16,0)
+		x:=DllCall("GetClientRect","UInt",getConsoleHandle(),"UInt",&r)
+		if (!x) or (LibConErrorLevel:=ErrorLevel)
+			return LibConError("GetConsoleClientSize",width,height) ;Failure
+		width:=NumGet(r,8,"int")
+		height:=NumGet(r,12,"int")
+		return 1
+	}
+	
+	GetConsoleClientWidth() {
+		if (!GetConsoleClientSize(width,height))
+			return 0 ;Failure
+		else
+			return %width% ;Success
+	}
+
+	GetConsoleClientHeight() {
+		if (!GetConsoleClientSize(width,height))
+			return 0 ;Failure
+		else
+			return %height% ;Success
+	}
+	
 	;http://msdn.microsoft.com/library/ms682663
 	FillConsoleOutputCharacter(cCharacter,nLength,x,y,ByRef lpNumberOfCharsWritten="") {
 		global LibConErrorLevel
@@ -856,6 +959,67 @@
 					,"UInt*",lpNumberOfAttrsWritten,"Int")
 		if (!x) or (LibConErrorLevel:=ErrorLevel)
 			return LibConError("FillConsoleOutputAttribute",wAttribute,nLength,x,y,lpNumberOfAttrsWritten) ;Failure
+		return 1
+	}
+	
+	;http://msdn.microsoft.com/en-US/library/ms684968
+	ReadConsoleOutputAttribute(ByRef lpAttribute, nLength, x, y, ByRef lpNumberOfAttrsRead="") {
+		global LibConErrorLevel
+		global sType
+		global Stdout
+		hStdout:=Stdout.__Handle
+	/*
+		BOOL WINAPI ReadConsoleOutputAttribute(
+			_In_   HANDLE hConsoleOutput,
+			_Out_  LPWORD lpAttribute,
+			_In_   DWORD nLength,
+			_In_   COORD dwReadCoord,
+			_Out_  LPDWORD lpNumberOfAttrsRead
+		);
+	*/
+		VarSetCapacity(dwWriteCoord,sType.COORD,0)
+			NumPut(x,dwWriteCoord,"UShort")
+			NumPut(y,dwWriteCoord,sType.SHORT,"UShort")
+		
+		x:=DllCall("ReadConsoleOutputAttribute"
+					,"UInt",hStdOut
+					,"UInt*",lpAttribute
+					,"UInt",nLength
+					,"uint",Numget(dwWriteCoord,"uint")
+					,"UInt*",lpNumberOfAttrsRead,"Int")
+		if (!x) or (LibConErrorLevel:=ErrorLevel)
+			return LibConError("ReadConsoleOutputAttribute",lpAttribute,nLength,x,y,lpNumberOfAttrsRead) ;Failure
+		return 1
+	}
+	
+	;http://msdn.microsoft.com/en-US/library/ms684969
+	ReadConsoleOutputCharacter(ByRef lpCharacter, nLength, x, y, ByRef lpNumberOfCharsRead="") {
+		global LibConErrorLevel
+		global sType
+		global Stdout
+		hStdout:=Stdout.__Handle
+	/*	
+		BOOL WINAPI ReadConsoleOutputCharacter(
+			_In_   HANDLE hConsoleOutput,
+			_Out_  LPTSTR lpCharacter,
+			_In_   DWORD nLength,
+			_In_   COORD dwReadCoord,
+			_Out_  LPDWORD lpNumberOfCharsRead
+		);
+	*/
+		VarSetCapacity(dwWriteCoord,sType.COORD,0)
+			NumPut(x,dwWriteCoord,"UShort")
+			NumPut(y,dwWriteCoord,sType.SHORT,"UShort")
+		
+		x:=DllCall("ReadConsoleOutputCharacter" (A_IsUnicode?"W":"A")
+					,"UInt",hStdOut
+					,"UChar*",lpCharacter
+					,"UInt",nLength
+					,"uint",Numget(dwWriteCoord,"uint")
+					,"UInt*",lpNumberOfCharsRead,"Int")
+		if (!x) or (LibConErrorLevel:=ErrorLevel)
+			return LibConError("ReadConsoleOutputCharacter",lpCharacter,nLength,x,y,lpNumberOfCharsRead) ;Failure
+		lpCharacter:=chr(lpCharacter)
 		return 1
 	}
 	
