@@ -22,17 +22,21 @@ LibCon : Documentation
         - [Getch( ByRef keyname )](#getch-byref-keyname-)
         - [ClearScreen()](#clearscreen)
         - [FillConsoleOutputCharacter( cCharacter, nLength, x, y, ByRef lpNumberOfCharsWritten="" )](#fillconsoleoutputcharacter-ccharacter-nlength-x-y-byref-lpnumberofcharswritten-)
+        - [ReadConsoleOutputCharacter( ByRef lpCharacter, nLength, x, y, ByRef lpNumberOfCharsRead="" )](#readconsoleoutputcharacter-byref-lpcharacter-nlength-x-y-byref-lpnumberofcharsread-)
         - [FlushInput()](#flushinput)
+        - [GetCurrentDirectory()](#getcurrentdirectory)
+        - [SetCurrentDirectory( dir )](#setcurrentdirectory-dir-)
     - Console Properties & Settings
         - Color Functions
             - [SetColor( FG="", BG="" )](#setcolor-fg-bg-)
             - [SetFgColor( c )](#setfgcolor-c-)
             - [SetBgColor( c )](#setbgcolor-c-)
-            - [GetColor()](#getcolor)
+            - [GetColor( ByRef FgColor="", ByRef BgColor="" )](#getcolor-byref-fgcolor-byref-bgcolor-)
             - [GetFgColor()](#getfgcolor)
             - [GetBgColor()](#getbgcolor)
             - [PrintColorTable()](#printcolortable)
             - [FillConsoleOutputAttribute( wAttribute, nLength, x, y, ByRef lpNumberOfAttrsWritten="" )](#fillconsoleoutputattribute-wattribute-nlength-x-y-byref-lpnumberofattrswritten-)
+            - [ReadConsoleOutputAttribute( ByRef lpAttribute, nLength, x, y, ByRef lpNumberOfAttrsRead="" )](#readconsoleoutputattribute-byref-lpattribute-nlength-x-y-byref-lpnumberofattrsread-)
         - Size, Position & Text
             - [GetFontSize( Byref fontwidth, ByRef fontheight )](#getfontsize-byref-fontwidth-byref-fontheight-)
             - [GetFontWidth()](#getfontwidth)
@@ -41,8 +45,13 @@ LibCon : Documentation
             - [GetConsoleWidth()](#getconsolewidth)
             - [GetConsoleHeight()](#getconsoleheight)
             - [SetConsoleSize( width, height, SizeHeight=0 )](#setconsolesize-width-height-sizeheight0-)
+            - [GetConsoleClientSize( ByRef width, ByRef height )](#getconsoleclientsize-byref-width-byref-height-)
+            - [GetConsoleClientWidth()](#getconsoleclientwidth)
+            - [GetConsoleClientHeight()](#getconsoleclientheight)
             - [GetConsoleCursorPosition( ByRef x, ByRef y )](#getconsolecursorposition-byref-x-byref-y-)
-            - [SetConsoleCursorPosition( x="", y="" )](#setconsolecursorposition-x--y--)
+            - [SetConsoleCursorPosition( x="", y="" )](#setconsolecursorposition-x-y-)
+            - [SetConsoleCursorInfo( Size="", Shown="" )](#setconsolecursorinfo-size-shown-)
+            - [GetConsoleCursorInfo( ByRef Size="", ByRef Shown="" )](#getconsolecursorinfo-byref-size-byref-shown-)
             - [GetConsoleOriginalTitle( byRef Title )](#getconsoleoriginaltitle-byref-title-)
             - [GetConsoleTitle( byRef Title )](#getconsoletitle-byref-title-)
             - [SetConsoleTitle( title="" )](#setconsoletitle-title-)
@@ -50,9 +59,11 @@ LibCon : Documentation
             - [GetConsoleInputCP()](#getconsoleinputcp)
             - [SetConsoleOutputCP( codepage )](#setconsoleoutputcp-codepage-)
             - [GetConsoleOutputCP()](#getconsoleoutputcp)
+            - [SetConsoleMode( Mode )](#setconsolemode-mode-)
+            - [GetConsoleMode( ByRef Mode )](#getconsolemode-byref-mode-)
     - Miscellaneous Functions
         - [GetConsoleHandle()](#getconsolehandle)
-        - [LibConError( fname:="", ByRef arg1:="", arg2:="", arg3:="", arg4:="", arg5:="" )](#libconerror-fname-byref-arg1-arg2-arg3-arg4-arg5-)
+        - [LibConError( fname:="", ByRef arg1:="", ByRef arg2:="", arg3:="", arg4:="", ByRef arg5:="" )](#libconerror-fname-byref-arg1-byref-arg2-arg3-arg4-byref-arg5-)
         - [Wait( timeout=0 )](#wait-timeout0-)
         - [WaitAction()](#waitaction)
         - [Pause( show=1 )](#pause-show1-)
@@ -224,6 +235,23 @@ Description: Writes a character to the console screen buffer a specified number 
                                       to the console screen buffer.
      Output: Success is Non-Zero, Failure is Zero
 ```
+<a id="readconsoleoutputcharacter-byref-lpcharacter-nlength-x-y-byref-lpnumberofcharsread-"></a>
+####**_ReadConsoleOutputCharacter( ByRef lpCharacter, nLength, x, y, ByRef lpNumberOfCharsRead="" )_**####
+
+----
+```
+Description: Reads a number of characters from consecutive cells of a console screen buffer,
+             beginning at a specified location.
+   MSDN URL: http://msdn.microsoft.com/library/ms684969
+      Input: lpCharacter - The variable in which to store the characters read from the
+                           console screen buffer.
+             nLength     - The number of character cells to be read.
+             x           - The x coordinate of the COORD structure that specifies the
+                           character coordinates of the first cell from which to read.
+             y           - The y coordinate of the COORD structure.
+             lpNumberOfCharsRead - The Varible in which to store the number characters read.
+     Output: Success is Non-Zero, Failure is Zero
+```
 <a id="flushinput"></a>
 ####**_FlushInput()_**####
 
@@ -235,6 +263,28 @@ Description: Flushes the console input buffer. All input records currently in th
       Input: None  
      Output: Success is Non-Zero, Failure is Zero
 ```
+<a id="getcurrentdirectory"></a>
+####**_GetCurrentDirectory()_**####
+
+----
+```
+Description: Retrieves the current working directory for the current process.
+   MSDN URL: http://msdn.microsoft.com/library/aa364934
+      Input: None  
+     Output: The Current working directory (Absolute Path). (String)
+```
+
+<a id="setcurrentdirectory-dir-"></a>
+####**_SetCurrentDirectory( dir )_**####
+
+----
+```
+Description: Changes the current working directory for the current process.
+   MSDN URL: http://msdn.microsoft.com/library/aa365530
+      Input: dir - The path to the new current working directory.
+                   Note: Absolute, Relative, Drives and UNC Path are all accepted.
+     Output: Success is Non-Zero, Failure is Zero
+```
 <a id="setcolor-fg-bg-"></a>
 ####**_SetColor( FG="", BG="" )_**####
 
@@ -242,6 +292,8 @@ Description: Flushes the console input buffer. All input records currently in th
 ```
 Description: Sets the Current Console's Foreground and Background Colors.
              (A.K.A. Text color and Text Background color)
+     Notice: To set the color that received from getColor(), set FG to that
+             value, and BG to '0' (zero).
       Input: FG (Foreground) - Set the Foreground color (Hexadecimal Value)
              BG (Background) - Set the Background color (Hexadecimal Value)
              Note: The 'Console Color Constants' may be used here.
@@ -266,17 +318,19 @@ Description: Synonym for 'setColor("",BG)' - see 'setColor()' for details.
       Input: BG (Background) - Set the Background color (Hexadecimal Value)
      Output: Success is Non-Zero, Failure is Zero
 ```
-<a id="getcolor"></a>
-####**_GetColor()_**####
+<a id="getcolor-byref-fgcolor-byref-bgcolor-"></a>
+####**_GetColor( ByRef FgColor="", ByRef BgColor="" )_**####
 
 ----
 ```
 Description: Returns the current color (Hexadecimal Value)
-             Note: It may be suggest to simply use the 'getFgColor()'
-             and the 'getBgColor()' functions instead since they are
-             more user friendly. See 'Console Color Constants' for all
-             possible color values.
-      Input: None
+             Note: The color returned is both the background and foreground
+             colors combined. One may use 'getFgColor()' or 'getBgColor()'
+             functions instead get only one of the two colors.
+             See 'Console Color Constants' for all possible color values.
+     Notice: Later, to set a "combined" color, use: SetColor(YourValueHere,0)
+      Input: FgColor - The Varible in which to store the Foreground color (Hex Value)
+             BgColor - The Varible in which to store the Background color (Hex Value)
      Output: Success is Non-Zero, Failure is Undefined
 ```
 <a id="getfgcolor"></a>
@@ -326,6 +380,23 @@ Description: Sets the character attributes for a specified number of character c
              y          - The y coordinate of the COORD structure.
              lpNumberOfAttrsWritten - The Varible in which to store the number of character
                                       cells whose attributes were actually set.
+     Output: Success is Non-Zero, Failure is Zero
+```
+<a id="readconsoleoutputattribute-byref-lpattribute-nlength-x-y-byref-lpnumberofattrsread-"></a>
+####**_ReadConsoleOutputAttribute( ByRef lpAttribute, nLength, x, y, ByRef lpNumberOfAttrsRead="" )_**####
+
+----
+```
+Description: Gets the character attributes for a specified number of character cells,
+             beginning at the specified coordinates in a screen buffer.
+   MSDN URL: http://msdn.microsoft.com/library/ms684968
+      Input: lpAttribute - The variable in which to store the "Character attributes" to used by console
+                           at the specified position.
+             nLength     - The number of screen buffer character cells from which to read.
+             x           - The x coordinate of the COORD structure that specifies the character
+                           coordinates of the first cell from which to read.
+             y           - The y coordinate of the COORD structure.
+             lpNumberOfAttrsRead - The Varible in which to store the number of attributes actually read.
      Output: Success is Non-Zero, Failure is Zero
 ```
 <a id="getfontsize-byref-fontwidth-byref-fontheight-"></a>
@@ -403,26 +474,82 @@ Description: Set the Console's buffer size, No need to worry about the window si
                           its original window height that was before resizing.
      Output: Success is Non-Zero, Failure is Zero
 ```
+<a id="getconsoleclientsize-byref-width-byref-height-"></a>
+####**_GetConsoleClientSize( ByRef width, ByRef height )_**####
+
+----
+```
+Description: Get the Console's Client Area size in pixels.
+      Input: width  - The Varible in which to store the console's client width (Number)
+             height - The Varible in which to store the console's client height (Number)
+     Output: Success is Non-Zero, Failure is Zero
+```
+<a id="getconsoleclientwidth"></a>
+####**_GetConsoleClientWidth()_**####
+
+----
+```
+Description: Shorthand for 'GetConsoleClientSize()'. Get the Console's buffer's Width.
+      Input: None
+     Output: The console's client (Area) width (Number)
+```
+<a id="getconsoleclientheight"></a>
+####**_GetConsoleClientHeight()_**####
+
+----
+```
+Description: Shorthand for 'GetConsoleClientSize()'. Get the Console's buffer's Width.
+      Input: None
+     Output: The console's client (Area) height (Number)
+```
 <a id="getconsolecursorposition-byref-x-byref-y-"></a>
 ####**_GetConsoleCursorPosition( ByRef x, ByRef y )_**####
 
 ----
 ```
-Description: Get the Cursor's (or caret) current position. The origin is (0,0)
+Description: Get the Cursor's (or caret) current position.
+       Note: The origin is (0,0)
    MSDN URL: http://msdn.microsoft.com/library/ms683171
       Input: x - The Varible in which to store the cursor's x pos. (Number)
              y - The Varible in which to store the cursor's y pos. (Number)
      Output: Success is Non-Zero, Failure is Zero
 ```
-<a id="setconsolecursorposition-x--y--"></a>
+<a id="setconsolecursorposition-x-y-"></a>
 ####**_SetConsoleCursorPosition( x="", y="" )_**####
 
 ----
 ```
-Description: Sets the cursor position in the specified console screen buffer.
+Description: Sets the cursor position.
+       Note: The origin is (0,0)
    MSDN URL: http://msdn.microsoft.com/library/ms686025
       Input: x - The desired Cursor's x pos. (Number)
              y - The desired Cursor's y pos. (Number)
+     Output: Success is Non-Zero, Failure is Zero
+```
+<a id="setconsolecursorinfo-size-shown-"></a>
+####**_SetConsoleCursorInfo( Size="", Shown="" )_**####
+
+----
+```
+Description: Sets the cursor height (size) and visibility.
+   MSDN URL: http://msdn.microsoft.com/library/ms686019
+      Input: Size  - The percentage of a character cell that is filled by the
+                     cursor. (Range 1 - 100)
+             Shown - The visibility of the cursor. Set to false (zero) to hide
+                     the cursor. (Boolean)
+     Output: Success is Non-Zero, Failure is Zero
+```
+<a id="getconsolecursorinfo-byref-size-byref-shown-"></a>
+####**_GetConsoleCursorInfo( ByRef Size="", ByRef Shown="" )_**####
+
+----
+```
+Description: Gets the cursor height (size) and visibility.
+   MSDN URL: http://msdn.microsoft.com/library/ms683163
+      Input: Size  - The variable in which to store the percentage of a character
+                     cell that is filled by the cursor. (Range 1 - 100)
+             Shown - The variable in which to store the visibility of the cursor.
+                     Set to false (zero), if the cursor is hidden. (Boolean)
      Output: Success is Non-Zero, Failure is Zero
 ```
 <a id="getconsoleoriginaltitle-byref-title-"></a>
@@ -487,7 +614,7 @@ Description: Sets the output code page used by the console. A console uses its
              output code page to translate the character values written by the
              various output functions into the images displayed in the console window.
    MSDN URL: http://msdn.microsoft.com/library/ms686036
-      Input:  codepage - (Number) see "Code Page Identifiers" : http://msdn.microsoft.com/library/dd317756
+      Input: codepage - (Number) see "Code Page Identifiers" : http://msdn.microsoft.com/library/dd317756
      Output: Success is Non-Zero, Failure is Zero
 ```
 <a id="getconsoleoutputcp"></a>
@@ -502,6 +629,28 @@ Description: Retrieves the output code page used by the console. A console uses 
       Input: None
      Output: codepage - (Number) see "Code Page Identifiers" : http://msdn.microsoft.com/library/dd317756
 ```
+<a id="setconsolemode-mode-"></a>
+####**_SetConsoleMode( Mode )_**####
+
+----
+```
+Description: Sets the input buffer's mode of the console. (Output not yet supported)
+   MSDN URL: http://msdn.microsoft.com/library/ms686033
+      Input: Mode - the console mode to be used (Hexadecimal/Number)
+             see the Console modes : http://msdn.microsoft.com/library/ms686033
+     Output: Success is Non-Zero, Failure is Zero
+```
+<a id="getconsolemode-byref-mode-"></a>
+####**_GetConsoleMode( ByRef Mode )_**####
+
+----
+```
+Description: Gets the output buffer's mode of the console. (Input not yet supported)
+   MSDN URL: http://msdn.microsoft.com/library/ms683167
+      Input: Mode - The variable in which to store the console mode currently used (Hexadecimal/Number)
+             see the Console modes : http://msdn.microsoft.com/library/ms686033
+     Output: Success is Non-Zero, Failure is Zero
+```
 <a id="getconsolehandle"></a>
 ####**_GetConsoleHandle()_**####
 
@@ -512,8 +661,8 @@ Description: Get the console's window Handle (Hwnd).
       Input: None
      Output: The Console's window handle (Hwnd)
 ```
-<a id="libconerror-fname-byref-arg1-arg2-arg3-arg4-arg5-"></a>
-####**_LibConError( fname:="", ByRef arg1:="", arg2:="", arg3:="", arg4:="", arg5:="" )_**####
+<a id="libconerror-fname-byref-arg1-byref-arg2-arg3-arg4-byref-arg5-"></a>
+####**_LibConError( fname:="", ByRef arg1:="", ByRef arg2:="", arg3:="", arg4:="", ByRef arg5:="" )_**####
 
 ----
 ```
@@ -613,12 +762,15 @@ Description: Displays an 'ASCII' progress bar.
 ----
 
 ```
+SetKeyDelay, 0
 SetWinDelay, 0
 SetBatchLines,-1
 ```
 <a id="predefined-variables--objects"></a>
 ###Predefined Variables & Objects###
 ----
+**_LibConVersion_** is a string that is set to the current version of LibCon used.
+*Definition (example):* `LibConVersion := "1.0.4.1" ;Library Version`
  
 **_LibConDebug_** is either set 1 (true) or 0 (false) to enable/disable LibConDebug Mode.  
 *Definition (default):* `LibConDebug := 0 ;Enable/Disable DebugMode`
@@ -656,15 +808,11 @@ Black:=0x0
 DarkBlue:=0x1
 DarkGreen:=0x2
 Turquoise:=0x3
-DarkGreenBlue:=0x3
-GreenBlue:=0x3
 DarkRed:=0x4
 Purple:=0x5
 Brown:=0x6
 Gray:=0x7
-Grey:=0x7
 DarkGray:=0x8
-DarkGrey:=0x8
 Blue:=0x9
 Green:=0xA
 Cyan:=0xB

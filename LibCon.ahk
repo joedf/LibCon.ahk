@@ -1,14 +1,15 @@
 ﻿;
 ; AutoHotkey (Tested) Version: 1.1.13.01
 ; Author:         Joe DF  |  http://joedf.co.nr  |  joedf@users.sourceforge.net
-; Date:           November 11th, 2013 - Remembrance day Release
-; Library Version: 1.0.4.0
+; Date:           November 13th, 2013 - Remembrance day Release (v1.0.4.x)
+; Library Version: 1.0.4.1
 ;
 ;	LibCon - AutoHotkey Library For Console Support
 ;
 ;///////////////////////////////////////////////////////
 
 ;Default settings
+	SetKeyDelay, 0
 	SetWinDelay, 0
 	SetBatchLines,-1
 
@@ -27,12 +28,12 @@
 	}	
 
 ;Console Constants ;{
+	LibConVersion := "1.0.4.1" ;Library Version
 	LibConDebug := 0 ;Enable/Disable DebugMode
 	LibConErrorLevel := 0 ;Used For DebugMode
-	LibConVersion := "1.0.4.0"
 	
 	;Type sizes // http://msdn.microsoft.com/library/aa383751 // EXAMPLE: SHORT is 2 bytes, etc..
-	sType := Object("SHORT", 2, "COORD", 4, "WORD", 2, "SMALL_RECT", 8, "DWORD", 4, "LONG", 4, "BOOL", 4)
+	sType := Object("SHORT", 2, "COORD", 4, "WORD", 2, "SMALL_RECT", 8, "DWORD", 4, "LONG", 4, "BOOL", 4, "RECT", 16)
 
 	;Console Color Constants
 	Black:=0x0
@@ -493,7 +494,7 @@
 	}
 
 	;GetConsoleScreenBufferInfo() http://msdn.microsoft.com/library/ms683171
-	GetColor() { ;Returns the current color (int Hexadecimal number)
+	GetColor(ByRef FgColor="", ByRef BgColor="") { ;Returns the current color (int Hexadecimal number)
 		global LibConErrorLevel
 		global Stdout
 		global sType
@@ -501,17 +502,20 @@
 		x:=DllCall("GetConsoleScreenBufferInfo","UPtr",Stdout.__Handle,"Ptr",&consoleInfo)
 		if (!x) or (LibConErrorLevel:=ErrorLevel)
 			return LibConError("getColor") ;Failure
-		return dec2hex(NumGet(&consoleInfo,(2*sType.COORD),"Short"))
+		c:=dec2hex(NumGet(&consoleInfo,(2*sType.COORD),"Short"))
+		FgColor:=dec2hex(c-(16*(c >> 4)))
+		BgColor:=dec2hex(c >> 4)
+		return c
 	}
 	
 	GetFgColor() {
-		c:=getColor()
-		return dec2hex(c-(16*(c >> 4)))
+		getColor(fg)
+		return fg
 	}
 	
 	GetBgColor() {
-		c:=getColor()
-		return dec2hex(c >> 4)
+		getColor("",bg)
+		return bg
 	}
 	
 	PrintColorTable() {
@@ -594,6 +598,7 @@
 			return LibConError("GetConsoleMode",Mode) ;Failure
 		return 1
 	}
+	
 	;SetConsoleMode() http://msdn.microsoft.com/library/ms686033
 	SetConsoleMode(Mode) {
 		global LibConErrorLevel
@@ -653,7 +658,7 @@
 	;SetCurrentDirectory() http://msdn.microsoft.com/library/aa365530
 	SetCurrentDirectory(dir) {
 		global LibConErrorLevel
-		StringReplace,dir,dir,\,\\,All
+		;StringReplace,dir,dir,\,\\,All  ; Not necessary?
 		if (dir!="") {
 			e:=DllCall("SetCurrentDirectory" (A_IsUnicode?"W":"A"),"Str",dir,"int")
 			if (!e) or (LibConErrorLevel:=ErrorLevel)
@@ -879,12 +884,13 @@
 	
 	GetConsoleClientSize(ByRef width, ByRef height) {
 		global LibConErrorLevel
-		VarSetCapacity(r,16,0)
-		x:=DllCall("GetClientRect","UInt",getConsoleHandle(),"UInt",&r)
+		global sType
+		VarSetCapacity(s,sType.RECT,0)
+		x:=DllCall("GetClientRect","UInt",getConsoleHandle(),"UInt",&s)
 		if (!x) or (LibConErrorLevel:=ErrorLevel)
 			return LibConError("GetConsoleClientSize",width,height) ;Failure
-		width:=NumGet(r,8,"int")
-		height:=NumGet(r,12,"int")
+		width:=NumGet(s,2*(sType.LONG),"Int")
+		height:=NumGet(s,3*(sType.LONG),"Int")
 		return 1
 	}
 	
@@ -962,7 +968,7 @@
 		return 1
 	}
 	
-	;http://msdn.microsoft.com/en-US/library/ms684968
+	;http://msdn.microsoft.com/library/ms684968
 	ReadConsoleOutputAttribute(ByRef lpAttribute, nLength, x, y, ByRef lpNumberOfAttrsRead="") {
 		global LibConErrorLevel
 		global sType
@@ -992,7 +998,7 @@
 		return 1
 	}
 	
-	;http://msdn.microsoft.com/en-US/library/ms684969
+	;http://msdn.microsoft.com/library/ms684969
 	ReadConsoleOutputCharacter(ByRef lpCharacter, nLength, x, y, ByRef lpNumberOfCharsRead="") {
 		global LibConErrorLevel
 		global sType
@@ -1024,7 +1030,7 @@
 	}
 	
 	;Msgbox for Errors (DebugMode Only)
-	LibConError(fname:="",ByRef arg1:="",arg2:="",arg3:="",arg4:="",arg5:="") {
+	LibConError(fname:="",ByRef arg1:="", ByRef arg2:="",arg3:="",arg4:="", ByRef arg5:="") {
 		global LibConDebug
 		global LibConErrorLevel
 		
