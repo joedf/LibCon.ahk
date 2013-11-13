@@ -769,7 +769,7 @@ SetBatchLines,-1
 <a id="predefined-variables--objects"></a>
 ###Predefined Variables & Objects###
 ----
-**_LibConVersion_** is a string that is set to the current version of LibCon used.
+**_LibConVersion_** is a string that is set to the current version of LibCon used.  
 *Definition (example):* `LibConVersion := "1.0.4.1" ;Library Version`
  
 **_LibConDebug_** is either set 1 (true) or 0 (false) to enable/disable LibConDebug Mode.  
