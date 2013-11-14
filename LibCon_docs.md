@@ -83,6 +83,7 @@ LibCon : Documentation
 Description: Runs StartConsole() if the script was launched run from "Explorer.exe" or
              if the script is not compiled, otherwise it will use AttachConsole on its 
              parent process.
+     Notice: This is the usual and recommended way to start a console.
       Input: None  
      Output: Success is Non-Zero, Failure is Zero
 ```
@@ -91,9 +92,10 @@ Description: Runs StartConsole() if the script was launched run from "Explorer.e
 
 ----
 ```
-Description: Opens up a New/Sepera Console Window that 'belongs' (attached) to the current
+Description: Opens up a New/Seperate Console Window that 'belongs' (attached) to the current
              AutoHotkey Thread. Also, Sets the Library's Global variables:
              Stdout (Object) and Stdin (Object)
+       Note: Only one console is allowed per process.
       Input: None  
      Output: Success is Non-Zero, Failure is Zero
 ```
@@ -105,7 +107,7 @@ Description: Opens up a New/Sepera Console Window that 'belongs' (attached) to t
 Description: Attach to a Console that is currently running. Although, it is suggested to use
              'StartConsole()' when possible. (Since this mode is for console 
              applications, it is suggested to compile your script as console 
-             application, then use StartSmart() Instead.)
+             application. SmartStartConsole() is Recommended.)
       Input: cPID - The target Console's PID 
              Default: Defaults to calling process. ATTACH_PARENT_PROCESS = (DWORD)-1
      Output: Success is Non-Zero, Failure is Zero
