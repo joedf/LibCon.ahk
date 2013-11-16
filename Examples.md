@@ -37,7 +37,7 @@ Functions used:
 
 ----
 Description:
-> This example is basically a follow-up of example 1. It shows how to the interaction between GUI and CLI can be implemented.  
+> This example is basically a follow-up of example 1. It shows a way the interaction between GUI and CLI can be implemented.  
 
 >Essentially, a deeper look at the "basics".
 
@@ -55,7 +55,7 @@ Functions used:
 
 ----
 Description:
-> This example is was originally implemented to push the limits of LibCon a little further than the "basics". It involves a DOS style GUI, similar to Word 5.5a using "text-based GUI". This considered a more profound example. It has been simplified and commented greatly to demonstration the basic concept of "drawing" in the console, or otherwise, "GUI drawing".
+> This example was originally implemented to push the limits of LibCon a little further than the "basics". It involves a DOS style GUI, similar to Word 5.5a using "text-based GUI". This is considered to be a more profound example. It has been simplified and commented greatly to demonstrate the basic concept of "drawing" in the console, or otherwise, "GUI drawing".
 
 >Essentially, an example that takes a deeper look at the more advanced console functions.
 

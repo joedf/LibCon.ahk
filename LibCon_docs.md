@@ -106,7 +106,7 @@ Description: Opens up a New/Seperate Console Window that 'belongs' (attached) to
 ```
 Description: Attach to a Console that is currently running. Although, it is suggested to use
              'StartConsole()' when possible. (Since this mode is for console 
-             applications, it is suggested to compile your script as console 
+             applications, it is suggested to compile your script as console a 
              application. SmartStartConsole() is Recommended.)
       Input: cPID - The target Console's PID 
              Default: Defaults to calling process. ATTACH_PARENT_PROCESS = (DWORD)-1
