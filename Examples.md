@@ -30,7 +30,7 @@ Functions used:
 - FreeConsole()
 
 [View Source](https://github.com/joedf/LibCon.ahk/blob/master/Example.ahk)  
-[View ScreenShot](#example-1--preview)  
+[View ScreenShot](#example-1---preview)  
 <br>
 <a id="example-2--gui-interaction"></a>
 ####**_Example 2 : GUI Interaction_**####
@@ -77,16 +77,16 @@ Functions used:
 - ReadConsoleOutputAttribute()
 
 [View Source](https://github.com/joedf/LibCon.ahk/blob/master/Example3.ahk)  
-[View ScreenShot](#example-3--preview)  
+[View ScreenShot](#example-3---preview)  
 <br>
 <a id="screenshots"></a>
 ####**_ScreenShots_**####
 
 ----
-<a id="example-1--preview"></a>
+<a id="example-1---preview"></a>
 #####Example 1 - Preview#####
 ![Example 1](preview.png "Preview")  
-<a id="example-3--preview"></a> 
+<a id="example-3---preview"></a> 
 #####Example 3 - Preview#####
 ![Example 3](preview2.png "Preview 2")  
 <br>
