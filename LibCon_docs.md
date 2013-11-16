@@ -1,7 +1,7 @@
 LibCon : Documentation
 =====================================
 
-#Table of Contents#
+##Table of Contents##
 - [Library Global Variables](#global-vars)
     - [Defaults](#defaults)
     - [Predefined Variables & Objects](#predefined-variables--objects)

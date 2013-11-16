@@ -38,6 +38,7 @@ fW:=GetFontWidth()
 ;set vars
 cH:=31
 cW:=80
+title:="Untitled GUI"
 INT_MAX:=32768
 lastcolor_at_cursor:=-1
 print_n:=0
@@ -51,7 +52,7 @@ consoleGUI.cBgColor:=DarkGray ;ClientArea
 puts( "Testing ConsoleWindow_FakeGUI...`n`n")
 puts( "`t     Window Specifications")
 puts( "`t_______________________________")
-puts( "`t    Title: ""Untitled GUI""")
+putsf( "`t    Title: ""%s""",title)
 putsf("`t   Colums: %s",cW)
 putsf("`t     Rows: %s",cH)
 puts( "`t_______________________________`n")
@@ -80,7 +81,7 @@ setconsolesize(cW,cH+1)
 WinMove,%self%,,,,%INT_MAX%,%INT_MAX%
 
 ;draw the gui (background)
-consoleGUI.Draw("The MIT License")
+consoleGUI.Draw(title)
 
 ;set cursor back to (0,0)
 setConsoleCursorPos(0,0)
@@ -235,7 +236,7 @@ print_tip:
 	printf(tip_msg)
 
 	;reset color to what was before the tip
-	setcolor(before_tip_color)
+	setcolor(before_tip_color,0)
 return
 
 Load_txt:
@@ -329,7 +330,7 @@ class consoleGUI {
 		setConsoleCursorPos(0,0) ;bring back up
 		this.HorizontalBar(title)
 		Loop % ((GetConsoleClientHeight()//GetFontHeight())-3)
-			this.VerticalBars()
+			this.VerticalBar()
 		this.HorizontalBar("") ;bottom
 	}
 
@@ -386,7 +387,7 @@ class consoleGUI {
 			print(fm)
 			setcolor(this.FgColor,this.BgColor)
 			print(fe)
-			setcolor(oc)
+			setcolor(oc,0)
 			return
 		} else {
 			u:=""
@@ -395,12 +396,12 @@ class consoleGUI {
 			oc:=getcolor()
 			setcolor(this.FgColor,this.BgColor)
 			print(u)
-			setcolor(oc)
+			setcolor(oc,0)
 			return
 		}
 	}
 
-	VerticalBars() {
+	VerticalBar() {
 		x:=getconsolewidth()
 		oc:=getcolor()
 		setcolor(this.FgColor,this.BgColor)
@@ -412,7 +413,7 @@ class consoleGUI {
 		print(b)
 		setcolor(this.FgColor,this.BgColor)
 		print("|")
-		setcolor(oc)
+		setcolor(oc,0)
 	}
 }
 
