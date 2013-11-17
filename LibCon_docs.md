@@ -6,7 +6,7 @@ LibCon : Documentation
     - [Defaults](#defaults)
     - [Predefined Variables & Objects](#predefined-variables--objects)
     - [Console Color Constants](#console-color-constants)
-- [Library Functions](#library-functions)
+- Library Functions
     - Showing and Hiding the Console
         - [SmartStartConsole()](#smartstartconsole)
         - [StartConsole()](#startconsole)
@@ -80,8 +80,6 @@ LibCon : Documentation
         - [ToBase( n, b )](#tobase-n-b-)
         - [sProgressBar( Length, Current, Max, Unlock = 0, fixed=1, lp="|", lba="[", lbb="]" )](#sprogressbar-length-current-max-unlock--0-fixed1-lp-lba-lbb-)
 
-
-<a id="library-functions"></a>
 ##Library Functions##
 
 <a id="smartstartconsole"></a>
