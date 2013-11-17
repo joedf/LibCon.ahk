@@ -13,31 +13,40 @@ LibCon : Documentation
         - [AttachConsole( cPID:=-1 )](#attachconsole-cpid-1-)
         - [FreeConsole()](#freeconsole)
     - Input and Output Functions
-        - [NewLine( x=1 )](#newline-x1-)
-        - [Puts( string="" )](#puts-string-)
-        - [Print( string="" )](#print-string-)
-        - [Printf( msg, vargs* )](#printf-msg-vargs-)
-        - [Putsf( msg, vargs* )](#putsf-msg-vargs-)
-        - [Gets( ByRef var="" )](#gets-byref-var-)
-        - [Getch( ByRef keyname )](#getch-byref-keyname-)
-        - [ClearScreen()](#clearscreen)
-        - [FillConsoleOutputCharacter( cCharacter, nLength, x, y, ByRef lpNumberOfCharsWritten="" )](#fillconsoleoutputcharacter-ccharacter-nlength-x-y-byref-lpnumberofcharswritten-)
-        - [ReadConsoleOutputCharacter( ByRef lpCharacter, nLength, x, y, ByRef lpNumberOfCharsRead="" )](#readconsoleoutputcharacter-byref-lpcharacter-nlength-x-y-byref-lpnumberofcharsread-)
-        - [FlushInput()](#flushinput)
-        - [GetCurrentDirectory()](#getcurrentdirectory)
-        - [SetCurrentDirectory( dir )](#setcurrentdirectory-dir-)
+        - User Interface
+            - [NewLine( x=1 )](#newline-x1-)
+            - [Puts( string="" )](#puts-string-)
+            - [Print( string="" )](#print-string-)
+            - [Printf( msg, vargs* )](#printf-msg-vargs-)
+            - [Putsf( msg, vargs* )](#putsf-msg-vargs-)
+            - [Gets( ByRef var="" )](#gets-byref-var-)
+            - [Getch( ByRef keyname )](#getch-byref-keyname-)
+            - [ClearScreen()](#clearscreen)
+            - [FillConsoleOutputCharacter( cCharacter, nLength, x, y, ByRef lpNumberOfCharsWritten="" )](#fillconsoleoutputcharacter-ccharacter-nlength-x-y-byref-lpnumberofcharswritten-)
+            - [ReadConsoleOutputCharacter( ByRef lpCharacter, nLength, x, y, ByRef lpNumberOfCharsRead="" )](#readconsoleoutputcharacter-byref-lpcharacter-nlength-x-y-byref-lpnumberofcharsread-)
+        - File I/O
+            - [SetCurrentDirectory( dir )](#setcurrentdirectory-dir-)
+            - [GetCurrentDirectory()](#getcurrentdirectory)
+        - Other
+            - [FlushInput()](#flushinput)
+            - [SetConsoleInputCP( codepage )](#setconsoleinputcp-codepage-)
+            - [GetConsoleInputCP()](#getconsoleinputcp)
+            - [SetConsoleOutputCP( codepage )](#setconsoleoutputcp-codepage-)
+            - [GetConsoleOutputCP()](#getconsoleoutputcp)
     - Console Properties & Settings
         - Color Functions
             - [SetColor( FG="", BG="" )](#setcolor-fg-bg-)
             - [SetFgColor( c )](#setfgcolor-c-)
             - [SetBgColor( c )](#setbgcolor-c-)
+            - [SetColorPos( c, x, y )](#setcolorpos-c-x-y-)
             - [GetColor( ByRef FgColor="", ByRef BgColor="" )](#getcolor-byref-fgcolor-byref-bgcolor-)
             - [GetFgColor()](#getfgcolor)
             - [GetBgColor()](#getbgcolor)
+            - [GetColorPos( x, y )](#getcolorpos-x-y-)
             - [PrintColorTable()](#printcolortable)
             - [FillConsoleOutputAttribute( wAttribute, nLength, x, y, ByRef lpNumberOfAttrsWritten="" )](#fillconsoleoutputattribute-wattribute-nlength-x-y-byref-lpnumberofattrswritten-)
             - [ReadConsoleOutputAttribute( ByRef lpAttribute, nLength, x, y, ByRef lpNumberOfAttrsRead="" )](#readconsoleoutputattribute-byref-lpattribute-nlength-x-y-byref-lpnumberofattrsread-)
-        - Size, Position & Text
+        - Size
             - [GetFontSize( Byref fontwidth, ByRef fontheight )](#getfontsize-byref-fontwidth-byref-fontheight-)
             - [GetFontWidth()](#getfontwidth)
             - [GetFontHeight()](#getfontheight)
@@ -45,20 +54,20 @@ LibCon : Documentation
             - [GetConsoleWidth()](#getconsolewidth)
             - [GetConsoleHeight()](#getconsoleheight)
             - [SetConsoleSize( width, height, SizeHeight=0 )](#setconsolesize-width-height-sizeheight0-)
+            - [SetConsoleWidth( w )](#setconsolewidth-w-)
+            - [SetConsoleHeight( h )](#setconsoleheight-h-)
             - [GetConsoleClientSize( ByRef width, ByRef height )](#getconsoleclientsize-byref-width-byref-height-)
             - [GetConsoleClientWidth()](#getconsoleclientwidth)
             - [GetConsoleClientHeight()](#getconsoleclientheight)
+        - Cursor
             - [GetConsoleCursorPosition( ByRef x, ByRef y )](#getconsolecursorposition-byref-x-byref-y-)
             - [SetConsoleCursorPosition( x="", y="" )](#setconsolecursorposition-x-y-)
             - [SetConsoleCursorInfo( Size="", Shown="" )](#setconsolecursorinfo-size-shown-)
             - [GetConsoleCursorInfo( ByRef Size="", ByRef Shown="" )](#getconsolecursorinfo-byref-size-byref-shown-)
+        - Other
             - [GetConsoleOriginalTitle( byRef Title )](#getconsoleoriginaltitle-byref-title-)
             - [GetConsoleTitle( byRef Title )](#getconsoletitle-byref-title-)
             - [SetConsoleTitle( title="" )](#setconsoletitle-title-)
-            - [SetConsoleInputCP( codepage )](#setconsoleinputcp-codepage-)
-            - [GetConsoleInputCP()](#getconsoleinputcp)
-            - [SetConsoleOutputCP( codepage )](#setconsoleoutputcp-codepage-)
-            - [GetConsoleOutputCP()](#getconsoleoutputcp)
             - [SetConsoleMode( Mode )](#setconsolemode-mode-)
             - [GetConsoleMode( ByRef Mode )](#getconsolemode-byref-mode-)
     - Miscellaneous Functions
@@ -74,7 +83,7 @@ LibCon : Documentation
 
 <a id="library-functions"></a>
 ##Library Functions##
------
+
 <a id="smartstartconsole"></a>
 ####**_SmartStartConsole()_**####
 
@@ -142,7 +151,7 @@ Description: Prints a String with a new line. (has Unicode Support)
              Default: Prints an empty new line.
              Fallback Method: Unicode Support not guaranteed
       Input: The String to be printed
-     Output: None
+     Output: Success is Non-Zero, Failure is Zero
 ```
 <a id="print-string-"></a>
 ####**_Print( string="" )_**####
@@ -154,7 +163,7 @@ Description: Prints a String without a new line. Same as 'puts()' except
              Default: Prints Nothing. 'Flushes' Stdout.
              Fallback Method: Unicode Support not guaranteed
       Input: The String to be printed
-     Output: None
+     Output: Success is Non-Zero, Failure is Zero
 ```
 <a id="printf-msg-vargs-"></a>
 ####**_Printf( msg, vargs* )_**####
@@ -168,7 +177,7 @@ Description: Synonym for 'print("hello" . Name . "!")' except that in this funti
              can be treated as a string.
              Default: Prints Nothing. 'Flushes' Stdout. (Same behaviour as 'print()'
       Input: The 'format' String to be printed
-     Output: None
+     Output: Success is Non-Zero, Failure is Zero
 ```
 <a id="putsf-msg-vargs-"></a>
 ####**_Putsf( msg, vargs* )_**####
@@ -180,7 +189,7 @@ Description: Synonym for 'puts("hello" . Name . "!")' except that in this funtio
              execept without a new line.
              Default: Prints a new line. (Same behaviour as 'puts()')
       Input: The String to be printed
-     Output: None
+     Output: Success is Non-Zero, Failure is Zero
 ```
 <a id="gets-byref-var-"></a>
 ####**_Gets( ByRef var="" )_**####
@@ -216,7 +225,7 @@ Description: Clears the Current Console's Screen.
    Synonyms: 'cls()' and 'Clear()'
    MSDN URL: http://msdn.microsoft.com/library/ms682022
       Input: None
-     Output: None
+     Output: Success is Non-Zero, Failure is Zero
 ```
 <a id="fillconsoleoutputcharacter-ccharacter-nlength-x-y-byref-lpnumberofcharswritten-"></a>
 ####**_FillConsoleOutputCharacter( cCharacter, nLength, x, y, ByRef lpNumberOfCharsWritten="" )_**####
@@ -233,7 +242,7 @@ Description: Writes a character to the console screen buffer a specified number 
                           the character coordinates of the first cell to which the
                           character is to be written.
              y          - The y coordinate of the COORD structure.
-             lpNumberOfCharsWritten - The Varible in which to store the number characters
+             lpNumberOfCharsWritten - The Varible in which to store the number of characters
                                       to the console screen buffer.
      Output: Success is Non-Zero, Failure is Zero
 ```
@@ -265,17 +274,54 @@ Description: Flushes the console input buffer. All input records currently in th
       Input: None  
      Output: Success is Non-Zero, Failure is Zero
 ```
-<a id="getcurrentdirectory"></a>
-####**_GetCurrentDirectory()_**####
+<a id="setconsoleinputcp-codepage-"></a>
+####**_SetConsoleInputCP( codepage )_**####
 
 ----
 ```
-Description: Retrieves the current working directory for the current process.
-   MSDN URL: http://msdn.microsoft.com/library/aa364934
-      Input: None  
-     Output: The Current working directory (Absolute Path). (String)
+Description: Sets the input code page used by the console. A console uses its
+             input code page to translate keyboard input into the corresponding
+             character value.
+   MSDN URL: http://msdn.microsoft.com/library/ms686013
+      Input: codepage - (Number) see "Code Page Identifiers" : http://msdn.microsoft.com/library/dd317756
+     Output: Success is Non-Zero, Failure is Zero
 ```
+<a id="getconsoleinputcp"></a>
+####**_GetConsoleInputCP()_**####
 
+----
+```
+Description: Retrieves the input code page used by the console. A console uses its
+             input code page to translate keyboard input into the corresponding
+             character value.
+   MSDN URL: http://msdn.microsoft.com/library/ms683162
+      Input: None
+     Output: codepage - (Number) see "Code Page Identifiers" : http://msdn.microsoft.com/library/dd317756
+```
+<a id="setconsoleoutputcp-codepage-"></a>
+####**_SetConsoleOutputCP( codepage )_**####
+
+----
+```
+Description: Sets the output code page used by the console. A console uses its
+             output code page to translate the character values written by the
+             various output functions into the images displayed in the console window.
+   MSDN URL: http://msdn.microsoft.com/library/ms686036
+      Input: codepage - (Number) see "Code Page Identifiers" : http://msdn.microsoft.com/library/dd317756
+     Output: Success is Non-Zero, Failure is Zero
+```
+<a id="getconsoleoutputcp"></a>
+####**_GetConsoleOutputCP()_**####
+
+----
+```
+Description: Retrieves the output code page used by the console. A console uses its
+             output code page to translate the character values written by the 
+             various output functions into the images displayed in the console window.
+   MSDN URL: http://msdn.microsoft.com/library/ms683169
+      Input: None
+     Output: codepage - (Number) see "Code Page Identifiers" : http://msdn.microsoft.com/library/dd317756
+```
 <a id="setcurrentdirectory-dir-"></a>
 ####**_SetCurrentDirectory( dir )_**####
 
@@ -286,6 +332,16 @@ Description: Changes the current working directory for the current process.
       Input: dir - The path to the new current working directory.
                    Note: Absolute, Relative, Drives and UNC Path are all accepted.
      Output: Success is Non-Zero, Failure is Zero
+```
+<a id="getcurrentdirectory"></a>
+####**_GetCurrentDirectory()_**####
+
+----
+```
+Description: Retrieves the current working directory for the current process.
+   MSDN URL: http://msdn.microsoft.com/library/aa364934
+      Input: None  
+     Output: The Current working directory (Absolute Path). (String)
 ```
 <a id="setcolor-fg-bg-"></a>
 ####**_SetColor( FG="", BG="" )_**####
@@ -307,7 +363,8 @@ Description: Sets the Current Console's Foreground and Background Colors.
 
 ----
 ```
-Description: Synonym for 'setColor(FG)' - see 'setColor()' for details.
+Description: Sets the Foreground color.
+             Shorthand for setColor()
       Input: FG (Foreground) - Set the Foreground color (Hexadecimal Value)
      Output: Success is Non-Zero, Failure is Zero
 ```
@@ -316,8 +373,22 @@ Description: Synonym for 'setColor(FG)' - see 'setColor()' for details.
 
 ----
 ```
-Description: Synonym for 'setColor("",BG)' - see 'setColor()' for details.
+Description: Sets the Background color.
+             Shorthand for setColor()
       Input: BG (Background) - Set the Background color (Hexadecimal Value)
+     Output: Success is Non-Zero, Failure is Zero
+```
+<a id="setcolorpos-c-x-y-"></a>
+####**_SetColorPos( c, x, y )_**####
+
+----
+```
+Description: Sets the color at the specified cursor position.
+             Meant to be used with GetColorPos()
+             Shorthand for FillConsoleOutputAttribute()
+      Input: c - A color value returned by GetColorPos()
+             x - The desired Cursor's x pos. (Number)
+             y - The desired Cursor's y pos. (Number)
      Output: Success is Non-Zero, Failure is Zero
 ```
 <a id="getcolor-byref-fgcolor-byref-bgcolor-"></a>
@@ -354,6 +425,18 @@ Description: Returns the current Background color (Hexadecimal Value)
              See 'Console Color Constants' for all possible color values.
       Input: None
      Output: Success is Non-Zero, Failure is Undefined
+```
+<a id="getcolorpos-x-y-"></a>
+####**_GetColorPos( x, y )_**####
+
+----
+```
+Description: Gets the color at the specified cursor position.
+             Meant to be used with SetColorPos()
+             Shorthand for ReadConsoleOutputAttribute()
+      Input: x - The desired Cursor's x pos. (Number)
+             y - The desired Cursor's y pos. (Number)
+     Output: The color value to be used with SetColorPos()
 ```
 <a id="printcolortable"></a>
 ####**_PrintColorTable()_**####
@@ -476,6 +559,24 @@ Description: Set the Console's buffer size, No need to worry about the window si
                           its original window height that was before resizing.
      Output: Success is Non-Zero, Failure is Zero
 ```
+<a id="setconsolewidth-w-"></a>
+####**_SetConsoleWidth( w )_**####
+
+----
+```
+Description: Shorthand for 'SetConsoleSize()'. Set the Console's buffer's Width.
+      Input: w - The buffer's Width (Number)
+     Output: Success is Non-Zero, Failure is Zero
+```
+<a id="setconsoleheight-h-"></a>
+####**_SetConsoleHeight( h )_**####
+
+----
+```
+Description: Shorthand for 'SetConsoleSize()'. Set the Console's buffer's Height.
+      Input: h - The buffer's Height (Number)
+     Output: Success is Non-Zero, Failure is Zero
+```
 <a id="getconsoleclientsize-byref-width-byref-height-"></a>
 ####**_GetConsoleClientSize( ByRef width, ByRef height )_**####
 
@@ -583,54 +684,6 @@ Description: Sets the title for the current console window.
       Input: title - The desired title for the current console window.
      Output: Success is Non-Zero, Failure is Zero
 ```
-<a id="setconsoleinputcp-codepage-"></a>
-####**_SetConsoleInputCP( codepage )_**####
-
-----
-```
-Description: Sets the input code page used by the console. A console uses its
-             input code page to translate keyboard input into the corresponding
-             character value.
-   MSDN URL: http://msdn.microsoft.com/library/ms686013
-      Input: codepage - (Number) see "Code Page Identifiers" : http://msdn.microsoft.com/library/dd317756
-     Output: Success is Non-Zero, Failure is Zero
-```
-<a id="getconsoleinputcp"></a>
-####**_GetConsoleInputCP()_**####
-
-----
-```
-Description: Retrieves the input code page used by the console. A console uses its
-             input code page to translate keyboard input into the corresponding
-             character value.
-   MSDN URL: http://msdn.microsoft.com/library/ms683162
-      Input: None
-     Output: codepage - (Number) see "Code Page Identifiers" : http://msdn.microsoft.com/library/dd317756
-```
-<a id="setconsoleoutputcp-codepage-"></a>
-####**_SetConsoleOutputCP( codepage )_**####
-
-----
-```
-Description: Sets the output code page used by the console. A console uses its
-             output code page to translate the character values written by the
-             various output functions into the images displayed in the console window.
-   MSDN URL: http://msdn.microsoft.com/library/ms686036
-      Input: codepage - (Number) see "Code Page Identifiers" : http://msdn.microsoft.com/library/dd317756
-     Output: Success is Non-Zero, Failure is Zero
-```
-<a id="getconsoleoutputcp"></a>
-####**_GetConsoleOutputCP()_**####
-
-----
-```
-Description: Retrieves the output code page used by the console. A console uses its
-             output code page to translate the character values written by the 
-             various output functions into the images displayed in the console window.
-   MSDN URL: http://msdn.microsoft.com/library/ms683169
-      Input: None
-     Output: codepage - (Number) see "Code Page Identifiers" : http://msdn.microsoft.com/library/dd317756
-```
 <a id="setconsolemode-mode-"></a>
 ####**_SetConsoleMode( Mode )_**####
 
@@ -721,7 +774,7 @@ Description: Wait until the user presses a key. This may be used for something
 ```
 Description: Converts a decimal value to a hexadecimal value.
       Input: The Decimal value to be converted (Number) (Optional)
-     Output: The convert value Hexadecimal value (Number)
+     Output: The converted Hexadecimal value (Number)
 ```
 <a id="tobase-n-b-"></a>
 ####**_ToBase( n, b )_**####
@@ -758,7 +811,7 @@ Description: Displays an 'ASCII' progress bar.
 ```
 <a id="global-vars"></a>
 ##Global Vars##
-----
+
 <a id="defaults"></a>
 ###Defaults###
 ----
@@ -772,7 +825,7 @@ SetBatchLines,-1
 ###Predefined Variables & Objects###
 ----
 **_LibConVersion_** is a string that is set to the current version of LibCon used.  
-*Definition (example):* `LibConVersion := "1.0.4.1" ;Library Version`
+*Definition (example):* `LibConVersion := "1.0.4.2" ;Library Version`
  
 **_LibConDebug_** is either set 1 (true) or 0 (false) to enable/disable LibConDebug Mode.  
 *Definition (default):* `LibConDebug := 0 ;Enable/Disable DebugMode`
@@ -783,7 +836,7 @@ SetBatchLines,-1
 **_sType_** is an Object that is used when coding with structures and DllCalls.  
 It contains a few type sizes (Bytes). See "[Windows Data Types](http://msdn.microsoft.com/library/aa383751)" : http://msdn.microsoft.com/library/aa383751  
 *Definition:*  
-`sType := Object("SHORT", 2, "COORD", 4, "WORD", 2, "SMALL_RECT", 8, "DWORD", 4, "LONG", 4)`
+`sType := Object("SHORT", 2, "COORD", 4, "WORD", 2, "SMALL_RECT", 8, "DWORD", 4, "LONG", 4, "BOOL", 4, "RECT", 16, "CHAR", 1)`
 
 **_Stdin_** is an Object that is used to reference the currently attached console's Input buffer.  
 *Definition:* ```Stdin := FileOpen(DllCall("GetStdHandle", "int", -10, "ptr"), "h `n")```

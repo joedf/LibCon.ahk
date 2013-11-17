@@ -1,8 +1,8 @@
 ﻿;
 ; AutoHotkey (Tested) Version: 1.1.13.01
 ; Author:         Joe DF  |  http://joedf.co.nr  |  joedf@users.sourceforge.net
-; Date:           November 13th, 2013 - Remembrance day Release (v1.0.4.x)
-; Library Version: 1.0.4.1
+; Date:           November 16th, 2013 - Remembrance day Release (v1.0.4.x)
+; Library Version: 1.0.4.2
 ;
 ;	LibCon - AutoHotkey Library For Console Support
 ;
@@ -33,7 +33,7 @@
 	LibConErrorLevel := 0 ;Used For DebugMode
 	
 	;Type sizes // http://msdn.microsoft.com/library/aa383751 // EXAMPLE: SHORT is 2 bytes, etc..
-	sType := Object("SHORT", 2, "COORD", 4, "WORD", 2, "SMALL_RECT", 8, "DWORD", 4, "LONG", 4, "BOOL", 4, "RECT", 16)
+	sType := Object("SHORT", 2, "COORD", 4, "WORD", 2, "SMALL_RECT", 8, "DWORD", 4, "LONG", 4, "BOOL", 4, "RECT", 16, "CHAR", 1)
 
 	;Console Color Constants
 	Black:=0x0
@@ -158,8 +158,8 @@
 	}
 	
 	NewLine(x=1) {
-	loop %x%
-		puts()
+		loop %x%
+			puts()
 	}
 	
 	;New Method - Supports Both Unicode and ANSI
@@ -273,32 +273,20 @@
 	
 	;_getch() http://msdn.microsoft.com/library/078sfkak
 	_getch(Lock=1) {
-		if (!Lock)
-			return DllCall("msvcrt.dll\_getch_nolock","int")
-		else
-			return DllCall("msvcrt.dll\_getch","int")
+		return DllCall("msvcrt.dll\_getch" (lock?"":"_nolock"),"int")
 	}
 	
 	_getchW(Lock=1) {
-		if (!Lock)
-			return DllCall("msvcrt.dll\_getwch_nolock","int")
-		else
-			return DllCall("msvcrt.dll\_getwch","int")
+		return DllCall("msvcrt.dll\_getwch" (lock?"":"_nolock"),"int")
 	}
 	
 	;_ungetch() http://msdn.microsoft.com/library/yezzac74
 	_ungetch(c,Lock=1) {
-		if (!Lock)
-			return DllCall("msvcrt.dll\_ungetch_nolock","int",c,"int")
-		else
-			return DllCall("msvcrt.dll\_ungetch","int",c,"int")
+		return DllCall("msvcrt.dll\_ungetch" (lock?"":"_nolock"),"int",c,"int")
 	}
 	
 	_ungetchW(c,Lock=1) {
-		if (!Lock)
-			return DllCall("msvcrt.dll\_ungetwch_nolock","int",c,"int")
-		else
-			return DllCall("msvcrt.dll\_ungetwch","int",c,"int")
+		return DllCall("msvcrt.dll\_ungetwch" (lock?"":"_nolock"),"int",c,"int")
 	}
 
 	Getch(ByRef keyname="") {
@@ -492,6 +480,10 @@
 	SetBgColor(c) {
 		return setColor("",c)
 	}
+	
+	setColorPos(c,x,y) {
+		return FillConsoleOutputAttribute(c,1,x,y)
+	}
 
 	;GetConsoleScreenBufferInfo() http://msdn.microsoft.com/library/ms683171
 	GetColor(ByRef FgColor="", ByRef BgColor="") { ;Returns the current color (int Hexadecimal number)
@@ -516,6 +508,11 @@
 	GetBgColor() {
 		getColor("",bg)
 		return bg
+	}
+	
+	getColorPos(x,y) {
+		ReadConsoleOutputAttribute(c,1,x,y)
+		return c
 	}
 	
 	PrintColorTable() {
@@ -880,6 +877,14 @@
 				return LibConError("setConsoleSize",width,height,SizeHeight) ;Failure
 			}
 		}
+	}
+	
+	SetConsoleWidth(w) {
+		return SetConsoleSize(w,GetConsoleHeight())
+	}
+	
+	SetConsoleHeight(h) {
+		return SetConsoleSize(GetConsoleWidth(),h)
 	}
 	
 	GetConsoleClientSize(ByRef width, ByRef height) {

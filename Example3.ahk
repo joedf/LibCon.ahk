@@ -10,6 +10,13 @@ AutoTrim, Off ;needed for this example
 SetWinDelay,0 ;optional
 ;<<<<<<<<  HEADER END  >>>>>>>>>
 
+if LibConVersion < 1.0.4.24
+{
+	puts("sorry... LibCon v1.0.4.2 and Up is required to run this script.")
+	Pause(0)
+	ExitApp
+}
+
 ;Create self-referrer
 self:="ahk_pid " DllCall("GetCurrentProcessId") ;or use: ahk_id with getConsoleHandle()
 
@@ -170,13 +177,13 @@ update_draw:
 				;if the cursor position and colors (the vars) are valid
 				;Erase last cursor drawn at position (essentially reset to original colors at last position)
 				if ( (_lmx!="") && (_lmy!="") && (lastcolor_at_cursor>=0) )
-					FillConsoleOutputAttribute(lastcolor_at_cursor,1,_lmx,_lmy)
+					SetColorPos(lastcolor_at_cursor,_lmx,_lmy) ;FillConsoleOutputAttribute(lastcolor_at_cursor,1,_lmx,_lmy)
 				
 				;save the current position's colors for reset later, before drawing new cursor
-				ReadConsoleOutputAttribute(lastcolor_at_cursor,1,_mx,_my)
+				lastcolor_at_cursor:=GetColorPos(_mx,_my) ;ReadConsoleOutputAttribute(lastcolor_at_cursor,1,_mx,_my)
 				
 				;set/draw the cursor
-				FillConsoleOutputAttribute((Yellow*16)+Black,1,_mx,_my)
+				SetColorPos((Yellow*16)+Black,_mx,_my) ;FillConsoleOutputAttribute((Yellow*16)+Black,1,_mx,_my)
 			
 			;Print mouse coords in "statusbar"
 			printf("[%s,%s]  ",_mx,_my)
