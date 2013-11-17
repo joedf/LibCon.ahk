@@ -10,7 +10,7 @@ AutoTrim, Off ;needed for this example
 SetWinDelay,0 ;optional
 ;<<<<<<<<  HEADER END  >>>>>>>>>
 
-if LibConVersion < 1.0.4.24
+if LibConVersion < 1.0.4.2
 {
 	puts("sorry... LibCon v1.0.4.2 and Up is required to run this script.")
 	Pause(0)
