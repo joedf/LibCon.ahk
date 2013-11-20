@@ -28,7 +28,7 @@
 	}	
 
 ;Console Constants ;{
-	LibConVersion := "1.0.4.1" ;Library Version
+	LibConVersion := "1.0.4.2" ;Library Version
 	LibConDebug := 0 ;Enable/Disable DebugMode
 	LibConErrorLevel := 0 ;Used For DebugMode
 	
