@@ -840,7 +840,7 @@ It contains a few type sizes (Bytes). See "[Windows Data Types](http://msdn.micr
 *Definition:* ```Stdin := FileOpen(DllCall("GetStdHandle", "int", -10, "ptr"), "h `n")```
 
 **_Stdout_** is an Object that is used to reference the currently attached console's Output buffer.  
-*Definition:* ```Stdout :=FileOpen(DllCall("GetStdHandle", "int", -11, "ptr"), "h `n")```
+*Definition:* ```Stdout := FileOpen(DllCall("GetStdHandle", "int", -11, "ptr"), "h `n")```
 
 **_args_** is an Object that is used to reference the arguments the script has received.  
 The object is created only when the number of arguments is greater than zero.  
