@@ -80,6 +80,9 @@ Compile:
 				RegWrite, REG_SZ, HKCU, Software\AutoHotkey\Ahk2Exe, LastIcon, %LastIcon%
 			}
 		ToolTip
-		MsgBox Done.
+		if (e)
+			MsgBox Error occured - ErrorLevel: %e%
+		else
+			MsgBox Done.
 	}
 ExitApp
