@@ -1,4 +1,9 @@
-﻿;"Compile as console application" Script by Lexikos
+﻿;added help, -- joedf 19:22 2014/02/03
+argc = %0%
+if (!argc)
+MsgBox Usage: [%A_scriptName%] [filename] [Subsystem C:Console`, G:Gui]
+
+;"Compile as console application" Script by Lexikos
 ;from: http://www.autohotkey.com/board/topic/21189-compile-ahk-ii-for-those-who-compile/page-20#entry316030
 ;-------------------------------------------------------------------------------------
 
