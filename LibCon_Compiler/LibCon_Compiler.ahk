@@ -2,7 +2,7 @@
 
 regread,ahkdir,HKLM,SOFTWARE\AutoHotkey,InstallDir
 AhkCompiler:=ahkdir "\Compiler\Ahk2Exe.exe"
-AhkVersion:="1.1.13.01"
+AhkVersion:=GetFileVersion(A_scriptDir "\bin\AutoHotkeyA32_CLI.bin")
 
 Gui, Add, Text,     x12  y12 w32  h20 , Script:
 Gui, Add, Text,     x12  y32 w32  h20 , Icon:
@@ -86,3 +86,11 @@ Compile:
 			MsgBox Done.
 	}
 ExitApp
+
+GetFileVersion(fileName) {
+	v:=ComObjCreate("Scripting.FileSystemObject").GetFileVersion(fileName)
+	StringGetPos,p,v,.,R1
+	if ( StrLen(x:=SubStr(v,p+2)) == 1)
+		return SubStr(v,1,-1) "0" x
+	return v
+}
