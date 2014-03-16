@@ -219,11 +219,11 @@
 	}
 	
 	cls() {
-		ClearScreen()
+		return ClearScreen()
 	}
 	
 	Clear() {
-		ClearScreen()
+		return ClearScreen()
 	}
 	
 	; New Method - Supports Both Unicode and ANSI
@@ -809,18 +809,14 @@
 
 	GetFontWidth() {
 		if (!getFontSize(fontwidth,fontheight))
-		{
 			return 0 ;Failure
-		}
 		else
 			return %fontwidth% ;Success
 	}
 
 	GetFontHeight() {
 		if (!getFontSize(fontwidth,fontheight))
-		{
 			return 0 ;Failure
-		}
 		else
 			return %fontheight% ;Success
 	}
