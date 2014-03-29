@@ -21,6 +21,7 @@ LibCon : Documentation
             - [Putsf( msg, vargs* )](#putsf-msg-vargs-)
             - [Gets( ByRef var="" )](#gets-byref-var-)
             - [Getch( ByRef keyname )](#getch-byref-keyname-)
+            - [ReadConsoleInput()](#readconsoleinput)
             - [ClearScreen()](#clearscreen)
             - [FillConsoleOutputCharacter( cCharacter, nLength, x, y, ByRef lpNumberOfCharsWritten="" )](#fillconsoleoutputcharacter-ccharacter-nlength-x-y-byref-lpnumberofcharswritten-)
             - [ReadConsoleOutputCharacter( ByRef lpCharacter, nLength, x, y, ByRef lpNumberOfCharsRead="" )](#readconsoleoutputcharacter-byref-lpcharacter-nlength-x-y-byref-lpnumberofcharsread-)
@@ -74,7 +75,6 @@ LibCon : Documentation
         - [GetConsoleHandle()](#getconsolehandle)
         - [LibConError( fname:="", ByRef arg1:="", ByRef arg2:="", arg3:="", arg4:="", ByRef arg5:="" )](#libconerror-fname-byref-arg1-byref-arg2-arg3-arg4-byref-arg5-)
         - [Wait( timeout=0 )](#wait-timeout0-)
-        - [WaitAction()](#waitaction)
         - [Pause( show=1 )](#pause-show1-)
         - [Dec2Hex( var )](#dec2hex-var-)
         - [ToBase( n, b )](#tobase-n-b-)
@@ -212,6 +212,19 @@ Description: Gets/Obtains a single key from the user. This may be used for somet
              (has Unicode Support)
       Input: The Varible in which to store the Key Name (string) (Optional)
      Output: The Key Code
+```
+<a id="readconsoleinput"></a>
+####**_ReadConsoleInput()_**####
+
+----
+```
+Description: Gets/Obtains a single input (Captures Everything: mouse move, key press,
+             etc...) from the user. This may be used for something
+             like "Press any key to continue" or "Mouse Click to quit".
+   MSDN URL: http://msdn.microsoft.com/library/ms684961
+      Input: None
+     Output: Event Object, having members 'EventType' and 'EventInfo[]'
+     Credit: by Nick McCoy (Ronins)
 ```
 <a id="clearscreen"></a>
 ####**_ClearScreen()_**####
@@ -740,19 +753,6 @@ Description: Gets/Obtains a single key from the user. This may be used for somet
       Input: The number of seconds until timeout (Optional)
      Output: The Key Code
 ```
-<a id="waitaction"></a>
-####**_WaitAction()_**####
-
-----
-```
-Description: Gets/Obtains a single input (Captures Everything: mouse move, key press,
-             etc...) from the user. This may be used for something
-             like "Press any key to continue" or "Mouse Click to quit".
-             IMPORTANT Note: This function is still experimental!
-      Input: None
-     Output: The Key Code (vk or sc - Undefined for the moment...)
-     Credit: by gwarble
-```
 <a id="pause-show1-"></a>
 ####**_Pause( show=1 )_**####
  
@@ -823,7 +823,7 @@ SetBatchLines,-1
 ###Predefined Variables & Objects###
 ----
 **_LibConVersion_** is a string that is set to the current version of LibCon used.  
-*Definition (example):* `LibConVersion := "1.0.4.2" ;Library Version`
+*Definition (example):* `LibConVersion := "1.0.5.0" ;Library Version`
  
 **_LibConDebug_** is either set 1 (true) or 0 (false) to enable/disable LibConDebug Mode.  
 *Definition (default):* `LibConDebug := 0 ;Enable/Disable DebugMode`

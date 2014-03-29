@@ -1,8 +1,8 @@
 ﻿;
 ; AutoHotkey (Tested) Version: 1.1.13.01
 ; Author:         Joe DF  |  http://joedf.co.nr  |  joedf@users.sourceforge.net
-; Date:           November 16th, 2013 - Remembrance day Release (v1.0.4.x)
-; Library Version: 1.0.4.2
+; Date:           March 29th, 2014 - Git Commit #100 Edition!
+; Library Version: 1.0.5.0
 ;
 ;	LibCon - AutoHotkey Library For Console Support
 ;
@@ -28,7 +28,7 @@
 	}	
 
 ;Console Constants ;{
-	LibConVersion := "1.0.4.2" ;Library Version
+	LibConVersion := "1.0.5.0" ;Library Version
 	LibConDebug := 0 ;Enable/Disable DebugMode
 	LibConErrorLevel := 0 ;Used For DebugMode
 	
@@ -399,6 +399,7 @@
 		return %SingleKey%
 	}
 	
+	/*
 	;from gwarble
 	;http://www.autohotkey.com/board/topic/96304-real-console-applications-command-line-apps/?hl=console
 	WaitAction() {
@@ -408,6 +409,29 @@
 		key := NumGet(INPUT_RECORD,14,"Short")
 		flushInput() ;Flush the input buffer	
 		return key
+	}
+	*/
+	
+	;fork see AHK-Console-Class : https://github.com/NickMcCoy/AHK-Console-Class
+	ReadConsoleInput()
+	{
+		global Stdin
+		global LibConErrorLevel
+		Event := {}
+		Event.EventList[0x0001] := "4|8|10|12|14|16"
+		Event.EventList[0x0002] := "4|6|8|12|16"
+		
+		VarSetCapacity(InputRecord, 2000)
+		VarSetCapacity(s, 4)
+		e:=DllCall("ReadConsoleInput", "int", Stdin.__Handle, "int", &InputRecord, "int", 100, "int", &s)
+		if (!e) or (LibConErrorLevel:=ErrorLevel)
+			return LibConError("ReadConsoleInput")
+		Event.EventType := NumGet(InputRecord, 0, "short")
+		Dummy := Event.EventList[Event.EventType]
+		Loop, Parse, Dummy, |
+			Event.EventInfo[A_Index] := NumGet(InputRecord, A_LoopField, "short")
+		Event.s := NumGet(s)
+		return, Event
 	}
 
 	Pause(show=1) {
@@ -637,6 +661,21 @@
 			e:=DllCall("SetConsoleTitle","Str",string)
 			if (!e) or (LibConErrorLevel:=ErrorLevel)
 				return LibConError("SetConsoleTitle",title) ;Failure
+			return 1
+		}
+		return 0
+	}
+	
+	;fork see AHK-Console-Class : https://github.com/NickMcCoy/AHK-Console-Class
+	SetConsoleIcon(Path)
+	{
+		global LibConErrorLevel
+		if (FileExist(Path))
+		{
+			hIcon := DllCall("LoadImage", "uint", 0, "str", Path, "uint", 1, "int", 0, "int", 0, "uint", 0x00000010)
+			e:=DllCall("SetConsoleIcon", "int", hIcon)
+			if (!e) or (LibConErrorLevel:=ErrorLevel)
+				return LibConError("SetConsoleIcon",Path) ;Failure
 			return 1
 		}
 		return 0

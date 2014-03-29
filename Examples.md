@@ -74,6 +74,7 @@ Functions used:
 - GetConsoleClientHeight()
 - ClearScreen()
 - SetColorPos(), GetColorPos()
+- ReadConsoleInput()
 
 [View Source](https://github.com/joedf/LibCon.ahk/blob/master/Example3.ahk)  
 [View ScreenShot](#example-3---preview)  

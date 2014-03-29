@@ -10,9 +10,9 @@ AutoTrim, Off ;needed for this example
 SetWinDelay,0 ;optional
 ;<<<<<<<<  HEADER END  >>>>>>>>>
 
-if LibConVersion < 1.0.4.2
+if LibConVersion < 1.0.5.0
 {
-	puts("sorry... LibCon v1.0.4.2 and Up is required to run this script.")
+	puts("sorry... LibCon v1.0.5.0 and Up is required to run this script.")
 	Pause(0)
 	ExitApp
 }
@@ -66,8 +66,15 @@ puts( "`t_______________________________`n")
 puts( "`nNOTICE: The Loading Message is fake...")
 newline()
 
-;Wait for key press
-pause()
+;Wait for mouse double click
+puts("Please double click to continue.")
+Loop
+{
+	E := ReadConsoleInput()
+	if(E.EventType = 2 && E.EventInfo[5] = 2)
+		break
+}
+
 KeyWait Space ;is a used 'key' / blocked for later
 
 ;enable selection "mode"
