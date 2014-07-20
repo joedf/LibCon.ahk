@@ -9,7 +9,7 @@ See the [Documentation here.](LibCon_docs.md) See some [Examples here.](Examples
 LibCon is proudly under the [MIT License.](License.md)
   
 ------------------------------------------------
-![Preview](preview.png "Preview")
+![Preview](preview.png)
   
 ------------------------------------------------
 [Contact Me](mailto:joedf@users.sourceforge.net) for Requests, Comments, Contributions, etc.
