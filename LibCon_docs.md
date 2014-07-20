@@ -222,6 +222,7 @@ Description: Gets/Obtains a single input (Captures Everything: mouse move, key p
              etc...) from the user. This may be used for something
              like "Press any key to continue" or "Mouse Click to quit".
    MSDN URL: http://msdn.microsoft.com/library/ms684961
+Event types: http://msdn.microsoft.com/library/ms683499
       Input: None
      Output: Event Object, having members 'EventType' and 'EventInfo[]'
      Credit: by Nick McCoy (Ronins)
