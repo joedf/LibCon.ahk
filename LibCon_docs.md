@@ -24,7 +24,8 @@ LibCon : Documentation
             - [ReadConsoleInput()](#readconsoleinput)
             - [ClearScreen()](#clearscreen)
             - [FillConsoleOutputCharacter( cCharacter, nLength, x, y, ByRef lpNumberOfCharsWritten="" )](#fillconsoleoutputcharacter-ccharacter-nlength-x-y-byref-lpnumberofcharswritten-)
-            - [ReadConsoleOutputCharacter( ByRef lpCharacter, nLength, x, y, ByRef lpNumberOfCharsRead="" )](#readconsoleoutputcharacter-byref-lpcharacter-nlength-x-y-byref-lpnumberofcharsread-)
+            - [ReadConsoleOutput( x, y, w, h )](#readconsoleoutput-x-y-w-h-)
+            - [ReadConsoleOutputCharacter( x, y )](#readconsoleoutputcharacter-x-y-)
         - File I/O
             - [SetCurrentDirectory( dir )](#setcurrentdirectory-dir-)
             - [GetCurrentDirectory()](#getcurrentdirectory)
@@ -258,22 +259,29 @@ Description: Writes a character to the console screen buffer a specified number 
                                       to the console screen buffer.
      Output: Success is Non-Zero, Failure is Zero
 ```
-<a id="readconsoleoutputcharacter-byref-lpcharacter-nlength-x-y-byref-lpnumberofcharsread-"></a>
-####**_ReadConsoleOutputCharacter( ByRef lpCharacter, nLength, x, y, ByRef lpNumberOfCharsRead="" )_**####
+<a id="readconsoleoutput-x-y-w-h-"></a>
+####**_ReadConsoleOutput( x, y, w, h )_**####
 
 ----
 ```
-Description: Reads a number of characters from consecutive cells of a console screen buffer,
-             beginning at a specified location.
+Description: Reads a number of characters located in a specified rectangle.
+   MSDN URL: http://msdn.microsoft.com/library/ms684965
+      Input: x           - The x coordinate of upper left corner of the rectangle.
+             y           - The x coordinate of upper left corner of the rectangle.
+             w           - The width of the rectangle.
+             w           - The height of the rectangle.
+     Output: On failure, an empty string is returned.
+```
+<a id="readconsoleoutputcharacter-x-y-"></a>
+####**_ReadConsoleOutputCharacter( x, y )_**####
+
+----
+```
+Description: Reads a single character from the specified coordinates of a console screen buffer.
    MSDN URL: http://msdn.microsoft.com/library/ms684969
-      Input: lpCharacter - The variable in which to store the characters read from the
-                           console screen buffer.
-             nLength     - The number of character cells to be read.
-             x           - The x coordinate of the COORD structure that specifies the
-                           character coordinates of the first cell from which to read.
-             y           - The y coordinate of the COORD structure.
-             lpNumberOfCharsRead - The Varible in which to store the number characters read.
-     Output: Success is Non-Zero, Failure is Zero
+      Input: x           - The x coordinate of the character to read.
+             y           - The y coordinate of the character to read.
+     Output: On failure, an empty string is returned.
 ```
 <a id="flushinput"></a>
 ####**_FlushInput()_**####
@@ -824,7 +832,7 @@ SetBatchLines,-1
 ###Predefined Variables & Objects###
 ----
 **_LibConVersion_** is a string that is set to the current version of LibCon used.  
-*Definition (example):* `LibConVersion := "1.0.5.0" ;Library Version`
+*Definition (example):* `LibConVersion := "1.0.6.1" ;Library Version`
  
 **_LibConDebug_** is either set 1 (true) or 0 (false) to enable/disable LibConDebug Mode.  
 *Definition (default):* `LibConDebug := 0 ;Enable/Disable DebugMode`

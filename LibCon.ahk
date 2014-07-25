@@ -1,8 +1,8 @@
 ﻿;
 ; AutoHotkey (Tested) Version: 1.1.13.01
 ; Author:         Joe DF  |  http://joedf.co.nr  |  joedf@users.sourceforge.net
-; Date:           March 29th, 2014 - Git Commit #100 Edition!
-; Library Version: 1.0.5.0
+; Date:           June 25th, 2014
+; Library Version: 1.0.6.1
 ;
 ;	LibCon - AutoHotkey Library For Console Support
 ;
@@ -28,7 +28,7 @@
 	}	
 
 ;Console Constants ;{
-	LibConVersion := "1.0.5.0" ;Library Version
+	LibConVersion := "1.0.6.1" ;Library Version
 	LibConDebug := 0 ;Enable/Disable DebugMode
 	LibConErrorLevel := 0 ;Used For DebugMode
 	
@@ -1039,7 +1039,8 @@
 	}
 	
 	;http://msdn.microsoft.com/library/ms684969
-	ReadConsoleOutputCharacter(ByRef lpCharacter, nLength, x, y, ByRef lpNumberOfCharsRead="") {
+	; could not get it work with more than 1 char... so i decided to just coords of one char
+	ReadConsoleOutputCharacter(x, y) {
 		global LibConErrorLevel
 		global sType
 		global Stdout
@@ -1056,17 +1057,36 @@
 		VarSetCapacity(dwWriteCoord,sType.COORD,0)
 			NumPut(x,dwWriteCoord,"UShort")
 			NumPut(y,dwWriteCoord,sType.SHORT,"UShort")
+			
+		VarSetCapacity(lpCharacter,2,0)
 		
 		x:=DllCall("ReadConsoleOutputCharacter" (A_IsUnicode?"W":"A")
 					,"UInt",hStdOut
 					,"UChar*",lpCharacter
-					,"UInt",nLength
+					,"UInt",1
 					,"uint",Numget(dwWriteCoord,"uint")
 					,"UInt*",lpNumberOfCharsRead,"Int")
 		if (!x) or (LibConErrorLevel:=ErrorLevel)
-			return LibConError("ReadConsoleOutputCharacter",lpCharacter,nLength,x,y,lpNumberOfCharsRead) ;Failure
-		lpCharacter:=chr(lpCharacter)
-		return 1
+			return LibConError("ReadConsoleOutputCharacter",x,y) ;Failure
+		return chr(lpCharacter)
+	}
+	
+	;http://msdn.microsoft.com/library/ms684965
+	; pseudo function to replace the Original/real function
+	ReadConsoleOutput(x, y, w, h) {
+		str:=""
+		Loop % h
+		{
+			z:=(A_Index-1)+y
+			Loop % w
+			{
+				k:=(A_Index-1)+x
+				str .= ReadConsoleOutputCharacter(k,z)
+			}
+			if (h!=A_Index)
+				str .= "`n"
+		}
+		return str
 	}
 	
 	;Msgbox for Errors (DebugMode Only)
