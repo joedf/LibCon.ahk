@@ -22,6 +22,16 @@ return
 GuiClose:
 ExitApp
 
+GuiDropFiles: ;https://github.com/fincs/Ahk2Exe/blob/44f155b96c571dc83a16370762fda78a46320d92/Ahk2Exe.ahk#L85-L93
+	if A_EventInfo > 2
+		MsgBox, 16, , You cannot drop more than one file into this window!
+	SplitPath, A_GuiEvent,,, dropExt
+	if dropExt = ahk
+		GuiControl,, tScript, %A_GuiEvent%
+	else if dropExt = ico
+		GuiControl,, tIcon, %A_GuiEvent%
+return
+
 bScript:
 	FileSelectFile,obScript,1,,,AutoHotkey Files (*.ahk)
 	if obScript is not space
