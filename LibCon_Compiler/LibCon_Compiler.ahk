@@ -2,7 +2,15 @@
 
 regread,ahkdir,HKLM,SOFTWARE\AutoHotkey,InstallDir
 AhkCompiler:=ahkdir "\Compiler\Ahk2Exe.exe"
-AhkVersion:=GetFileVersion(A_scriptDir "\bin\AutoHotkeyA32_CLI.bin")
+BuildTypes:="A32|U32|U64"
+Loop,Parse,BuildTypes,|
+{
+	FileGetVersion,AhkVersion_%A_LoopField%,%A_ScriptDir%\bin\AutoHotkey%A_LoopField%_CLI.bin
+	if (ErrorLevel) {
+		MsgBox, 16, , File missing:`n"%A_ScriptDir%\bin\AutoHotkey%A_LoopField%_CLI.bin"`n`nThe program will not exit.
+		ExitApp -1
+	}
+}
 
 Gui, Add, Text,     x12  y12 w32  h20 , Script:
 Gui, Add, Text,     x12  y32 w32  h20 , Icon:
@@ -11,7 +19,7 @@ Gui, Add, Edit,     x44  y10 w148 h20 vtScript ReadOnly,
 Gui, Add, Edit,     x44  y30 w148 h20 vtIcon ReadOnly, 
 Gui, Add, Button,   x192 y10 w70  h20 gbScript, Browse...
 Gui, Add, Button,   x192 y30 w70  h20 gbIcon, Browse...
-Gui, Add, DDL,      x44  y50 w148 h20 vtType AltSubmit choose1 r3, v%AhkVersion% Unicode 32-bit|v%AhkVersion% Unicode 64-bit|v%AhkVersion% ANSI 32-bit
+Gui, Add, DDL,      x44  y50 w148 h20 vtType AltSubmit choose1 r3, v%AhkVersion_U32% Unicode 32-bit|v%AhkVersion_U64% Unicode 64-bit|v%AhkVersion_A32% ANSI 32-bit
 Gui, Add, Checkbox, x200 y52 w70  h20 vtMpress, Mpress
 Gui, Add, Button,   x2   y72 w130 h30 gCompile, Compile && Save As...
 Gui, Add, Button,   x132 y72 w130 h30 gGuiClose, Cancel
@@ -33,18 +41,21 @@ GuiDropFiles: ;https://github.com/fincs/Ahk2Exe/blob/44f155b96c571dc83a16370762f
 return
 
 bScript:
+	Gui +OwnDialogs
 	FileSelectFile,obScript,1,,,AutoHotkey Files (*.ahk)
 	if obScript is not space
 		GuiControl,,tScript,%obScript%
 return
 
 bIcon:
+	Gui +OwnDialogs
 	FileSelectFile,obIcon,1,,,Icon Files (*.ico)
 	if obIcon is not space
 		GuiControl,,tIcon,%obIcon%
 return
 
 Compile:
+	Gui +OwnDialogs
 	FileSelectFile,obExe,S16,,,Executable Files (*.exe)
 	if (ErrorLevel) {
 		MsgBox Invalid file...
@@ -94,13 +105,6 @@ Compile:
 			MsgBox Error occured - ErrorLevel: %e%
 		else
 			MsgBox Done.
+		Gui -Disabled
 	}
-ExitApp
-
-GetFileVersion(fileName) {
-	v:=ComObjCreate("Scripting.FileSystemObject").GetFileVersion(fileName)
-	StringGetPos,p,v,.,R1
-	if ( StrLen(x:=SubStr(v,p+2)) == 1)
-		return SubStr(v,1,-1) "0" x
-	return v
-}
+return
