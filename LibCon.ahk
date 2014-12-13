@@ -1,8 +1,8 @@
 ﻿;
 ; AutoHotkey (Tested) Version: 1.1.13.01
 ; Author:         Joe DF  |  http://joedf.co.nr  |  joedf@users.sourceforge.net
-; Date:           June 25th, 2014
-; Library Version: 1.0.6.1
+; Date:           December 13th, 2014
+; Library Version: 1.0.6.2
 ;
 ;	LibCon - AutoHotkey Library For Console Support
 ;
@@ -1142,7 +1142,7 @@
 				ExitApp
 			IfMsgBox, Ignore
 			{
-				LibConErrorsIgnoreList:=fname`,LibConErrorsIgnoreList
+				LibConErrorsIgnoreList:=fname "," LibConErrorsIgnoreList
 				return 0
 			}
 			IfMsgBox, Retry
