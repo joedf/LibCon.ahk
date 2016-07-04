@@ -66,6 +66,11 @@ puts( "`t_______________________________`n")
 puts( "`nNOTICE: The Loading Message is fake...")
 newline()
 
+;Disable selection "mode" if active
+SetConsoleMode(0x0080)
+;Ensure Mouse input is enabled
+SetConsoleMode(0x0010)
+
 ;Wait for mouse double click
 puts("Please double click to continue.")
 Loop
@@ -88,24 +93,18 @@ setconsoleCursorInfo(oCurSz,0)
 clearscreen()
 
 ;Set the console size
-;and height+1 to correctly draw later
-setconsolesize(cW,cH+1)
+;and +1 to correctly draw later
+setconsolesize(cW+1,cH+1)
 
 ;Correctly size the window accordingly (max the window size)
-WinMove,%self%,,,,%INT_MAX%,%INT_MAX%
+;WinMove,%self%,,,,%INT_MAX%,%INT_MAX%
+WinMove,%self%,,,, % (cW+5)*fW , (cH+5)*fH
 
 ;draw the gui (background)
 consoleGUI.Draw(title)
 
 ;set cursor back to (0,0)
 setConsoleCursorPos(0,0)
-
-;Set the console size
-;now to correct, after gui draw routine
-setconsolesize(cW,cH)
-
-;Correctly size the window accordingly (max the window size)
-WinMove,%self%,,,,%INT_MAX%,%INT_MAX%
 
 ;draw the "tip!" message
 gosub print_tip
