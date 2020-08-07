@@ -1,7 +1,7 @@
 LibCon : Examples
 =====================================
 
-##Table of Contents##
+## Table of Contents ##
 - [Example 1 : Simple Usage](#example-1--simple-usage)
 - [Example 2 : GUI Interaction](#example-2--gui-interaction)
 - [Example 3 : Advanced Usage](#example-3--advanced-usage)
@@ -9,7 +9,7 @@ LibCon : Examples
 <br><br>
 
 <a id="example-1--simple-usage"></a>
-####**_Example 1 : Simple Usage_**####
+#### **_Example 1 : Simple Usage_** ####
 
 ----
 Description:
@@ -33,7 +33,7 @@ Functions used:
 [View ScreenShot](#example-1---preview)  
 <br>
 <a id="example-2--gui-interaction"></a>
-####**_Example 2 : GUI Interaction_**####
+#### **_Example 2 : GUI Interaction_** ####
 
 ----
 Description:
@@ -51,7 +51,7 @@ Functions used:
 [View Source](https://github.com/joedf/LibCon.ahk/blob/master/Example2.ahk)  
 <br>
 <a id="example-3--advanced-usage"></a>
-####**_Example 3 : Advanced Usage_**####
+#### **_Example 3 : Advanced Usage_** ####
 
 ----
 Description:
@@ -80,13 +80,13 @@ Functions used:
 [View ScreenShot](#example-3---preview)  
 <br>
 <a id="screenshots"></a>
-####**_ScreenShots_**####
+#### **_ScreenShots_** ####
 
 ----
 <a id="example-1---preview"></a>
-#####Example 1 - Preview#####
+##### Example 1 - Preview #####
 ![Example 1](preview.png "Preview")  
 <a id="example-3---preview"></a> 
-#####Example 3 - Preview#####
+##### Example 3 - Preview #####
 ![Example 3](preview2.png "Preview 2")  
 <br>
