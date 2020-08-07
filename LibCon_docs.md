@@ -1,7 +1,7 @@
 LibCon : Documentation
 =====================================
 
-##Table of Contents##
+## Table of Contents ##
 - [Library Global Variables](#global-vars)
     - [Defaults](#defaults)
     - [Predefined Variables & Objects](#predefined-variables--objects)
@@ -81,10 +81,10 @@ LibCon : Documentation
         - [ToBase( n, b )](#tobase-n-b-)
         - [sProgressBar( Length, Current, Max, Unlock = 0, fixed=1, lp="|", lba="[", lbb="]" )](#sprogressbar-length-current-max-unlock--0-fixed1-lp-lba-lbb-)
 
-##Library Functions##
+## Library Functions ##
 
 <a id="smartstartconsole"></a>
-####**_SmartStartConsole()_**####
+#### **_SmartStartConsole()_** ####
 
 ----
 ```
@@ -96,7 +96,7 @@ Description: Runs StartConsole() if the script was launched run from "Explorer.e
      Output: Success is Non-Zero, Failure is Zero
 ```
 <a id="startconsole"></a>
-####**_StartConsole()_**####
+#### **_StartConsole()_** ####
 
 ----
 ```
@@ -108,7 +108,7 @@ Description: Opens up a New/Seperate Console Window that 'belongs' (attached) to
      Output: Success is Non-Zero, Failure is Zero
 ```
 <a id="attachconsole-cpid-1-"></a>
-####**_AttachConsole( cPID:=-1 )_**####
+#### **_AttachConsole( cPID:=-1 )_** ####
 
 ----
 ```
@@ -121,7 +121,7 @@ Description: Attach to a Console that is currently running. Although, it is sugg
      Output: Success is Non-Zero, Failure is Zero
 ```
 <a id="freeconsole"></a>
-####**_FreeConsole()_**####
+#### **_FreeConsole()_** ####
 
 ----
 ```
@@ -131,7 +131,7 @@ Description: Detach/Terminate current Console and keeps AutoHotkey running
      Output: Success is Non-Zero, Failure is Zero
 ```
 <a id="newline-x1-"></a>
-####**_NewLine( x=1 )_**####
+#### **_NewLine( x=1 )_** ####
 
 ----
 ```
@@ -142,7 +142,7 @@ Description: Prints (empty) new lines. Number of new lines varies
      Output: None
 ```
 <a id="puts-string-"></a>
-####**_Puts( string="" )_**####
+#### **_Puts( string="" )_** ####
 
 ----
 ```
@@ -153,7 +153,7 @@ Description: Prints a String with a new line. (has Unicode Support)
      Output: Success is Non-Zero, Failure is Zero
 ```
 <a id="print-string-"></a>
-####**_Print( string="" )_**####
+#### **_Print( string="" )_** ####
 
 ----
 ```
@@ -165,7 +165,7 @@ Description: Prints a String without a new line. Same as 'puts()' except
      Output: Success is Non-Zero, Failure is Zero
 ```
 <a id="printf-msg-vargs-"></a>
-####**_Printf( msg, vargs* )_**####
+#### **_Printf( msg, vargs* )_** ####
 
 ----
 ```
@@ -179,7 +179,7 @@ Description: Synonym for 'print("hello" . Name . "!")' except that in this funti
      Output: Success is Non-Zero, Failure is Zero
 ```
 <a id="putsf-msg-vargs-"></a>
-####**_Putsf( msg, vargs* )_**####
+#### **_Putsf( msg, vargs* )_** ####
 
 ----
 ```
@@ -191,7 +191,7 @@ Description: Synonym for 'puts("hello" . Name . "!")' except that in this funtio
      Output: Success is Non-Zero, Failure is Zero
 ```
 <a id="gets-byref-var-"></a>
-####**_Gets( ByRef var="" )_**####
+#### **_Gets( ByRef var="" )_** ####
 
 ----
 ```
@@ -203,7 +203,7 @@ Description: Gets/Obtains input from the console user, until a carriage return '
      Output: The inputed/obtained string
 ```
 <a id="getch-byref-keyname-"></a>
-####**_Getch( ByRef keyname )_**####
+#### **_Getch( ByRef keyname )_** ####
 
 ----
 ```
@@ -215,7 +215,7 @@ Description: Gets/Obtains a single key from the user. This may be used for somet
      Output: The Key Code
 ```
 <a id="readconsoleinput"></a>
-####**_ReadConsoleInput()_**####
+#### **_ReadConsoleInput()_** ####
 
 ----
 ```
@@ -229,7 +229,7 @@ Event types: http://msdn.microsoft.com/library/ms683499
      Credit: by Nick McCoy (Ronins)
 ```
 <a id="clearscreen"></a>
-####**_ClearScreen()_**####
+#### **_ClearScreen()_** ####
  
 ----
 ```
@@ -241,7 +241,7 @@ Description: Clears the Current Console's Screen.
      Output: Success is Non-Zero, Failure is Zero
 ```
 <a id="fillconsoleoutputcharacter-ccharacter-nlength-x-y-byref-lpnumberofcharswritten-"></a>
-####**_FillConsoleOutputCharacter( cCharacter, nLength, x, y, ByRef lpNumberOfCharsWritten="" )_**####
+#### **_FillConsoleOutputCharacter( cCharacter, nLength, x, y, ByRef lpNumberOfCharsWritten="" )_** ####
 
 ----
 ```
@@ -260,7 +260,7 @@ Description: Writes a character to the console screen buffer a specified number 
      Output: Success is Non-Zero, Failure is Zero
 ```
 <a id="readconsoleoutput-x-y-w-h-"></a>
-####**_ReadConsoleOutput( x, y, w, h )_**####
+#### **_ReadConsoleOutput( x, y, w, h )_** ####
 
 ----
 ```
@@ -273,7 +273,7 @@ Description: Reads a number of characters located in a specified rectangle.
      Output: On failure, an empty string is returned.
 ```
 <a id="readconsoleoutputcharacter-x-y-"></a>
-####**_ReadConsoleOutputCharacter( x, y )_**####
+#### **_ReadConsoleOutputCharacter( x, y )_** ####
 
 ----
 ```
@@ -284,7 +284,7 @@ Description: Reads a single character from the specified coordinates of a consol
      Output: On failure, an empty string is returned.
 ```
 <a id="flushinput"></a>
-####**_FlushInput()_**####
+#### **_FlushInput()_** ####
 
 ----
 ```
@@ -295,7 +295,7 @@ Description: Flushes the console input buffer. All input records currently in th
      Output: Success is Non-Zero, Failure is Zero
 ```
 <a id="setconsoleinputcp-codepage-"></a>
-####**_SetConsoleInputCP( codepage )_**####
+#### **_SetConsoleInputCP( codepage )_** ####
 
 ----
 ```
@@ -307,7 +307,7 @@ Description: Sets the input code page used by the console. A console uses its
      Output: Success is Non-Zero, Failure is Zero
 ```
 <a id="getconsoleinputcp"></a>
-####**_GetConsoleInputCP()_**####
+#### **_GetConsoleInputCP()_** ####
 
 ----
 ```
@@ -319,7 +319,7 @@ Description: Retrieves the input code page used by the console. A console uses i
      Output: codepage - (Number) see "Code Page Identifiers" : http://msdn.microsoft.com/library/dd317756
 ```
 <a id="setconsoleoutputcp-codepage-"></a>
-####**_SetConsoleOutputCP( codepage )_**####
+#### **_SetConsoleOutputCP( codepage )_** ####
 
 ----
 ```
@@ -331,7 +331,7 @@ Description: Sets the output code page used by the console. A console uses its
      Output: Success is Non-Zero, Failure is Zero
 ```
 <a id="getconsoleoutputcp"></a>
-####**_GetConsoleOutputCP()_**####
+#### **_GetConsoleOutputCP()_** ####
 
 ----
 ```
@@ -343,7 +343,7 @@ Description: Retrieves the output code page used by the console. A console uses 
      Output: codepage - (Number) see "Code Page Identifiers" : http://msdn.microsoft.com/library/dd317756
 ```
 <a id="setcurrentdirectory-dir-"></a>
-####**_SetCurrentDirectory( dir )_**####
+#### **_SetCurrentDirectory( dir )_** ####
 
 ----
 ```
@@ -354,7 +354,7 @@ Description: Changes the current working directory for the current process.
      Output: Success is Non-Zero, Failure is Zero
 ```
 <a id="getcurrentdirectory"></a>
-####**_GetCurrentDirectory()_**####
+#### **_GetCurrentDirectory()_** ####
 
 ----
 ```
@@ -364,7 +364,7 @@ Description: Retrieves the current working directory for the current process.
      Output: The Current working directory (Absolute Path). (String)
 ```
 <a id="setcolor-fg-bg-"></a>
-####**_SetColor( FG="", BG="" )_**####
+#### **_SetColor( FG="", BG="" )_** ####
 
 ----
 ```
@@ -379,7 +379,7 @@ Description: Sets the Current Console's Foreground and Background Colors.
      Output: Success is Non-Zero, Failure is Zero
 ```
 <a id="setfgcolor-c-"></a>
-####**_SetFgColor( c )_**####
+#### **_SetFgColor( c )_** ####
 
 ----
 ```
@@ -389,7 +389,7 @@ Description: Sets the Foreground color.
      Output: Success is Non-Zero, Failure is Zero
 ```
 <a id="setbgcolor-c-"></a>
-####**_SetBgColor( c )_**####
+#### **_SetBgColor( c )_** ####
 
 ----
 ```
@@ -399,7 +399,7 @@ Description: Sets the Background color.
      Output: Success is Non-Zero, Failure is Zero
 ```
 <a id="setcolorpos-c-x-y-"></a>
-####**_SetColorPos( c, x, y )_**####
+#### **_SetColorPos( c, x, y )_** ####
 
 ----
 ```
@@ -412,7 +412,7 @@ Description: Sets the color at the specified cursor position.
      Output: Success is Non-Zero, Failure is Zero
 ```
 <a id="getcolor-byref-fgcolor-byref-bgcolor-"></a>
-####**_GetColor( ByRef FgColor="", ByRef BgColor="" )_**####
+#### **_GetColor( ByRef FgColor="", ByRef BgColor="" )_** ####
 
 ----
 ```
@@ -427,7 +427,7 @@ Description: Returns the current color (Hexadecimal Value)
      Output: Success is Non-Zero, Failure is Undefined
 ```
 <a id="getfgcolor"></a>
-####**_GetFgColor()_**####
+#### **_GetFgColor()_** ####
 
 ----
 ```
@@ -437,7 +437,7 @@ Description: Returns the current Foreground color (Hexadecimal Value)
      Output: Success is Non-Zero, Failure is Undefined
 ```
 <a id="getbgcolor"></a>
-####**_GetBgColor()_**####
+#### **_GetBgColor()_** ####
 
 ----
 ```
@@ -447,7 +447,7 @@ Description: Returns the current Background color (Hexadecimal Value)
      Output: Success is Non-Zero, Failure is Undefined
 ```
 <a id="getcolorpos-x-y-"></a>
-####**_GetColorPos( x, y )_**####
+#### **_GetColorPos( x, y )_** ####
 
 ----
 ```
@@ -459,7 +459,7 @@ Description: Gets the color at the specified cursor position.
      Output: The color value to be used with SetColorPos()
 ```
 <a id="printcolortable"></a>
-####**_PrintColorTable()_**####
+#### **_PrintColorTable()_** ####
 
 ----
 ```
@@ -469,7 +469,7 @@ Description: Prints a Color table with all the Color Constants.
      Output: None
 ```
 <a id="fillconsoleoutputattribute-wattribute-nlength-x-y-byref-lpnumberofattrswritten-"></a>
-####**_FillConsoleOutputAttribute( wAttribute, nLength, x, y, ByRef lpNumberOfAttrsWritten="" )_**####
+#### **_FillConsoleOutputAttribute( wAttribute, nLength, x, y, ByRef lpNumberOfAttrsWritten="" )_** ####
 
 ----
 ```
@@ -488,7 +488,7 @@ Description: Sets the character attributes for a specified number of character c
      Output: Success is Non-Zero, Failure is Zero
 ```
 <a id="readconsoleoutputattribute-byref-lpattribute-nlength-x-y-byref-lpnumberofattrsread-"></a>
-####**_ReadConsoleOutputAttribute( ByRef lpAttribute, nLength, x, y, ByRef lpNumberOfAttrsRead="" )_**####
+#### **_ReadConsoleOutputAttribute( ByRef lpAttribute, nLength, x, y, ByRef lpNumberOfAttrsRead="" )_** ####
 
 ----
 ```
@@ -505,7 +505,7 @@ Description: Gets the character attributes for a specified number of character c
      Output: Success is Non-Zero, Failure is Zero
 ```
 <a id="getfontsize-byref-fontwidth-byref-fontheight-"></a>
-####**_GetFontSize( Byref fontwidth, ByRef fontheight )_**####
+#### **_GetFontSize( Byref fontwidth, ByRef fontheight )_** ####
 
 ----
 ```
@@ -516,7 +516,7 @@ Description: the width and height of each character in the font, in logical unit
      Output: Success is Non-Zero, Failure is Zero
 ```
 <a id="getfontwidth"></a>
-####**_GetFontWidth()_**####
+#### **_GetFontWidth()_** ####
 
 ----
 ```
@@ -525,7 +525,7 @@ Description: Get the current font's width. Shorthand for getFontSize()
      Output: The Font's width (in pixels)
 ```
 <a id="getfontheight"></a>
-####**_GetFontHeight()_**####
+#### **_GetFontHeight()_** ####
 
 ----
 ```
@@ -534,7 +534,7 @@ Description: Get the current font's height. Shorthand for getFontSize()
      Output: The Font's height (in pixels)
 ```
 <a id="getconsolesize-byref-bufferwidth-byref-bufferheight-"></a>
-####**_GetConsoleSize( ByRef bufferwidth, ByRef bufferheight )_**####
+#### **_GetConsoleSize( ByRef bufferwidth, ByRef bufferheight )_** ####
 
 ----
 ```
@@ -546,7 +546,7 @@ Description: Get the Console's buffer size in columns and lines (rows),
      Output: Success is Non-Zero, Failure is Zero
 ```
 <a id="getconsolewidth"></a>
-####**_GetConsoleWidth()_**####
+#### **_GetConsoleWidth()_** ####
 
 ----
 ```
@@ -555,7 +555,7 @@ Description: Shorthand for 'getConsoleSize()'. Get the Console's buffer's Width.
      Output: The buffer's Width (Number)
 ```
 <a id="getconsoleheight"></a>
-####**_GetConsoleHeight()_**####
+#### **_GetConsoleHeight()_** ####
 
 ----
 ```
@@ -564,7 +564,7 @@ Description: Shorthand for 'getConsoleSize()'. Get the Console's buffer's Height
      Output: The buffer's Height (Number)
 ```
 <a id="setconsolesize-width-height-sizeheight0-"></a>
-####**_SetConsoleSize( width, height, SizeHeight=0 )_**####
+#### **_SetConsoleSize( width, height, SizeHeight=0 )_** ####
 
 ----
 ```
@@ -580,7 +580,7 @@ Description: Set the Console's buffer size, No need to worry about the window si
      Output: Success is Non-Zero, Failure is Zero
 ```
 <a id="setconsolewidth-w-"></a>
-####**_SetConsoleWidth( w )_**####
+#### **_SetConsoleWidth( w )_** ####
 
 ----
 ```
@@ -589,7 +589,7 @@ Description: Shorthand for 'SetConsoleSize()'. Set the Console's buffer's Width.
      Output: Success is Non-Zero, Failure is Zero
 ```
 <a id="setconsoleheight-h-"></a>
-####**_SetConsoleHeight( h )_**####
+#### **_SetConsoleHeight( h )_** ####
 
 ----
 ```
@@ -598,7 +598,7 @@ Description: Shorthand for 'SetConsoleSize()'. Set the Console's buffer's Height
      Output: Success is Non-Zero, Failure is Zero
 ```
 <a id="getconsoleclientsize-byref-width-byref-height-"></a>
-####**_GetConsoleClientSize( ByRef width, ByRef height )_**####
+#### **_GetConsoleClientSize( ByRef width, ByRef height )_** ####
 
 ----
 ```
@@ -608,7 +608,7 @@ Description: Get the Console's Client Area size in pixels.
      Output: Success is Non-Zero, Failure is Zero
 ```
 <a id="getconsoleclientwidth"></a>
-####**_GetConsoleClientWidth()_**####
+#### **_GetConsoleClientWidth()_** ####
 
 ----
 ```
@@ -617,7 +617,7 @@ Description: Shorthand for 'GetConsoleClientSize()'. Get the Console's buffer's 
      Output: The console's client (Area) width (Number)
 ```
 <a id="getconsoleclientheight"></a>
-####**_GetConsoleClientHeight()_**####
+#### **_GetConsoleClientHeight()_** ####
 
 ----
 ```
@@ -626,7 +626,7 @@ Description: Shorthand for 'GetConsoleClientSize()'. Get the Console's buffer's 
      Output: The console's client (Area) height (Number)
 ```
 <a id="getconsolecursorposition-byref-x-byref-y-"></a>
-####**_GetConsoleCursorPosition( ByRef x, ByRef y )_**####
+#### **_GetConsoleCursorPosition( ByRef x, ByRef y )_** ####
 
 ----
 ```
@@ -638,7 +638,7 @@ Description: Get the Cursor's (or caret) current position.
      Output: Success is Non-Zero, Failure is Zero
 ```
 <a id="setconsolecursorposition-x-y-"></a>
-####**_SetConsoleCursorPosition( x="", y="" )_**####
+#### **_SetConsoleCursorPosition( x="", y="" )_** ####
 
 ----
 ```
@@ -650,7 +650,7 @@ Description: Sets the cursor position.
      Output: Success is Non-Zero, Failure is Zero
 ```
 <a id="setconsolecursorinfo-size-shown-"></a>
-####**_SetConsoleCursorInfo( Size="", Shown="" )_**####
+#### **_SetConsoleCursorInfo( Size="", Shown="" )_** ####
 
 ----
 ```
@@ -663,7 +663,7 @@ Description: Sets the cursor height (size) and visibility.
      Output: Success is Non-Zero, Failure is Zero
 ```
 <a id="getconsolecursorinfo-byref-size-byref-shown-"></a>
-####**_GetConsoleCursorInfo( ByRef Size="", ByRef Shown="" )_**####
+#### **_GetConsoleCursorInfo( ByRef Size="", ByRef Shown="" )_** ####
 
 ----
 ```
@@ -676,7 +676,7 @@ Description: Gets the cursor height (size) and visibility.
      Output: Success is Non-Zero, Failure is Zero
 ```
 <a id="getconsoleoriginaltitle-byref-title-"></a>
-####**_GetConsoleOriginalTitle( byRef Title )_**####
+#### **_GetConsoleOriginalTitle( byRef Title )_** ####
 
 ----
 ```
@@ -685,7 +685,7 @@ Description: Retrieves the original title for the current console window.
      Output: Success is Non-Zero, Failure is Zero
 ```
 <a id="getconsoletitle-byref-title-"></a>
-####**_GetConsoleTitle( byRef Title )_**####
+#### **_GetConsoleTitle( byRef Title )_** ####
 
 ----
 ```
@@ -695,7 +695,7 @@ Description: Retrieves the title for the current console window.
      Output: Success is Non-Zero, Failure is Zero
 ```
 <a id="setconsoletitle-title-"></a>
-####**_SetConsoleTitle( title="" )_**####
+#### **_SetConsoleTitle( title="" )_** ####
 
 ----
 ```
@@ -705,7 +705,7 @@ Description: Sets the title for the current console window.
      Output: Success is Non-Zero, Failure is Zero
 ```
 <a id="setconsolemode-mode-"></a>
-####**_SetConsoleMode( Mode )_**####
+#### **_SetConsoleMode( Mode )_** ####
 
 ----
 ```
@@ -716,7 +716,7 @@ Description: Sets the input buffer's mode of the console. (Output not yet suppor
      Output: Success is Non-Zero, Failure is Zero
 ```
 <a id="getconsolemode-byref-mode-"></a>
-####**_GetConsoleMode( ByRef Mode )_**####
+#### **_GetConsoleMode( ByRef Mode )_** ####
 
 ----
 ```
@@ -727,7 +727,7 @@ Description: Gets the output buffer's mode of the console. (Input not yet suppor
      Output: Success is Non-Zero, Failure is Zero
 ```
 <a id="getconsolehandle"></a>
-####**_GetConsoleHandle()_**####
+#### **_GetConsoleHandle()_** ####
 
 ----
 ```
@@ -737,7 +737,7 @@ Description: Get the console's window Handle (Hwnd).
      Output: The Console's window handle (Hwnd)
 ```
 <a id="libconerror-fname-byref-arg1-byref-arg2-arg3-arg4-byref-arg5-"></a>
-####**_LibConError( fname:="", ByRef arg1:="", ByRef arg2:="", arg3:="", arg4:="", ByRef arg5:="" )_**####
+#### **_LibConError( fname:="", ByRef arg1:="", ByRef arg2:="", arg3:="", arg4:="", ByRef arg5:="" )_** ####
 
 ----
 ```
@@ -751,7 +751,7 @@ Description: Explicit Error Handling towards the user. Msgboxes for Errors (Debu
      Output: Success is Non-Zero, Failure is Zero
 ```
 <a id="wait-timeout0-"></a>
-####**_Wait( timeout=0 )_**####
+#### **_Wait( timeout=0 )_** ####
 
 ----
 ```
@@ -763,7 +763,7 @@ Description: Gets/Obtains a single key from the user. This may be used for somet
      Output: The Key Code
 ```
 <a id="pause-show1-"></a>
-####**_Pause( show=1 )_**####
+#### **_Pause( show=1 )_** ####
  
 ----
 ```
@@ -775,7 +775,7 @@ Description: Wait until the user presses a key. This may be used for something
      Output: Success is Non-Zero, Failure is Zero
 ```
 <a id="dec2hex-var-"></a>
-####**_Dec2Hex( var )_**####
+#### **_Dec2Hex( var )_** ####
 
 ----
 ```
@@ -784,7 +784,7 @@ Description: Converts a decimal value to a hexadecimal value.
      Output: The converted Hexadecimal value (Number)
 ```
 <a id="tobase-n-b-"></a>
-####**_ToBase( n, b )_**####
+#### **_ToBase( n, b )_** ####
 
 ----
 ```
@@ -795,7 +795,7 @@ Description: Converts a decimal value to a specified base value. The base is
      Credit: by Laszlo
 ```
 <a id="sprogressbar-length-current-max-unlock--0-fixed1-lp-lba-lbb-"></a>
-####**_sProgressBar( Length, Current, Max, Unlock = 0, fixed=1, lp="|", lba="[", lbb="]" )_**####
+#### **_sProgressBar( Length, Current, Max, Unlock = 0, fixed=1, lp="|", lba="[", lbb="]" )_** ####
 
 ----
 ```
@@ -817,10 +817,10 @@ Description: Displays an 'ASCII' progress bar.
              forked by joedf
 ```
 <a id="global-vars"></a>
-##Global Vars##
+## Global Vars ##
 
 <a id="defaults"></a>
-###Defaults###
+### Defaults ###
 ----
 
 ```
@@ -829,7 +829,7 @@ SetWinDelay, 0
 SetBatchLines,-1
 ```
 <a id="predefined-variables--objects"></a>
-###Predefined Variables & Objects###
+### Predefined Variables & Objects ###
 ----
 **_LibConVersion_** is a string that is set to the current version of LibCon used.  
 *Definition (example):* `LibConVersion := "1.0.6.1" ;Library Version`
@@ -863,7 +863,7 @@ Note: `if (args)` will return true, if the object exists, otherwise, it will ret
 *Definition:* `argc=%0%`
 
 <a id="console-color-constants"></a>
-###Console Color Constants###
+### Console Color Constants ###
 ----
 ```AutoHotkey
 Black:=0x0
