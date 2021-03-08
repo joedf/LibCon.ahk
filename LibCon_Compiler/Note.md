@@ -1,5 +1,5 @@
 ## Update
-This is no longer necessary, as we now have the `;@Ahk2Exe-ConsoleApp` compiler directive to do this for us.
+This is no longer necessary, as we now have the `;@Ahk2Exe-ConsoleApp` compiler directive to do this for us.  
 https://www.autohotkey.com/docs/misc/Ahk2ExeDirectives.htm#ConsoleApp
 
 ## Original notes
