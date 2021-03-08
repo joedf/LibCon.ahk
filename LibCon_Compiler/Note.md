@@ -1,3 +1,8 @@
+## Update
+This is no longer necessary, as we now have the `;@Ahk2Exe-ConsoleApp` compiler directive to do this for us.
+https://www.autohotkey.com/docs/misc/Ahk2ExeDirectives.htm#ConsoleApp
+
+## Original notes
 These Binaries are essentially the same as the originals except, they have been modified using a method to make AutoHotkey act/be as console applcation. In other words, changing the binaries to use the console subsystem. They have been created using `Ahk2CLI.ahk`
 
 See: https://github.com/fincs/Ahk2Exe/issues/14
