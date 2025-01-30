@@ -170,7 +170,7 @@
 		if (!hConsole) ;or (;LibConErrorLevel:=ErrorLevel)
 			return LibConError("getConsoleHandle") ;Failure
 		else
-			return %hConsole% ;Success
+			return hConsole ;Success
 	}
 
 	NewLine(x:=1) {
@@ -447,22 +447,35 @@
 	{
 		global Stdin
 		global LibConErrorLevel
-		Event := {}
-		Event.EventList[0x0001] := "4|8|10|12|14|16"
-		Event.EventList[0x0002] := "4|6|8|12|16"
+		; Event := {}
+		; Event.EventList[0x0001] := "4|8|10|12|14|16"
+		; Event.EventList[0x0002] := "4|6|8|12|16"
+		Event := {
+			EventList: [
+				"4|8|10|12|14|16",
+				"4|6|8|12|16",
+			],
+			EventInfo: [],
+		}
 
 		; VarSetCapacity(InputRecord, 2000)
 		InputRecord := Buffer(2000, 0)
-		VarSetStrCapacity(&s, 4)
+		; VarSetStrCapacity(&s, 4)
+		s := Buffer(4, 0)
 		; e:=DllCall("ReadConsoleInput", "int", Stdin.__Handle, "int", &InputRecord, "int", 100, "int", &s)
-		e:=DllCall("ReadConsoleInput", "int", Stdin.Handle, "int", &InputRecord, "int", 100, "int", &s)
+		e:=DllCall("ReadConsoleInput", "Uptr", Stdin.Handle, "UInt*", InputRecord.Ptr, "int", 100, "int*", s.Ptr)
 		if (!e) ;or (;LibConErrorLevel:=ErrorLevel)
 			return LibConError("ReadConsoleInput")
 		Event.EventType := NumGet(InputRecord, 0, "short")
-		Dummy := Event.EventList[Event.EventType]
+
+		Dummy := ""
+		if Event.EventType > 0
+			Dummy := Event.EventList[Event.EventType]
+		
 		Loop Parse Dummy, "|"
 			Event.EventInfo[A_Index] := NumGet(InputRecord, A_LoopField, "short")
-		Event.s := NumGet(s, "UPtr")
+		; Event.s := NumGet(s, "UPtr")
+		Event.s := s
 		return Event
 	}
 
@@ -646,7 +659,7 @@
 		global LibConErrorLevel
 		global stdout
 		; e:=DllCall("GetConsoleMode","UInt",stdout.__handle,"UInt*",Mode)
-		e:=DllCall("GetConsoleMode","UInt",stdout.Handle,"UInt*",Mode)
+		e:=DllCall("GetConsoleMode","UInt",stdout.Handle,"UInt*",&Mode := 0)
 		if (!e) ;or (;LibConErrorLevel:=ErrorLevel)
 			return LibConError("GetConsoleMode",Mode) ;Failure
 		return 1
@@ -752,11 +765,13 @@
 		; VarSetCapacity(s,sType.DWORD+sType.BOOL,0)
 		s := Buffer(sType.DWORD+sType.BOOL,0)
 		; e:=DllCall("GetConsoleCursorInfo","UInt",stdout.__handle,"Ptr",&s)
-		e:=DllCall("GetConsoleCursorInfo","UInt",stdout.Handle,"Ptr",&s)
+		e:=DllCall("GetConsoleCursorInfo","UInt",stdout.Handle,"Ptr",s.Ptr)
 		if (!e) ;or (;LibConErrorLevel:=ErrorLevel)
 			return LibConError("GetConsoleCursorInfo",Shown,Size) ;Failure
-		Size:=NumGet(&s,"UInt")
-		Shown:=NumGet(&s,sType.DWORD,"Int")
+		; Size:=NumGet(&s,"UInt")
+		Size:=NumGet(s,"UInt")
+		; Shown:=NumGet(&s,sType.DWORD,"Int")
+		Shown:=NumGet(s,sType.DWORD,"Int")
 		return 1
 	}
 
@@ -778,10 +793,17 @@
 			GetConsoleCursorInfo("",&Shown)
 		; VarSetCapacity(s,sType.DWORD+sType.BOOL,0)
 		s := Buffer(sType.DWORD+sType.BOOL,0)
-		NumPut(Size,s,"UInt")
-		NumPut(Shown,s,sType.DWORD,"Int")
+
+		; v1- NumPut(Number, VarOrAddress , Offset, Type)
+		; NumPut(Size,s,"UInt")
+		; NumPut(Shown,s,sType.DWORD,"Int")
+
+		; v2- NumPut Type, Number, Type2, Number2, ... Target , Offset
+		NumPut("UInt", Size, s)
+		NumPut("Int", Shown, s, sType.DWORD)
+
 		; e:=DllCall("SetConsoleCursorInfo","UInt",stdout.__handle,"Ptr",&s)
-		e:=DllCall("SetConsoleCursorInfo","UInt",stdout.Handle,"Ptr",&s)
+		e:=DllCall("SetConsoleCursorInfo","UInt",stdout.Handle,"Ptr",s.Ptr)
 		if (!e) ;or (;LibConErrorLevel:=ErrorLevel)
 			return LibConError("SetConsoleCursorInfo",Shown,Size) ;Failure
 		return 1
@@ -797,11 +819,12 @@
 		hStdout := Stdout.Handle
 		; VarSetCapacity(struct,(sType.COORD*3)+sType.WORD+sType.SMALL_RECT,0)
 		struct := Buffer((sType.COORD*3)+sType.WORD+sType.SMALL_RECT,0)
-		e:=DllCall("GetConsoleScreenBufferInfo","UPtr",hStdout,"Ptr",&struct)
+		; e:=DllCall("GetConsoleScreenBufferInfo","UPtr",hStdout,"Ptr",&struct)
+		e:=DllCall("GetConsoleScreenBufferInfo","UPtr",hStdout,"Ptr",struct.Ptr)
 		if (!e) ;or (;LibConErrorLevel:=ErrorLevel)
 			return LibConError("getConsoleCursorPosition",x,y) ;Failure
-		x:=NumGet(&struct,sType.COORD,"UShort")
-		y:=NumGet(&struct,sType.COORD+sType.SHORT,"UShort")
+		x:=NumGet(struct,sType.COORD,"UShort")
+		y:=NumGet(struct,sType.COORD+sType.SHORT,"UShort")
 		return 1
 	}
 
@@ -819,11 +842,11 @@
 			y:=oy
 		; VarSetCapacity(struct,sType.COORD,0)
 		struct := Buffer(sType.COORD,0)
-		Numput(x,struct,"UShort")
-		Numput(y,struct,sType.SHORT,"UShort")
+		Numput("UShort",x,struct)
+		Numput("UShort",y,struct,sType.SHORT)
 		e:=DllCall("SetConsoleCursorPosition","Ptr",hStdout,"uint",Numget(struct,"uint"))
 		if (!e) ;or (;LibConErrorLevel:=ErrorLevel)
-			return LibConError("SetConsoleCursorPosition",x,y) ;Failure
+			return LibConError("SetConsoleCursorPosition",&x,&y) ;Failure
 		return 1
 	}
 
@@ -844,10 +867,16 @@
 		hStdout := Stdout.Handle
 		; VarSetCapacity(struct,(sType.COORD*3)+sType.WORD+sType.SMALL_RECT,0)
 		struct := Buffer((sType.COORD*3)+sType.WORD+sType.SMALL_RECT,0)
-		x:=DllCall("GetConsoleScreenBufferInfo","UPtr",hStdout,"Ptr",&struct)
+		; x:=DllCall("GetConsoleScreenBufferInfo","UPtr",hStdout,"Ptr",&struct)
+		x:=DllCall("GetConsoleScreenBufferInfo","UPtr",hStdout,"Ptr",struct.Ptr)
 		;;LibConErrorLevel:=ErrorLevel
-		bufferwidth:=NumGet(&struct,"UShort")
-		bufferheight:=NumGet(&struct,sType.SHORT,"UShort")
+		
+		; bufferwidth:=NumGet(&struct,"UShort")
+		bufferwidth:=NumGet(struct,"UShort")
+		
+		; bufferheight:=NumGet(&struct,sType.SHORT,"UShort")
+		bufferheight:=NumGet(struct,sType.SHORT,"UShort")
+		
 		if (!x) ;or (;LibConErrorLevel:=ErrorLevel)
 			return LibConError("getConsoleSize",bufferwidth,bufferheight) ;Failure
 		return 1
@@ -886,13 +915,16 @@
 
 		; VarSetCapacity(struct,sType.DWORD+sType.COORD,0)
 		struct := Buffer(sType.DWORD+sType.COORD,0)
-		x:=DllCall("GetCurrentConsoleFont","Ptr",hStdout,"Int",0,"Ptr",&struct)
+		; x:=DllCall("GetCurrentConsoleFont","Ptr",hStdout,"Int",0,"Ptr",&struct)
+		x:=DllCall("GetCurrentConsoleFont","Ptr",hStdout,"Int",0,"Ptr",struct.Ptr)
 		;LibConErrorLevel:=ErrorLevel
 		;VarSetCapacity(structb,sType.COORD,0)
 		;structb:=DllCall("GetConsoleFontSize","Ptr",hStdout,"UInt",NumGet(&struct,"Int"))
 
-		fontwidth:=NumGet(&struct,sType.DWORD,"UShort")
-		fontheight:=NumGet(&struct,sType.DWORD+sType.SHORT,"UShort")
+		; fontwidth:=NumGet(&struct,sType.DWORD,"UShort")
+		fontwidth:=NumGet(struct,sType.DWORD,"UShort")
+		; fontheight:=NumGet(&struct,sType.DWORD+sType.SHORT,"UShort")
+		fontheight:=NumGet(struct,sType.DWORD+sType.SHORT,"UShort")
 
 		if (!x) ;or (;LibConErrorLevel:=ErrorLevel)
 			return LibConError("getFontSize",fontwidth,fontheight) ;Failure
@@ -929,13 +961,21 @@
 
 		;MsgBox % "rqW: " width "`nrqH: " height
 
-		newBuffer := Object("w",(width*fW),"h",(height*fH))
-		oldBuffer := Object("w",(cW*fW),"h",(cH*fH))
+		; newBuffer := Object("w",(width*fW),"h",(height*fH))
+		newBuffer := {
+			w: (width*fW),
+			h: (height*fH),
+		}
+		; oldBuffer := Object("w",(cW*fW),"h",(cH*fH))
+		oldBuffer := {
+			w: (cW*fW),
+			h: (cH*fH),
+		}
 
 		; VarSetCapacity(bufferSize,sType.COORD,0)
 		bufferSize := Buffer(sType.COORD,0)
-		NumPut(width,bufferSize,"UShort")
-		NumPut(height,bufferSize,sType.SHORT,"UShort")
+		NumPut("UShort",width,bufferSize)
+		NumPut("UShort",height,bufferSize,sType.SHORT)
 
 		if ( (newBuffer.w >= oldBuffer.w) and (newBuffer.h >= oldBuffer.h) )
 		{
@@ -982,7 +1022,7 @@
 		global sType
 		; VarSetCapacity(s,sType.RECT,0)
 		s := Buffer(sType.RECT,0)
-		x:=DllCall("GetClientRect","UInt",getConsoleHandle(),"UInt",&s)
+		x:=DllCall("GetClientRect","UInt",getConsoleHandle(),"UInt",s.Ptr)
 		if (!x) ;or (;LibConErrorLevel:=ErrorLevel)
 			return LibConError("GetConsoleClientSize",width,height) ;Failure
 		width:=NumGet(s,2*(sType.LONG),"Int")
@@ -1022,15 +1062,19 @@
 	*/
 		; VarSetCapacity(dwWriteCoord,sType.COORD,0)
 		dwWriteCoord := Buffer(sType.COORD,0)
-			NumPut(x,dwWriteCoord,"UShort")
-			NumPut(y,dwWriteCoord,sType.SHORT,"UShort")
+			; NumPut(x,dwWriteCoord,"UShort")
+			; NumPut(y,dwWriteCoord,sType.SHORT,"UShort")
+			; v2- NumPut Type, Number, Type2, Number2, ... Target , Offset
+			NumPut("UShort", x, dwWriteCoord)
+			NumPut("UShort", y, dwWriteCoord, sType.SHORT)
 
 		x:=DllCall("FillConsoleOutputCharacter"
 					,"UInt",hStdOut
 					,"UChar",Ord(cCharacter)
 					,"UInt",nLength
 					,"uint",Numget(dwWriteCoord,"uint")
-					,"UInt*",lpNumberOfCharsWritten,"Int")
+					,"UInt*",&lpNumberOfCharsWritten := 0
+					,"Int")
 		if (!x) ;or (;LibConErrorLevel:=ErrorLevel)
 			return LibConError("FillConsoleOutputCharacter",cCharacter,nLength,x,y,lpNumberOfCharsWritten) ;Failure
 		return 1
@@ -1054,15 +1098,16 @@
 	*/
 		; VarSetCapacity(dwWriteCoord,sType.COORD,0)
 		dwWriteCoord := Buffer(sType.COORD,0)
-			NumPut(x,dwWriteCoord,"UShort")
-			NumPut(y,dwWriteCoord,sType.SHORT,"UShort")
+			NumPut("UShort",x,dwWriteCoord)
+			NumPut("UShort",y,dwWriteCoord,sType.SHORT)
 
 		x:=DllCall("FillConsoleOutputAttribute"
 					,"UInt",hStdOut
 					,"UShort",wAttribute
 					,"UInt",nLength
 					,"uint",Numget(dwWriteCoord,"uint")
-					,"UInt*",lpNumberOfAttrsWritten,"Int")
+					,"UInt*",&lpNumberOfAttrsWritten := 0
+					,"Int")
 		if (!x) ;or (;LibConErrorLevel:=ErrorLevel)
 			return LibConError("FillConsoleOutputAttribute",wAttribute,nLength,x,y,lpNumberOfAttrsWritten) ;Failure
 		return 1
@@ -1086,15 +1131,16 @@
 	*/
 		; VarSetCapacity(dwWriteCoord,sType.COORD,0)
 		dwWriteCoord := Buffer(sType.COORD,0)
-			NumPut(x,dwWriteCoord,"UShort")
-			NumPut(y,dwWriteCoord,sType.SHORT,"UShort")
+			NumPut("UShort",x,dwWriteCoord)
+			NumPut("UShort",y,dwWriteCoord,sType.SHORT)
 
 		x:=DllCall("ReadConsoleOutputAttribute"
 					,"UInt",hStdOut
-					,"UInt*",lpAttribute
+					,"UInt*",&lpAttribute := 0
 					,"UInt",nLength
 					,"uint",Numget(dwWriteCoord,"uint")
-					,"UInt*",lpNumberOfAttrsRead,"Int")
+					,"UInt*",&lpNumberOfAttrsRead := 0
+					,"Int")
 		if (!x) ;or (;LibConErrorLevel:=ErrorLevel)
 			return LibConError("ReadConsoleOutputAttribute",lpAttribute,nLength,x,y,lpNumberOfAttrsRead) ;Failure
 		return 1

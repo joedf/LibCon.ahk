@@ -1,8 +1,8 @@
-﻿
-#SingleInstance,Off
+﻿#Requires AutoHotkey >=2.0-
+#SingleInstance Off
 #Include LibCon.ahk ;Needed
 #NoTrayIcon ;Suggested
-SetBatchLines,-1 ;suggested
+SetBatchLines -1 ;suggested
 LibConDebug:=1 ;let the user know about errors
 
 SmartStartConsole() ;Shows the Console and 'initializes' the library

@@ -1,16 +1,17 @@
-﻿
-#SingleInstance,Off
+﻿#Requires AutoHotkey >=2.0-
+#SingleInstance Off
 #Include LibCon.ahk ;Needed
 #NoTrayIcon ;Suggested
-SetBatchLines,-1 ;suggested
+; SetBatchLines -1 ;suggested
 LibConDebug:=1 ;let the user know about errors
 StartConsole() ;Shows the Console (new/seperate) and 'initializes' the library
 
-AutoTrim, Off ;needed for this example
-SetWinDelay,0 ;optional
+; AutoTrim, Off ;needed for this example
+SetWinDelay 0 ;optional
 ;<<<<<<<<  HEADER END  >>>>>>>>>
 
-if LibConVersion < 1.0.5.0
+; if LibConVersion < 1.0.5.0
+if VerCompare(LibConVersion, "1.0.5.0") < 0
 {
 	puts("sorry... LibCon v1.0.5.0 and Up is required to run this script.")
 	Pause(0)
@@ -21,10 +22,10 @@ if LibConVersion < 1.0.5.0
 self:="ahk_pid " DllCall("GetCurrentProcessId") ;or use: ahk_id with getConsoleHandle()
 
 ;Save the original console size
-GetConsoleSize(ocW,ocH)
+GetConsoleSize(&ocW,&ocH)
 
 ;Save the original window size
-WinGetPos,,,owW,owH,%self%
+WinGetPos ,,&owW,&owH,self
 
 ;Set the text (foreground) color to yellow on black
 setcolor(Yellow,0)
@@ -33,14 +34,14 @@ setcolor(Yellow,0)
 oc:=getcolor()
 
 ;Save original cursor settings
-getconsoleCursorInfo(oCurSz,oCurSw)
+getconsoleCursorInfo(&oCurSz,&oCurSw)
 
 ;Save the original console "mode"
-getConsoleMode(oCMode)
+getConsoleMode(&oCMode)
 
-;Save Font size
-fH:=GetFontHeight()
-fW:=GetFontWidth()
+;Save Font size (note! scaled by DPI)
+fH:=GetFontHeight() * (A_ScreenDPI/96)
+fW:=GetFontWidth() * (A_ScreenDPI/96)
 
 ;set vars
 cH:=31
@@ -49,6 +50,9 @@ title:="Untitled GUI"
 INT_MAX:=32768
 lastcolor_at_cursor:=-1
 print_n:=0
+
+consoleGUI := class_consoleGUI()
+
 ;set gui colors -- Note: Blue, Gray, Black, DarkGray are defined in LibCon.ahk
 consoleGUI.BgColor:=Blue
 consoleGUI.FgColor:=Gray
@@ -59,7 +63,7 @@ consoleGUI.cBgColor:=DarkGray ;ClientArea
 puts( "Testing ConsoleWindow_FakeGUI...`n`n")
 puts( "`t     Window Specifications")
 puts( "`t_______________________________")
-putsf( "`t    Title: ""%s""",title)
+putsf("`t    Title: `"%s`"",title)
 putsf("`t   Colums: %s",cW)
 putsf("`t     Rows: %s",cH)
 puts( "`t_______________________________`n")
@@ -72,15 +76,19 @@ SetConsoleMode(0x0080)
 SetConsoleMode(0x0010)
 
 ;Wait for mouse double click
+/*
 puts("Please double click to continue.")
-Loop
-{
+Loop {
 	E := ReadConsoleInput()
-	if(E.EventType = 2 && E.EventInfo[5] = 2)
+	; Putsf("type=%s    info=%2", E.EventType, E.EventInfo[5])
+	Putsf("type=%s", E.EventType)
+	if(E.EventType == 2 && E.EventInfo[5] == 2)
 		break
 }
+*/
+Pause()
 
-KeyWait Space ;is a used 'key' / blocked for later
+KeyWait "Space" ;is a used 'key' / blocked for later
 
 ;enable selection "mode"
 SetConsoleMode((0x0040|0x0080))
@@ -98,7 +106,7 @@ setconsolesize(cW+1,cH+1)
 
 ;Correctly size the window accordingly (max the window size)
 ;WinMove,%self%,,,,%INT_MAX%,%INT_MAX%
-WinMove,%self%,,,, % (cW+5)*fW , (cH+5)*fH
+WinMove ,, (cW+5)*fW , (cH+5)*fH, self
 
 ;draw the gui (background)
 consoleGUI.Draw(title)
@@ -107,10 +115,12 @@ consoleGUI.Draw(title)
 setConsoleCursorPos(0,0)
 
 ;draw the "tip!" message
-gosub print_tip
+; gosub print_tip
+print_tip()
 
 ;Load Pages into memory // Load Text into vars
-gosub Load_txt
+; gosub Load_txt
+Load_txt()
 
 ;Start Draw Update routine
 update_draw:
@@ -130,7 +140,7 @@ update_draw:
 	setcolor(Black,consoleGUI.FgColor)
 	
 	;the Coordmode of the mouse relative to the "console gui" area
-	CoordMode,Mouse,Client
+	CoordMode "Mouse", "Client"
 	
 	;Draw/Prepare the status bar at the bottom of the gui
 	setConsoleCursorPos(24,cH-2)
@@ -141,8 +151,11 @@ update_draw:
 	print(" Mouse coords: ")
 	
 	;Redraw to correct graphic issues, if any
-	WinSet, Redraw,,%self%
+	WinRedraw self
 	
+	lmx := "", lmy := ""
+	_lmx := "", _lmy := ""
+
 	;Start internal draw loop
 	Loop {
 		Sleep 10 ;avoid CPU overload
@@ -152,7 +165,7 @@ update_draw:
 			continue
 		
 		;get the mouse position
-		MouseGetPos,mx,my
+		MouseGetPos &mx, &my
 		
 		;Set the quit "hotkey"
 		if (GetKeyState("Esc","P"))
@@ -161,7 +174,7 @@ update_draw:
 		;set the change page "hotkey"
 		if (GetKeyState("Space","P"))
 		{
-			KeyWait Space
+			KeyWait "Space"
 			
 			;Draw next page
 			goto update_draw
@@ -174,8 +187,8 @@ update_draw:
 			setConsoleCursorPos(16,cH-2)
 			
 			;Calculate mouse position, relative to the console 'chars'
-			_mx:=(mx//fw)
-			_my:=(my//fh)
+			_mx:=Floor(mx/fw) ; _mx:=(mx//fw)
+			_my:=Floor(my/fh) ; _my:=(my//fh)
 			_mx:=(_mx>cW-1)?cW-1:((_mx<0)?0:_mx) ;-1 is used, because the console's
 			_my:=(_my>cH-1)?cH-1:((_my<0)?0:_my) ;... cursor position origin is (0,0)
 			
@@ -201,7 +214,7 @@ update_draw:
 			_lmy:=_my
 			
 			;Redraw to correct graphic issues, if any
-			WinSet, Redraw,,%self%
+			WinRedraw self
 		}
 	}
 	
@@ -217,13 +230,13 @@ clearscreen()
 setConsoleSize(ocW,ocH)
 
 ;Reset window size
-WinMove,%self%,,,,%owW%,%owH%
+WinMove ,, owW, owH, self
 
 ;Reset cursor visibility
 setconsoleCursorInfo(oCurSz,oCurSw)
 
 ;Reset console mode
-getConsoleMode(oCMode)
+getConsoleMode(&oCMode)
 
 ;print end/quit message
 puts("Execution over.")
@@ -233,9 +246,10 @@ Pause()
 
 ;Exit program
 ExitApp
-return
+; return
 
-print_tip:
+print_tip() {
+	global
 	;save the color, for reset later
 	before_tip_color:=getcolor()
 
@@ -250,11 +264,12 @@ print_tip:
 
 	;reset color to what was before the tip
 	setcolor(before_tip_color,0)
-return
+}
 
-Load_txt:
+Load_txt() {
+	global
 ;Initialize vars with content
-MIT =
+MIT := "
 (
 The MIT License (MIT)
 
@@ -278,9 +293,9 @@ IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
 CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-)
+)"
 
-ZLIB =
+ZLIB := "
 (
 The zlib/libpng License (Zlib)
 
@@ -304,9 +319,9 @@ it freely, subject to the following restrictions:
 
 3. This notice may not be removed or altered from any source
    distribution.
-)
+)"
 
-LOREMIPSUM =
+LOREMIPSUM := "
 (
 %A_space%                         - Lorem Ipsum -
 
@@ -327,22 +342,22 @@ The standard Lorem Ipsum passage, used since the 1500s
   
   
 %A_space%                             http://www.lipsum.com/ (November, 2013)
-)
-return
+)"
+}
 
-;consoleGUI functions
-class consoleGUI {
+;consoleGUI class and functions
+class class_consoleGUI {
 	
 	;Gui colors
-	static BgColor
-	static FgColor
-	static cFgColor ;ClientArea
-	static cBgColor ;ClientArea
+	static BgColor := 0
+	static FgColor := 0
+	static cFgColor := 0 ;ClientArea
+	static cBgColor := 0 ;ClientArea
 	
-	Draw(title="Untitled GUI") {
+	Draw(title:="Untitled GUI") {
 		setConsoleCursorPos(0,0) ;bring back up
 		this.HorizontalBar(title)
-		Loop % ((GetConsoleClientHeight()//GetFontHeight())-3)
+		Loop ((GetConsoleClientHeight()//GetFontHeight())-3)
 			this.VerticalBar()
 		this.HorizontalBar("") ;bottom
 	}
@@ -356,18 +371,18 @@ class consoleGUI {
 		this.HorizontalBar(title)
 		setcolor(this.cFgColor,this.cBgColor)
 		setConsoleCursorPos(offset_txt,y)
-		Loop, parse, text, `n, `r
+		Loop Parse text, "`n", "`r"
 		{
 			setConsoleCursorPos(offset_txt)
 			puts(A_LoopField)
 		}
 	}
 	
-	print_clean(delay=250) {
+	print_clean(delay:=250) {
 		setcolor(this.cFgColor,this.cBgColor)
 		setConsoleCursorPos(offset_txt:=6,4)
 		spaces:="                                                                      "
-		Loop, 22
+		Loop 22
 		{
 			;msgbox Line number %A_Index% is %A_LoopField%
 			setConsoleCursorPos(offset_txt)
@@ -376,23 +391,23 @@ class consoleGUI {
 			else
 				puts(spaces)
 		}
-		Sleep %delay%
+		Sleep delay
 		setConsoleCursorPos(offset_txt,14)
-		puts(spaces)	
+		puts(spaces)
 	}
 
-	HorizontalBar(Text="") {
+	HorizontalBar(Text:="") {
 		if ((l:=StrLen(text))>0) {
 			l+=4, w:=((x:=getconsolewidth())-l)//2, z:=(u:="")
-			loop % w
-				u=%u%_
-			fs=%u%
-			fm=[ %text% ]
-			fe=%u%
-			f=%fs%%fm%%fe%
-			Loop % abs(x-StrLen(f))
-				z=%z%_
-			fe=%fe%%z%
+			loop w
+				u .= "_"
+			fs:=u
+			fm := "[ " . text . " ]"
+			fe := u
+			f := fs . fm . fe
+			Loop abs(x-StrLen(f))
+				z .= "_"
+			fe := fe . z
 			oc:=getcolor()
 			setcolor(this.FgColor,this.BgColor)
 			print(fs)
@@ -404,8 +419,8 @@ class consoleGUI {
 			return
 		} else {
 			u:=""
-			loop % getconsolewidth()
-				u=%u%_
+			loop getconsolewidth()
+				u .= "_"
 			oc:=getcolor()
 			setcolor(this.FgColor,this.BgColor)
 			print(u)
@@ -420,8 +435,8 @@ class consoleGUI {
 		setcolor(this.FgColor,this.BgColor)
 		print("|")
 		b:=""
-		Loop % (x-2)
-			b=%b%%A_space%
+		Loop (x-2)
+			b := b . A_Space
 		setcolor(this.cBgColor,this.cBgColor)
 		print(b)
 		setcolor(this.FgColor,this.BgColor)
