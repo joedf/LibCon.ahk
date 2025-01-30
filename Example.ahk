@@ -7,6 +7,8 @@
 ;
 ;/////////////////////////////////////////////////////////////
 
+#Requires AutoHotkey >=2.0-
+
 #SingleInstance Off
 #Include LibCon.ahk ;Needed
 #NoTrayIcon ;Suggested

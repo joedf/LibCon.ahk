@@ -549,10 +549,11 @@
 		; VarSetCapacity(consoleInfo,(3*sType.COORD)+sType.WORD+sType.SMALL_RECT,0)
 		consoleInfo := Buffer((3*sType.COORD)+sType.WORD+sType.SMALL_RECT, 0)
 		; x:=DllCall("GetConsoleScreenBufferInfo","UPtr",Stdout.__Handle,"Ptr",&consoleInfo)
-		x:=DllCall("GetConsoleScreenBufferInfo","UPtr",Stdout.Handle,"Ptr",&consoleInfo)
+		x:=DllCall("GetConsoleScreenBufferInfo","UPtr",Stdout.Handle,"Ptr",consoleInfo.Ptr)
 		if (!x) ;or (;LibConErrorLevel:=ErrorLevel)
 			return LibConError("getColor") ;Failure
-		c:=dec2hex(NumGet(&consoleInfo,(2*sType.COORD),"Short"))
+		; c:=dec2hex(NumGet(&consoleInfo,(2*sType.COORD),"Short"))
+		c:=dec2hex(NumGet(consoleInfo,(2*sType.COORD),"Short"))
 		FgColor:=dec2hex(c-(16*(c >> 4)))
 		BgColor:=dec2hex(c >> 4)
 		return c
@@ -564,7 +565,7 @@
 	}
 
 	GetBgColor() {
-		getColor("",&bg)
+		getColor(&fg,&bg)
 		return bg
 	}
 
@@ -591,8 +592,10 @@
 				setColor(f:=(A_Index-1), b)
 				;print(dec2shex(b) . dec2shex(f) . ((f=15 or f="F") ? "`n" : " "))
 				;print(RegExReplace(k:=((b*16)+f),"0x",(k<16?"0":"")) . ((f=15)?"`n":" "))
-				; hex := Format("{1:#x}", var)
-				print((((b*16)+f)<16?"0":"") . SubStr(((b*16)+f),3) . ((f=15)?"`n":" "))
+				
+				; print((((b*16)+f)<16?"0":"") . SubStr(((b*16)+f),3) . ((f=15)?"`n":" "))
+				hex := Format("{1:X}{2:X}", b, f)
+				print(hex . ((f=15)?"`n":" "))
 			}
 			setColor(cf,cb)
 		}
