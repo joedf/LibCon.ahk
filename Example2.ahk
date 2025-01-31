@@ -2,7 +2,6 @@
 #SingleInstance Off
 #Include LibCon.ahk ;Needed
 #NoTrayIcon ;Suggested
-SetBatchLines -1 ;suggested
 LibConDebug:=1 ;let the user know about errors
 
 SmartStartConsole() ;Shows the Console and 'initializes' the library
@@ -10,77 +9,79 @@ SmartStartConsole() ;Shows the Console and 'initializes' the library
 
 puts("press a key to create the gui...")
 pause(0)
-Gui, +HwndhGUI +ToolWindow +E0x40000
-Gui, Add, Button,   x4       gButton    Default,   Button
-Gui, Add, Button,   x+4 yp   gButton2,  Button2
-Gui, Add, Radio,    x4       gRadio,    Radio
-Gui, Add, CheckBox, x+4 yp   gCheckbox, CheckBox
-Gui, Add, ComboBox, x4  w120 gComboBox, ComboBox
-Gui, Add, Edit,     x4  w120 gEdit,     Edit
-Gui, Add, Slider,x4 y+4 w248 gSlider    AltSubmit,   25
-Gui, Add, Picture,y4 x130 w48 h48 Icon1 gPic1,%A_ahkpath%
-Gui, Add, Picture,y4 x184 w48 h48 Icon2 gPic2,%A_ahkpath%
-Gui, Add, Picture,y56 x130 w48 h48 Icon3 gPic3,%A_ahkpath%
-Gui, Add, Picture,y56 x180 w48 h48 Icon4 gPic4,%A_ahkpath%
-Gui, Show,w256, LibCon Test GUI Interaction
-WinWaitClose, ahk_id %hGUI%
+g := Gui("+ToolWindow +E0x40000", "LibCon Test GUI Interaction")
+hGUI := g.Hwnd
+b1 := g.AddButton("x4 Default", "Button"), b1.OnEvent("Click", g_Button)
+b2 := g.AddButton("x+4 yp", "Button2"), b2.OnEvent("Click", g_Button2)
+r1 := g.AddRadio("x4", "Radio"), r1.OnEvent("Click", g_Radio)
+c1 := g.AddCheckBox("x+4 yp", "CheckBox"), c1.OnEvent("Click", g_Checkbox)
+c2 := g.AddComboBox("x4 w120", ["ComboBox"]), c2.OnEvent("Change", g_ComboBox)
+e1 := g.AddEdit("x4 w120", "Edit"), e1.OnEvent("Change", g_Edit)
+s1 := g.AddSlider("x4 y+4 w248 AltSubmit", "25"), s1.OnEvent("Change", g_Slider)
+p1 := g.AddPicture("y4 x130 w48 h48 Icon1", A_ahkpath), p1.OnEvent("Click", g_Pic1)
+p2 := g.AddPicture("y4 x184 w48 h48 Icon2", A_ahkpath), p2.OnEvent("Click", g_Pic2)
+p3 := g.AddPicture("y56 x130 w48 h48 Icon3", A_ahkpath), p3.OnEvent("Click", g_Pic3)
+p4 := g.AddPicture("y56 x180 w48 h48 Icon4", A_ahkpath), p4.OnEvent("Click", g_Pic4)
+g.OnEvent("Close", GuiClose)
+g.Show("w256")
+WinWaitClose("ahk_id " . hGUI)
 puts("testing Unicode Input/Output... press a key to continue")
 pause(0)
 putsf("Current InputCP: %s  OutputCP: %s  ",GetConsoleInputCP(),GetConsoleOutputCP())
 puts("UNICODE_¥£¤__%s__UNICODE_¢µ®___")
 print("enter some Unicode chars:")
-gets(a)
-puts(a)
+gets(&user_input)
+puts(user_input)
 pause()
 puts("bye!")
 Sleep 500
 ExitApp
 
-Button:
-puts("Button was pressed")
-return
+g_Button(g*){
+	puts("Button was pressed")
+}
 
-Button2:
-puts("Button2 was pressed")
-return
+g_Button2(g*){
+	puts("Button2 was pressed")
+}
 
-Radio:
-puts("Radio was clicked")
-return
+g_Radio(g*){
+	puts("Radio was clicked")
+}
 
-CheckBox:
-puts("CheckBox was clicked")
-return
+g_CheckBox(g*){
+	puts("CheckBox was clicked")
+}
 
-ComboBox:
-puts("ComboBox was clicked/changed")
-return
+g_ComboBox(g*){
+	puts("ComboBox was clicked/changed")
+}
 
-Edit:
-puts("Edit was changed")
-return
+g_Edit(g*){
+	puts("Edit was changed")
+}
 
-Slider:
-puts("Slider was clicked/Moved")
-return
+g_Slider(g*){
+	puts("Slider was clicked/Moved")
+}
 
-Pic1:
-puts("Picture 1 was clicked")
-return
+g_Pic1(g*){
+	puts("Picture 1 was clicked")
+}
 
-Pic2:
-puts("Picture 2 was clicked")
-return
+g_Pic2(g*){
+	puts("Picture 2 was clicked")
+}
 
-Pic3:
-puts("Picture 3 was clicked")
-return
+g_Pic3(g*){
+	puts("Picture 3 was clicked")
+}
 
-Pic4:
-puts("Picture 4 was clicked")
-return
+g_Pic4(g*){
+	puts("Picture 4 was clicked")
+}
 
-GuiClose:
-Gui,Destroy
-puts("Gui was Closed")
-return
+GuiClose(g){
+	g.Destroy()
+	puts("Gui was Closed")
+}
