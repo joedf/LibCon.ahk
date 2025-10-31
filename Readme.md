@@ -6,6 +6,8 @@ The main goal of this library is to maintain simplicity, so that the common Auto
 I know that this is probably considered far from complete, but just to get things started, here it is!  
 See the [Documentation here.](LibCon_docs.md) See some [Examples here.](Examples.md) View the [Discussion here.](http://ahkscript.org/boards/viewtopic.php?t=17)  
 
+**AutoHotkey v2 version available [here](https://github.com/joedf/LibCon.ahk/tree/v2-alpha).**
+
 LibCon is proudly under the [MIT License.](License.md)
   
 ------------------------------------------------
